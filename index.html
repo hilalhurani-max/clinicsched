@@ -8,7 +8,7 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#f5f4f0;--surface:#ffffff;--surface2:#f0efe9;
+  --bg:#f5f4f0;--surface:#fff;--surface2:#f0efe9;
   --text:#1a1916;--text2:#6b6a65;--text3:#9e9d98;
   --accent:#2563a8;--accent-light:#e8f0fb;
   --zvulun:#0d6e4f;--zvulun-light:#e6f4ef;
@@ -22,307 +22,310 @@
   --border:#e2e1da;--radius:10px;--radius-lg:16px;
 }
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
-
 .app{display:flex;flex-direction:column;min-height:100vh}
-.header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;gap:16px;height:58px;position:sticky;top:0;z-index:50}
-.logo{font-weight:600;font-size:16px;letter-spacing:-.3px}
-.logo span{color:var(--accent)}
-.divider{width:1px;height:20px;background:var(--border)}
-.clinic-name{font-size:12px;color:var(--text2)}
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 20px;display:flex;align-items:center;gap:12px;height:56px;position:sticky;top:0;z-index:50}
+.logo{font-weight:600;font-size:15px}.logo span{color:var(--accent)}
+.divider{width:1px;height:18px;background:var(--border)}
 .view-tabs{display:flex;gap:4px;margin-left:auto}
-.tab{padding:7px 16px;border-radius:8px;border:none;background:transparent;cursor:pointer;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text2);font-weight:500;transition:all .15s}
-.tab:hover{background:var(--surface2)}
-.tab.active{background:var(--accent);color:#fff}
-
-.content{flex:1;padding:24px;max-width:1200px;margin:0 auto;width:100%}
-.panel{display:none;flex-direction:column;gap:16px}
-.panel.active{display:flex}
-
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 24px}
-.card-title{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:16px}
-
-/* BUTTONS */
-.btn{padding:8px 16px;border-radius:var(--radius);border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
-.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:#1d4f8f}
+.tab{padding:6px 14px;border-radius:8px;border:none;background:transparent;cursor:pointer;font-size:13px;font-family:inherit;color:var(--text2);font-weight:500;transition:all .15s}
+.tab:hover{background:var(--surface2)}.tab.active{background:var(--accent);color:#fff}
+.content{flex:1;padding:20px;max-width:1280px;margin:0 auto;width:100%}
+.panel{display:none;flex-direction:column;gap:14px}.panel.active{display:flex}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 22px}
+.card-title{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:14px}
+.btn{padding:7px 14px;border-radius:var(--radius);border:none;font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:5px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover:not(:disabled){background:#1d4f8f}
 .btn-success{background:var(--success-light);color:var(--success)}
 .btn-danger{background:var(--danger-light);color:var(--danger)}
 .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text2)}.btn-ghost:hover{background:var(--surface2)}
 .btn-warn{background:var(--warn-light);color:var(--warn)}
-.btn-sm{padding:5px 11px;font-size:12px}
-
-/* FORM ELEMENTS */
-select,input[type=text]{padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:13px;background:var(--surface);color:var(--text)}
+.btn-sm{padding:4px 10px;font-size:12px}
+select,input[type=text],input[type=password],input[type=date]{padding:7px 11px;border:1px solid var(--border);border-radius:var(--radius);font-family:inherit;font-size:13px;background:var(--surface);color:var(--text)}
 select:focus,input:focus{outline:none;border-color:var(--accent)}
-
-/* CALENDAR */
 .cal-wrapper{overflow-x:auto}
-.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;min-width:560px}
-.cal-header{font-size:11px;font-weight:600;text-align:center;color:var(--text3);padding:6px;text-transform:uppercase;letter-spacing:.5px}
-.cal-day{border:1px solid var(--border);border-radius:9px;padding:7px;min-height:80px;background:var(--surface);cursor:pointer;transition:all .15s;position:relative}
+.cal-grid-wrap{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;min-width:560px}
+.cal-header{font-size:11px;font-weight:600;text-align:center;color:var(--text3);padding:5px;text-transform:uppercase;letter-spacing:.5px}
+.cal-day{border:1px solid var(--border);border-radius:9px;padding:6px;min-height:80px;background:var(--surface);cursor:pointer;transition:all .15s}
 .cal-day:hover{border-color:var(--accent);background:var(--accent-light)}
 .cal-day.empty{background:transparent;border-color:transparent;cursor:default;pointer-events:none}
 .cal-day.past{opacity:.4;cursor:not-allowed;pointer-events:none}
 .cal-day.today{border-color:var(--accent);border-width:2px}
-.day-num{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:5px}
-.shifts-list{display:flex;flex-direction:column;gap:3px}
-.shift-chip{font-size:10px;font-weight:500;padding:2px 6px;border-radius:5px;display:inline-block;white-space:nowrap}
+.cal-day.special{background:#fffbf0;border-color:#e8c84a}
+.day-num{font-size:12px;font-weight:600;margin-bottom:3px}
+.day-label{font-size:9px;color:var(--warn);font-weight:600;text-transform:uppercase;margin-bottom:2px}
+.shifts-list{display:flex;flex-direction:column;gap:2px}
+.shift-chip{font-size:9px;font-weight:500;padding:2px 5px;border-radius:4px;display:inline-block;white-space:nowrap}
 .chip-pending{background:var(--warn-light);color:var(--warn)}
 .chip-approved{background:var(--success-light);color:var(--success)}
 .chip-rejected{background:var(--danger-light);color:var(--danger)}
-
-/* BADGES */
-.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:500}
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500}
 .badge-ortho{background:var(--ortho-light);color:var(--ortho)}
 .badge-pedia{background:var(--pedia-light);color:var(--pedia)}
 .badge-internal{background:var(--internal-light);color:var(--internal)}
-.tag-zvulun{background:var(--zvulun-light);color:var(--zvulun);padding:2px 8px;border-radius:5px;font-size:11px;font-weight:500}
-.tag-lin{background:var(--lin-light);color:var(--lin);padding:2px 8px;border-radius:5px;font-size:11px;font-weight:500}
+.tag-zvulun{background:var(--zvulun-light);color:var(--zvulun);padding:2px 7px;border-radius:5px;font-size:11px;font-weight:500}
+.tag-lin{background:var(--lin-light);color:var(--lin);padding:2px 7px;border-radius:5px;font-size:11px;font-weight:500}
+.tag-morning{background:#fff8e1;color:#b8860b;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:600}
+.tag-evening{background:#f0e6ff;color:#6b3fa8;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:600}
 .badge-pending{background:var(--warn-light);color:var(--warn)}
 .badge-approved{background:var(--success-light);color:var(--success)}
 .badge-rejected{background:var(--danger-light);color:var(--danger)}
-
-/* STATS */
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
-.stat-num{font-size:26px;font-weight:600;font-family:'DM Mono',monospace;line-height:1}
-.stat-label{font-size:11px;color:var(--text2);margin-top:4px;text-transform:uppercase;letter-spacing:.4px}
-
-/* TABLES */
+.badge-swap_pending{background:#e8f0fb;color:var(--accent)}
+.badge-swap_approved{background:var(--success-light);color:var(--success)}
+.badge-swap_rejected{background:var(--danger-light);color:var(--danger)}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px}
+.stat-num{font-size:24px;font-weight:600;font-family:'DM Mono',monospace;line-height:1}
+.stat-label{font-size:10px;color:var(--text2);margin-top:3px;text-transform:uppercase;letter-spacing:.4px}
 .req-table{width:100%;border-collapse:collapse;font-size:13px}
-.req-table th{padding:9px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);white-space:nowrap}
-.req-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+.req-table th{padding:8px 11px;text-align:left;font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);white-space:nowrap}
+.req-table td{padding:9px 11px;border-bottom:1px solid var(--border);vertical-align:middle}
 .req-table tr:last-child td{border-bottom:none}
 .req-table tbody tr:hover td{background:var(--surface2)}
-
-/* SCHEDULE GRID */
 .sched-scroll{overflow-x:auto}
-.sched-table{border-collapse:collapse;font-size:12px;white-space:nowrap}
-.sched-table th,.sched-table td{border:1px solid var(--border);padding:6px 10px;text-align:center}
-.sched-table th{background:var(--surface2);font-weight:600;font-size:11px;color:var(--text2)}
-.sched-table .slot-z{background:var(--zvulun-light);color:var(--zvulun);font-size:11px;border-radius:4px;padding:1px 6px;display:inline-block;margin:1px 0}
-.sched-table .slot-l{background:var(--lin-light);color:var(--lin);font-size:11px;border-radius:4px;padding:1px 6px;display:inline-block;margin:1px 0}
-.sched-table .slot-empty{color:var(--text3);font-style:italic;font-size:11px}
-.sched-table .weekend{background:#fafaf8}
-
-/* MODAL */
+.sched-table{border-collapse:collapse;font-size:11px;white-space:nowrap}
+.sched-table th,.sched-table td{border:1px solid var(--border);padding:5px 8px;text-align:center}
+.sched-table th{background:var(--surface2);font-weight:600;font-size:10px;color:var(--text2)}
+.slot-z{background:var(--zvulun-light);color:var(--zvulun);font-size:10px;border-radius:4px;padding:1px 5px;display:inline-block;margin:1px;cursor:pointer}
+.slot-l{background:var(--lin-light);color:var(--lin);font-size:10px;border-radius:4px;padding:1px 5px;display:inline-block;margin:1px;cursor:pointer}
+.slot-z:hover,.slot-l:hover{opacity:.7}
+.slot-empty{color:var(--text3);font-style:italic;font-size:10px}
+.weekend-row{background:#fffdf5}
+.holiday-row{background:#fff8e1}
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;z-index:200;opacity:0;pointer-events:none;transition:opacity .2s}
 .overlay.open{opacity:1;pointer-events:all}
-.modal{background:var(--surface);border-radius:var(--radius-lg);padding:28px;width:380px;max-width:calc(100vw - 32px);transform:translateY(8px);transition:transform .2s}
+.modal{background:var(--surface);border-radius:var(--radius-lg);padding:26px;width:420px;max-width:calc(100vw - 28px);transform:translateY(8px);transition:transform .2s;max-height:90vh;overflow-y:auto}
 .overlay.open .modal{transform:translateY(0)}
-.modal h3{font-size:16px;font-weight:600;margin-bottom:20px}
-.modal-row{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.modal h3{font-size:15px;font-weight:600;margin-bottom:18px}
+.modal-row{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
 .modal-row label{font-size:12px;color:var(--text2);font-weight:500}
-.modal-row select,.modal-row input{width:100%;padding:9px 12px}
-.modal-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:20px}
-
-/* ADMIN INNER TABS */
-.admin-inner-tabs{display:flex;gap:4px;border-bottom:1px solid var(--border);padding-bottom:1px;flex-wrap:wrap}
-.itab{padding:7px 14px;border-radius:8px 8px 0 0;border:none;background:transparent;cursor:pointer;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text2);font-weight:500;transition:all .15s;border-bottom:2px solid transparent}
-.itab:hover{background:var(--surface2)}
-.itab.active{color:var(--accent);border-bottom-color:var(--accent);background:transparent}
-
-/* CONFLICT BOX */
-.conflict-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.modal-row select,.modal-row input{width:100%}
+.modal-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
+.shift-toggle{display:flex;gap:8px;margin-top:4px}
+.shift-btn{flex:1;padding:9px;border:2px solid var(--border);border-radius:var(--radius);cursor:pointer;font-size:13px;font-weight:500;font-family:inherit;background:var(--surface);color:var(--text2);transition:all .15s;text-align:center}
+.shift-btn.active{border-color:var(--accent);background:var(--accent-light);color:var(--accent)}
+.admin-inner-tabs{display:flex;gap:3px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.itab{padding:6px 13px;border-radius:8px 8px 0 0;border:none;background:transparent;cursor:pointer;font-size:13px;font-family:inherit;color:var(--text2);font-weight:500;transition:all .15s;border-bottom:2px solid transparent}
+.itab:hover{background:var(--surface2)}.itab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.conflict-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid var(--border)}
 .conflict-item:last-child{border-bottom:none}
-
-/* DOCTOR LIST */
-.doctor-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.doctor-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 @media(max-width:700px){.doctor-cols{grid-template-columns:1fr}.stats-row{grid-template-columns:repeat(2,1fr)}}
-.spec-col{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px}
-.doctor-item{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px}
+.spec-col{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px}
+.doctor-item{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:13px}
 .doctor-item:last-child{border-bottom:none}
-.add-row{display:flex;gap:6px;margin-top:10px}
-.add-row input{flex:1;font-size:12px;padding:6px 10px}
-
-/* LINK BOX */
-.link-box{background:var(--accent-light);border:1px solid #b3cff5;border-radius:var(--radius);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12px;color:var(--accent);font-family:'DM Mono',monospace;word-break:break-all}
-.wa-box{background:var(--surface2);border-radius:var(--radius);padding:14px 18px;font-size:13px;color:var(--text);line-height:1.75;white-space:pre-wrap;border:1px solid var(--border)}
-
-/* TOAST */
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1916;color:#fff;padding:11px 22px;border-radius:9px;font-size:13px;z-index:300;opacity:0;transition:opacity .2s;pointer-events:none;font-family:'DM Sans',sans-serif}
+.add-row{display:flex;gap:6px;margin-top:8px}.add-row input{flex:1;font-size:12px;padding:5px 9px}
+.wa-box{background:var(--surface2);border-radius:var(--radius);padding:12px 16px;font-size:13px;line-height:1.75;white-space:pre-wrap;border:1px solid var(--border)}
+.pw-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:500}
+.pw-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:34px 38px;width:320px;max-width:calc(100vw - 28px);box-shadow:0 8px 32px rgba(0,0,0,.1);display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center}
+.pw-box .logo{font-size:18px;font-weight:600}.pw-box .logo span{color:var(--accent)}
+.pw-box input{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius);font-size:15px;font-family:inherit;text-align:center;letter-spacing:2px}
+.pw-box input:focus{outline:none;border-color:var(--accent)}
+.pw-error{color:var(--danger);font-size:12px;display:none}
+.loading-overlay{position:fixed;inset:0;background:rgba(245,244,240,.85);display:none;align-items:center;justify-content:center;z-index:400;font-size:14px;color:var(--text2);gap:10px}
+.loading-overlay.show{display:flex}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--success);display:inline-block}
+.sync-dot.syncing{background:var(--warn);animation:pulse 1s infinite}
+.spinner{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.empty-state{padding:36px;text-align:center;color:var(--text3);font-size:13px}
+.empty-state .icon{font-size:28px;margin-bottom:8px}
+.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.info-box{background:var(--accent-light);border:1px solid #b3cff5;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:var(--accent);margin-bottom:12px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1a1916;color:#fff;padding:10px 20px;border-radius:9px;font-size:13px;z-index:300;opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap}
 .toast.show{opacity:1}
-
-.empty-state{padding:40px;text-align:center;color:var(--text3);font-size:13px}
-.empty-state .icon{font-size:32px;margin-bottom:10px}
-.section-title{font-size:16px;font-weight:600;margin-bottom:4px}
-.section-sub{font-size:12px;color:var(--text2);margin-bottom:18px}
-.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
 </style>
 </head>
 <body>
-<div class="app">
 
-  <!-- HEADER -->
+<!-- PASSWORD -->
+<div class="pw-screen" id="pw-screen" style="display:none">
+  <div class="pw-box">
+    <div class="logo">Clinic<span>Sched</span></div>
+    <p>🔒 Admin Dashboard<br>Enter your password</p>
+    <input type="password" id="pw-input" placeholder="Password" onkeydown="if(event.key==='Enter')checkPw()">
+    <div class="pw-error" id="pw-error">❌ Incorrect password</div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="checkPw()">Enter Admin</button>
+    <button class="btn btn-ghost" style="width:100%;justify-content:center;font-size:12px" onclick="cancelAdmin()">← Back to Doctor Portal</button>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div class="loading-overlay" id="loading-overlay">
+  <div style="border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;width:20px;height:20px;animation:spin .6s linear infinite"></div>
+  <span>Connecting…</span>
+</div>
+
+<div class="app">
   <div class="header">
     <div class="logo">Clinic<span>Sched</span></div>
     <div class="divider"></div>
-    <div class="clinic-name">Zvulun &amp; LIN Medical Clinics</div>
+    <span style="font-size:12px;color:var(--text2)">Zvulun &amp; LIN</span>
+    <span style="font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px">
+      <span class="sync-dot" id="sync-dot"></span>
+      <span id="sync-label">Live</span>
+    </span>
     <div class="view-tabs">
       <button class="tab active" onclick="showPanel('doctor',this)">🩺 Doctor Portal</button>
-      <button class="tab" onclick="showPanel('admin',this)">⚙️ Admin Dashboard</button>
+      <button class="tab" onclick="showPanel('admin',this)">⚙️ Admin</button>
     </div>
   </div>
 
   <div class="content">
 
-    <!-- ══════════════ DOCTOR PORTAL ══════════════ -->
+    <!-- ══ DOCTOR PORTAL ══ -->
     <div class="panel active" id="panel-doctor">
 
-      <!-- Identity card -->
-      <div class="card" style="padding:16px 24px">
-        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <div class="card" style="padding:14px 20px">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
           <span style="font-size:13px;color:var(--text2);font-weight:500">I am:</span>
-          <select id="doc-specialty" onchange="updateDoctorSelect()">
-            <option value="">— Select specialty —</option>
+          <select id="doc-specialty" onchange="updateDocSelect()">
+            <option value="">— Specialty —</option>
             <option value="ortho">Orthopedics</option>
             <option value="pedia">Pediatrics</option>
             <option value="internal">Internal Medicine</option>
           </select>
-          <select id="doc-name">
-            <option value="">— Select your name —</option>
-          </select>
-          <span style="font-size:12px;color:var(--text3);margin-left:auto">👆 Click any day to request a shift</span>
+          <select id="doc-name"><option value="">— Your name —</option></select>
+          <span style="font-size:11px;color:var(--text3);margin-left:auto">🟡 = Friday / Saturday / Holiday (morning &amp; evening shifts)</span>
         </div>
       </div>
 
-      <!-- Calendar -->
       <div class="card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-          <div class="card-title" style="margin-bottom:0" id="cal-month-label"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div class="card-title" style="margin-bottom:0" id="cal-label"></div>
           <div style="display:flex;gap:6px">
-            <button class="btn btn-ghost btn-sm" onclick="prevMonth()">◂ Prev</button>
-            <button class="btn btn-ghost btn-sm" onclick="nextMonth()">Next ▸</button>
+            <button class="btn btn-ghost btn-sm" onclick="prevMonth()">◂</button>
+            <button class="btn btn-ghost btn-sm" onclick="nextMonth()">▸</button>
           </div>
         </div>
         <div class="cal-wrapper">
-          <div class="calendar-grid" id="cal-headers">
+          <div class="cal-grid-wrap">
             <div class="cal-header">Sun</div><div class="cal-header">Mon</div><div class="cal-header">Tue</div>
             <div class="cal-header">Wed</div><div class="cal-header">Thu</div><div class="cal-header">Fri</div>
             <div class="cal-header">Sat</div>
           </div>
-          <div class="calendar-grid" id="cal-grid"></div>
+          <div class="cal-grid-wrap" id="cal-grid"></div>
         </div>
       </div>
 
-      <!-- My requests -->
       <div class="card">
         <div class="card-title">My shift requests</div>
-        <div id="my-requests-list">
-          <div class="empty-state"><div class="icon">📋</div>Select your name above, then click a day to request shifts.</div>
-        </div>
+        <div id="my-requests"></div>
       </div>
+
+      <div class="card" id="swap-card" style="display:none">
+        <div class="card-title">My swap requests</div>
+        <div id="my-swaps"></div>
+      </div>
+
     </div>
 
-    <!-- ══════════════ ADMIN DASHBOARD ══════════════ -->
+    <!-- ══ ADMIN ══ -->
     <div class="panel" id="panel-admin">
-
-      <!-- Stats -->
       <div class="stats-row" id="admin-stats"></div>
 
-      <!-- Inner tabs + action buttons -->
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
         <div class="admin-inner-tabs">
-          <button class="itab active" id="itab-requests" onclick="showAdminTab('requests')">Requests</button>
-          <button class="itab" id="itab-schedule" onclick="showAdminTab('schedule')">Schedule</button>
+          <button class="itab active" id="itab-req" onclick="showAdminTab('req')">Requests</button>
+          <button class="itab" id="itab-sched" onclick="showAdminTab('sched')">Schedule</button>
           <button class="itab" id="itab-conflicts" onclick="showAdminTab('conflicts')">Conflicts</button>
+          <button class="itab" id="itab-swaps" onclick="showAdminTab('swaps')">Swaps</button>
+          <button class="itab" id="itab-holidays" onclick="showAdminTab('holidays')">Holidays</button>
           <button class="itab" id="itab-doctors" onclick="showAdminTab('doctors')">Doctors</button>
-          <button class="itab" id="itab-links" onclick="showAdminTab('links')">Share Links</button>
+          <button class="itab" id="itab-links" onclick="showAdminTab('links')">Share</button>
         </div>
-        <div style="margin-left:auto;display:flex;gap:8px">
+        <div style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap">
           <button class="btn btn-warn btn-sm" onclick="autoSchedule()">⚡ Auto-Schedule</button>
-          <button class="btn btn-ghost btn-sm" onclick="exportCSV()">↓ Export CSV</button>
+          <button class="btn btn-ghost btn-sm" onclick="exportCSV()">↓ CSV</button>
+          <button class="btn btn-ghost btn-sm" onclick="loadAll()">↺</button>
         </div>
       </div>
 
-      <!-- REQUESTS TAB -->
-      <div id="tab-requests">
+      <div id="tab-req">
         <div class="card">
           <div class="toolbar">
-            <select id="f-status" onchange="renderRequests()">
-              <option value="">All statuses</option>
-              <option value="pending">Pending</option>
-              <option value="approved">Approved</option>
-              <option value="rejected">Rejected</option>
-            </select>
-            <select id="f-specialty" onchange="renderRequests()">
-              <option value="">All specialties</option>
-              <option value="ortho">Orthopedics</option>
-              <option value="pedia">Pediatrics</option>
-              <option value="internal">Internal Medicine</option>
-            </select>
-            <select id="f-site" onchange="renderRequests()">
-              <option value="">All sites</option>
-              <option value="ZVULUN">ZVULUN</option>
-              <option value="LIN">LIN</option>
-            </select>
-            <button class="btn btn-success btn-sm" onclick="bulkApprove()">✓ Approve all pending</button>
-            <button class="btn btn-danger btn-sm" onclick="bulkReject()">✗ Reject all pending</button>
+            <select id="f-status" onchange="renderRequests()"><option value="">All statuses</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select>
+            <select id="f-spec" onchange="renderRequests()"><option value="">All specialties</option><option value="ortho">Orthopedics</option><option value="pedia">Pediatrics</option><option value="internal">Internal</option></select>
+            <select id="f-site" onchange="renderRequests()"><option value="">All sites</option><option value="ZVULUN">ZVULUN</option><option value="LIN">LIN</option></select>
+            <button class="btn btn-success btn-sm" onclick="bulkApprove()">✓ Approve pending</button>
+            <button class="btn btn-danger btn-sm" onclick="bulkReject()">✗ Reject pending</button>
           </div>
-          <div style="overflow-x:auto" id="req-table-wrap"></div>
+          <div style="overflow-x:auto" id="req-table"></div>
         </div>
       </div>
 
-      <!-- SCHEDULE TAB -->
-      <div id="tab-schedule" style="display:none">
+      <div id="tab-sched" style="display:none">
         <div class="card">
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap">
-            <div class="card-title" style="margin-bottom:0">Monthly Schedule</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+            <div class="card-title" style="margin-bottom:0">Schedule</div>
             <select id="sched-month" onchange="renderSchedule()"></select>
-            <div style="margin-left:auto;display:flex;gap:10px;font-size:12px;color:var(--text2)">
-              <span><span class="tag-zvulun">Z</span> ZVULUN = 2/specialty</span>
-              <span><span class="tag-lin">L</span> LIN = 1/specialty</span>
-            </div>
+            <span style="font-size:11px;color:var(--text2)">💡 Click a doctor name to move them between sites</span>
           </div>
-          <div class="sched-scroll" id="sched-wrap"></div>
+          <div class="sched-scroll" id="sched-grid"></div>
         </div>
       </div>
 
-      <!-- CONFLICTS TAB -->
       <div id="tab-conflicts" style="display:none">
         <div class="card">
-          <div class="section-title">Scheduling conflicts</div>
-          <div class="section-sub">Slots where more doctors applied than needed. Click Resolve to choose who gets assigned.</div>
-          <div id="conflicts-wrap"></div>
+          <div class="card-title">Scheduling conflicts</div>
+          <div id="conflicts-list"></div>
         </div>
       </div>
 
-      <!-- DOCTORS TAB -->
+      <div id="tab-swaps" style="display:none">
+        <div class="card">
+          <div class="card-title">Swap requests</div>
+          <div id="swaps-list"></div>
+        </div>
+      </div>
+
+      <div id="tab-holidays" style="display:none">
+        <div class="card">
+          <div class="card-title">Special days &amp; Holidays</div>
+          <p style="font-size:12px;color:var(--text2);margin-bottom:14px">Holidays get morning &amp; evening shifts, just like Fridays and Saturdays.</p>
+          <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+            <input type="date" id="hol-date">
+            <input type="text" id="hol-name" placeholder="Holiday name (e.g. Rosh Hashana)" style="flex:1;min-width:160px">
+            <button class="btn btn-primary btn-sm" onclick="addHoliday()">+ Add</button>
+          </div>
+          <div id="holidays-list"></div>
+        </div>
+      </div>
+
       <div id="tab-doctors" style="display:none">
         <div class="card">
-          <div class="section-title">Doctor roster</div>
-          <div class="section-sub">Add or remove doctors per specialty. Changes apply immediately.</div>
+          <div class="card-title">Doctor roster</div>
           <div class="doctor-cols" id="doctor-cols"></div>
         </div>
       </div>
 
-      <!-- LINKS TAB -->
       <div id="tab-links" style="display:none">
         <div class="card">
-          <div class="section-title">Share with doctors</div>
-          <div class="section-sub">Send the link below via WhatsApp or any messaging app. Doctors open it and choose their name and preferred shifts.</div>
-          <div style="display:flex;flex-direction:column;gap:14px;margin-top:8px">
+          <div class="card-title">Share with doctors</div>
+          <div style="display:flex;flex-direction:column;gap:12px">
             <div>
-              <div style="font-size:12px;color:var(--text2);margin-bottom:8px;font-weight:500">Portal link</div>
-              <div class="link-box">
-                <span>https://clinicsched.app/portal?clinic=zvulun-lin</span>
+              <div style="font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:500">Your app link</div>
+              <div style="display:flex;gap:8px">
+                <input type="text" id="app-link" value="https://hilalhurani-max.github.io/clinicsched" style="flex:1">
                 <button class="btn btn-ghost btn-sm" onclick="copyLink()">Copy</button>
               </div>
             </div>
             <div>
-              <div style="font-size:12px;color:var(--text2);margin-bottom:8px;font-weight:500">WhatsApp message</div>
+              <div style="font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:500">WhatsApp message</div>
               <div class="wa-box" id="wa-msg"></div>
-              <div style="display:flex;gap:8px;margin-top:10px">
-                <button class="btn btn-success btn-sm" onclick="openWhatsApp()">📱 Open WhatsApp</button>
-                <button class="btn btn-ghost btn-sm" onclick="copyWA()">Copy message</button>
+              <div style="display:flex;gap:8px;margin-top:8px">
+                <button class="btn btn-success btn-sm" onclick="openWA()">📱 Open WhatsApp</button>
+                <button class="btn btn-ghost btn-sm" onclick="copyWA()">Copy</button>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-    </div><!-- end admin panel -->
-  </div><!-- end content -->
-</div><!-- end app -->
+    </div>
+  </div>
+</div>
 
 <!-- SHIFT REQUEST MODAL -->
 <div class="overlay" id="modal-shift">
@@ -335,21 +338,72 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
     <div class="modal-row">
       <label>Site</label>
       <select id="m-site">
-        <option value="ZVULUN">ZVULUN (2 doctors/specialty needed)</option>
-        <option value="LIN">LIN (1 doctor/specialty needed)</option>
+        <option value="ZVULUN">ZVULUN (2 doctors/specialty)</option>
+        <option value="LIN">LIN (1 doctor/specialty)</option>
       </select>
     </div>
-    <div id="m-warning" style="background:var(--warn-light);color:var(--warn);font-size:12px;padding:8px 12px;border-radius:8px;display:none"></div>
+    <div class="modal-row" id="m-shift-row" style="display:none">
+      <label>Shift time</label>
+      <div class="shift-toggle">
+        <button class="shift-btn active" id="btn-morning" onclick="selectShift('morning')">🌅 Morning</button>
+        <button class="shift-btn" id="btn-evening" onclick="selectShift('evening')">🌙 Evening</button>
+      </div>
+    </div>
+    <div id="m-warn" style="background:var(--warn-light);color:var(--warn);font-size:12px;padding:8px 11px;border-radius:8px;display:none;margin-top:6px"></div>
     <div class="modal-btns">
       <button class="btn btn-ghost" onclick="closeModal('modal-shift')">Cancel</button>
-      <button class="btn btn-primary" onclick="submitRequest()">Submit request</button>
+      <button class="btn btn-primary" id="submit-btn" onclick="submitRequest()">Submit request</button>
     </div>
   </div>
 </div>
 
-<!-- CONFLICT RESOLVE MODAL -->
+<!-- SWAP MODAL -->
+<div class="overlay" id="modal-swap">
+  <div class="modal">
+    <h3>Request shift swap</h3>
+    <div class="info-box">Ask another doctor to swap shifts with you. I will approve or reject the swap request.</div>
+    <div class="modal-row">
+      <label>My shift to give away</label>
+      <select id="sw-my"></select>
+    </div>
+    <div class="modal-row">
+      <label>Doctor to swap with</label>
+      <select id="sw-other"></select>
+    </div>
+    <div class="modal-row">
+      <label>Their shift I want (optional)</label>
+      <select id="sw-their"></select>
+    </div>
+    <div class="modal-btns">
+      <button class="btn btn-ghost" onclick="closeModal('modal-swap')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitSwap()">Send swap request</button>
+    </div>
+  </div>
+</div>
+
+<!-- MOVE MODAL (admin) -->
+<div class="overlay" id="modal-move">
+  <div class="modal">
+    <h3 id="move-title">Move doctor</h3>
+    <p id="move-desc" style="font-size:13px;color:var(--text2);margin-bottom:16px"></p>
+    <div class="modal-row">
+      <label>Move to site</label>
+      <select id="move-site"><option value="ZVULUN">ZVULUN</option><option value="LIN">LIN</option></select>
+    </div>
+    <div class="modal-row" id="move-shift-row" style="display:none">
+      <label>Shift time</label>
+      <select id="move-shift"><option value="morning">🌅 Morning</option><option value="evening">🌙 Evening</option></select>
+    </div>
+    <div class="modal-btns">
+      <button class="btn btn-ghost" onclick="closeModal('modal-move')">Cancel</button>
+      <button class="btn btn-primary" onclick="applyMove()">Move</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFLICT MODAL -->
 <div class="overlay" id="modal-conflict">
-  <div class="modal" style="width:430px">
+  <div class="modal" style="width:440px">
     <h3 id="cm-title">Resolve conflict</h3>
     <p style="font-size:12px;color:var(--text2);margin-bottom:14px" id="cm-sub"></p>
     <div id="cm-body"></div>
@@ -363,13 +417,28 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
 <div class="toast" id="toast"></div>
 
 <script>
-// ══════════════════════════════
-// STATE
-// ══════════════════════════════
-const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
-const WEEKDAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+// ══════════════════════════════════════
+// SUPABASE
+// ══════════════════════════════════════
+const SB_URL='https://wuyrusrudcpiwwnamudi.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind1eXJ1c3J1ZGNwaXd3bmFtdWRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxMjQyODMsImV4cCI6MjA5MjcwMDI4M30.xcMCuzIoQUoXyQ7FRjNdpCOvkqlcldqygXHumcSxlh8';
+const H={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=representation'};
+const api=(t,q='')=>`${SB_URL}/rest/v1/${t}?${q}`;
 
-const DOCTORS={
+async function dbGet(t,q=''){const r=await fetch(api(t,'order=created_at.asc&'+q),{headers:H});if(!r.ok)throw new Error(await r.text());return r.json();}
+async function dbIns(t,row){const r=await fetch(api(t),{method:'POST',headers:H,body:JSON.stringify(row)});if(!r.ok)throw new Error(await r.text());return r.json();}
+async function dbUpd(t,id,p){const r=await fetch(api(t,'id=eq.'+id),{method:'PATCH',headers:H,body:JSON.stringify(p)});if(!r.ok)throw new Error(await r.text());return r.json();}
+async function dbDel(t,id){const r=await fetch(api(t,'id=eq.'+id),{method:'DELETE',headers:H});if(!r.ok)throw new Error(await r.text());}
+
+// ══════════════════════════════════════
+// STATE
+// ══════════════════════════════════════
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const NEEDED={ZVULUN:2,LIN:1};
+const PW='Moked2026';
+
+const DOCS={
   ortho:['Dr. Cohen A.','Dr. Levy B.','Dr. Ben-David C.','Dr. Katz D.','Dr. Shapiro E.',
          'Dr. Mizrahi F.','Dr. Goldberg G.','Dr. Peretz H.','Dr. Azulay I.','Dr. Rotem J.',
          'Dr. Segal K.','Dr. Dayan L.','Dr. Har-El M.','Dr. Biton N.','Dr. Erez O.'],
@@ -381,244 +450,322 @@ const DOCTORS={
             'Dr. Kadosh K.','Dr. Lasri L.','Dr. Manor M.','Dr. Navon N.','Dr. Ofir O.']
 };
 
-let requests=[];
-let nextId=1;
-let calYear,calMonth;
-let currentDoc=null,currentSpec=null;
-let selectedDate=null;
-let conflictList=[];
-let activeConflictIdx=null;
-
-// Init calendar to current month
+let reqs=[],swaps=[],holidays=[];
 const now=new Date();
-calYear=now.getFullYear();
-calMonth=now.getMonth()+1;
+let calY=now.getFullYear(),calM=now.getMonth()+1;
+let curDoc=null,curSpec=null,selDate=null,selShift='morning';
+let adminOk=false,pendBtn=null;
+let cflList=[],cflIdx=null,moveId=null;
 
-// Seed sample data
-function seed(){
-  const y=now.getFullYear(),m=now.getMonth()+1;
-  const days=[2,4,6,9,11,13,16,18,20,23,25,27];
-  const specs=['ortho','pedia','internal'];
-  const sites=['ZVULUN','LIN'];
-  days.forEach(d=>{
-    specs.forEach(sp=>{
-      const pool=DOCTORS[sp];
-      const count=2+Math.floor(Math.random()*3);
-      for(let i=0;i<count;i++){
-        const doc=pool[Math.floor(Math.random()*pool.length)];
-        const site=sites[Math.floor(Math.random()*2)];
-        const ds=`${y}-${pad(m)}-${pad(d)}`;
-        if(!requests.find(r=>r.doctor===doc&&r.date===ds&&r.site===site)){
-          requests.push({id:nextId++,doctor:doc,specialty:sp,date:ds,site,status:'pending'});
-        }
-      }
-    });
-  });
-}
-seed();
+// ══════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════
+const pad=n=>String(n).padStart(2,'0');
+function toast(msg,d=2600){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),d);}
+function sync(on){document.getElementById('sync-dot').className='sync-dot'+(on?' syncing':'');document.getElementById('sync-label').textContent=on?'Syncing…':'Live';}
+function showLoad(on){document.getElementById('loading-overlay').classList.toggle('show',on);}
+const specLbl=s=>({ortho:'Orthopedics',pedia:'Pediatrics',internal:'Internal Med'}[s]||s);
+const specBadge=s=>`<span class="badge badge-${s}">${specLbl(s)}</span>`;
+const stBadge=s=>{const m={pending:'Pending',approved:'Approved',rejected:'Rejected',swap_pending:'Swap Pending',swap_approved:'Swap Approved',swap_rejected:'Swap Rejected'};return`<span class="badge badge-${s.replace(' ','_')}">${m[s]||s}</span>`;};
+const siteBadge=s=>`<span class="tag-${s.toLowerCase()}">${s}</span>`;
+const shiftBadge=t=>t?`<span class="tag-${t}">${t==='morning'?'🌅 Morning':'🌙 Evening'}</span>`:'';
+function isSpecial(ds){const dow=new Date(ds+'T12:00:00').getDay();return dow===5||dow===6||holidays.some(h=>h.date===ds);}
+function holName(ds){const h=holidays.find(h=>h.date===ds);return h?h.name:null;}
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
 
-// ══════════════════════════════
-// HELPERS
-// ══════════════════════════════
-function pad(n){return String(n).padStart(2,'0')}
-function toast(msg,dur=2400){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),dur);
-}
-function specLabel(s){return{ortho:'Orthopedics',pedia:'Pediatrics',internal:'Internal Med'}[s]||s}
-function specBadge(s){return`<span class="badge badge-${s}">${specLabel(s)}</span>`}
-function statusBadge(s){return`<span class="badge badge-${s}">${s}</span>`}
-function siteBadge(s){return`<span class="tag-${s.toLowerCase()}">${s}</span>`}
-
+// ══════════════════════════════════════
+// PASSWORD
+// ══════════════════════════════════════
 function showPanel(name,btn){
+  if(name==='admin'&&!adminOk){
+    pendBtn=btn;
+    document.getElementById('pw-input').value='';
+    document.getElementById('pw-error').style.display='none';
+    document.getElementById('pw-screen').style.display='flex';
+    setTimeout(()=>document.getElementById('pw-input').focus(),100);
+    return;
+  }
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.view-tabs .tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('panel-'+name).classList.add('active');
   if(btn)btn.classList.add('active');
-  if(name==='admin'){renderAdmin();}
+  if(name==='admin')renderAdmin();
 }
-
+function checkPw(){
+  if(document.getElementById('pw-input').value===PW){
+    adminOk=true;document.getElementById('pw-screen').style.display='none';showPanel('admin',pendBtn);
+  }else{document.getElementById('pw-error').style.display='block';document.getElementById('pw-input').value='';document.getElementById('pw-input').focus();}
+}
+function cancelAdmin(){
+  document.getElementById('pw-screen').style.display='none';
+  document.querySelectorAll('.view-tabs .tab').forEach((t,i)=>t.classList.toggle('active',i===0));
+}
 function showAdminTab(name){
-  ['requests','schedule','conflicts','doctors','links'].forEach(t=>{
-    document.getElementById('tab-'+t).style.display=(t===name?'':'none');
-    const b=document.getElementById('itab-'+t);
-    if(b)b.classList.toggle('active',t===name);
+  ['req','sched','conflicts','swaps','holidays','doctors','links'].forEach(t=>{
+    document.getElementById('tab-'+t).style.display=t===name?'':'none';
+    const b=document.getElementById('itab-'+t);if(b)b.classList.toggle('active',t===name);
   });
-  if(name==='schedule'){populateSchedMonths();renderSchedule();}
+  if(name==='sched'){populateSchedMonths();renderSchedule();}
   if(name==='conflicts')renderConflicts();
+  if(name==='swaps')renderSwapsAdmin();
+  if(name==='holidays')renderHolidays();
   if(name==='doctors')renderDoctors();
   if(name==='links')renderLinks();
 }
 
-function openModal(id){document.getElementById(id).classList.add('open')}
-function closeModal(id){document.getElementById(id).classList.remove('open')}
+// ══════════════════════════════════════
+// DATA
+// ══════════════════════════════════════
+async function loadAll(){
+  sync(true);
+  try{
+    reqs=await dbGet('requests');
+    try{swaps=await dbGet('swaps');}catch(e){swaps=[];}
+    try{holidays=await dbGet('holidays');}catch(e){holidays=[];}
+    renderCal();renderMyReqs();renderMySwaps();
+    if(document.getElementById('panel-admin').classList.contains('active'))renderAdmin();
+  }catch(e){toast('⚠️ DB: '+e.message);}
+  finally{sync(false);}
+}
+setInterval(loadAll,30000);
 
-// ══════════════════════════════
-// DOCTOR PORTAL
-// ══════════════════════════════
-function updateDoctorSelect(){
+// ══════════════════════════════════════
+// CALENDAR
+// ══════════════════════════════════════
+function updateDocSelect(){
   const sp=document.getElementById('doc-specialty').value;
   const sel=document.getElementById('doc-name');
-  sel.innerHTML='<option value="">— Select your name —</option>';
-  if(sp){
-    DOCTORS[sp].forEach(d=>{
-      const o=document.createElement('option');o.value=d;o.textContent=d;sel.appendChild(o);
-    });
-  }
-  currentSpec=sp;currentDoc=null;
-  sel.onchange=()=>{currentDoc=sel.value;currentSpec=sp;renderCalendar();renderMyRequests();};
+  sel.innerHTML='<option value="">— Your name —</option>';
+  if(sp)DOCS[sp].forEach(d=>{const o=document.createElement('option');o.value=d;o.textContent=d;sel.appendChild(o);});
+  curSpec=sp;curDoc=null;
+  sel.onchange=()=>{curDoc=sel.value;curSpec=sp;renderCal();renderMyReqs();renderMySwaps();};
 }
+function prevMonth(){calM--;if(calM<1){calM=12;calY--;}renderCal();}
+function nextMonth(){calM++;if(calM>12){calM=1;calY++;}renderCal();}
 
-function prevMonth(){calMonth--;if(calMonth<1){calMonth=12;calYear--;}renderCalendar();}
-function nextMonth(){calMonth++;if(calMonth>12){calMonth=1;calYear++;}renderCalendar();}
-
-function renderCalendar(){
-  document.getElementById('cal-month-label').textContent=`${MONTHS[calMonth-1]} ${calYear}`;
-  const grid=document.getElementById('cal-grid');
-  grid.innerHTML='';
-  const firstDay=new Date(calYear,calMonth-1,1).getDay();
-  const daysInMonth=new Date(calYear,calMonth,0).getDate();
+function renderCal(){
+  document.getElementById('cal-label').textContent=`${MONTHS[calM-1]} ${calY}`;
+  const grid=document.getElementById('cal-grid');grid.innerHTML='';
+  const first=new Date(calY,calM-1,1).getDay();
+  const dim=new Date(calY,calM,0).getDate();
   const todayStr=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
-
-  for(let i=0;i<firstDay;i++){
-    const b=document.createElement('div');b.className='cal-day empty';grid.appendChild(b);
-  }
-  for(let d=1;d<=daysInMonth;d++){
-    const ds=`${calYear}-${pad(calMonth)}-${pad(d)}`;
-    const cell=document.createElement('div');cell.className='cal-day';
-    if(ds===todayStr)cell.classList.add('today');
-    const isPast=ds<todayStr;
-    if(isPast)cell.classList.add('past');
-
+  for(let i=0;i<first;i++){const b=document.createElement('div');b.className='cal-day empty';grid.appendChild(b);}
+  for(let d=1;d<=dim;d++){
+    const ds=`${calY}-${pad(calM)}-${pad(d)}`;
+    const cell=document.createElement('div');
+    const dow=new Date(ds+'T12:00:00').getDay();
+    const special=isSpecial(ds);
+    const past=ds<todayStr;
+    cell.className='cal-day'+(past?' past':'')+(ds===todayStr?' today':'')+(special?' special':'');
     const dn=document.createElement('div');dn.className='day-num';
-    dn.textContent=d;
-    const dow=new Date(calYear,calMonth-1,d).getDay();
-    dn.style.color=dow===6?'var(--accent)':(dow===5?'var(--danger)':'var(--text2)');
+    dn.textContent=d;dn.style.color=dow===6?'var(--accent)':dow===5?'var(--danger)':'var(--text2)';
     cell.appendChild(dn);
-
+    const hn=holName(ds);
+    if(hn||dow===5||dow===6){const l=document.createElement('div');l.className='day-label';l.textContent=hn||(dow===5?'Friday':'Saturday');cell.appendChild(l);}
     const sl=document.createElement('div');sl.className='shifts-list';
-    requests.filter(r=>r.date===ds&&r.doctor===currentDoc).forEach(r=>{
+    reqs.filter(r=>r.date===ds&&r.doctor===curDoc).forEach(r=>{
       const ch=document.createElement('span');
       ch.className=`shift-chip chip-${r.status}`;
-      ch.textContent=`${r.site} ${r.status==='approved'?'✓':r.status==='rejected'?'✗':'…'}`;
+      ch.textContent=`${r.site}${r.shift_type?' '+(r.shift_type==='morning'?'🌅':'🌙'):''} ${r.status==='approved'?'✓':r.status==='rejected'?'✗':'…'}`;
       sl.appendChild(ch);
     });
     cell.appendChild(sl);
-
-    if(!isPast){
-      cell.onclick=()=>openShiftModal(d,ds);
-    }
+    if(!past)cell.onclick=()=>openShiftModal(d,ds,special);
     grid.appendChild(cell);
   }
 }
 
-function openShiftModal(d,ds){
-  if(!currentDoc){toast('Please select your name first');return;}
-  selectedDate=ds;
-  document.getElementById('m-date').value=`${MONTHS[calMonth-1]} ${d}, ${calYear}`;
-  document.getElementById('m-warning').style.display='none';
+function selectShift(t){selShift=t;document.getElementById('btn-morning').classList.toggle('active',t==='morning');document.getElementById('btn-evening').classList.toggle('active',t==='evening');}
+
+function openShiftModal(d,ds,special){
+  if(!curDoc){toast('Please select your name first');return;}
+  selDate=ds;selShift='morning';
+  document.getElementById('m-date').value=`${MONTHS[calM-1]} ${d}, ${calY}`;
+  document.getElementById('m-warn').style.display='none';
+  document.getElementById('m-shift-row').style.display=special?'flex':'none';
+  selectShift('morning');
+  const btn=document.getElementById('submit-btn');btn.disabled=false;btn.textContent='Submit request';
   openModal('modal-shift');
 }
 
-function submitRequest(){
+async function submitRequest(){
   const site=document.getElementById('m-site').value;
-  const exists=requests.find(r=>r.doctor===currentDoc&&r.date===selectedDate&&r.site===site);
-  if(exists){
-    const w=document.getElementById('m-warning');
-    w.textContent='You already have a request for this slot.';w.style.display='block';return;
+  const shiftType=isSpecial(selDate)?selShift:null;
+  if(reqs.find(r=>r.doctor===curDoc&&r.date===selDate&&r.site===site&&r.shift_type==shiftType)){
+    const w=document.getElementById('m-warn');w.textContent='You already have a request for this slot.';w.style.display='block';return;
   }
-  requests.push({id:nextId++,doctor:currentDoc,specialty:currentSpec,date:selectedDate,site,status:'pending'});
-  closeModal('modal-shift');renderCalendar();renderMyRequests();toast('✓ Shift request submitted!');
+  const btn=document.getElementById('submit-btn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Submitting…';
+  try{
+    const row={doctor:curDoc,specialty:curSpec,date:selDate,site,status:'pending',shift_type:shiftType};
+    const ins=await dbIns('requests',row);reqs.push(ins[0]);
+    closeModal('modal-shift');renderCal();renderMyReqs();toast('✓ Shift request submitted!');
+  }catch(e){toast('Error: '+e.message);}
+  finally{btn.disabled=false;btn.textContent='Submit request';}
 }
 
-function renderMyRequests(){
-  const wrap=document.getElementById('my-requests-list');
-  const mine=requests.filter(r=>r.doctor===currentDoc).sort((a,b)=>a.date.localeCompare(b.date));
+function renderMyReqs(){
+  const wrap=document.getElementById('my-requests');
+  const mine=reqs.filter(r=>r.doctor===curDoc).sort((a,b)=>a.date.localeCompare(b.date));
   if(!mine.length){wrap.innerHTML='<div class="empty-state"><div class="icon">📋</div>No requests yet — click a day on the calendar.</div>';return;}
-  let html=`<table class="req-table"><thead><tr><th>Date</th><th>Day</th><th>Site</th><th>Status</th><th></th></tr></thead><tbody>`;
+  let h=`<table class="req-table"><thead><tr><th>Date</th><th>Site</th><th>Shift</th><th>Status</th><th></th></tr></thead><tbody>`;
   mine.forEach(r=>{
-    const d=new Date(r.date+'T00:00:00');
-    html+=`<tr>
-      <td style="font-family:'DM Mono',monospace;font-size:12px">${r.date}</td>
-      <td style="color:var(--text2)">${WEEKDAYS[d.getDay()]}</td>
+    h+=`<tr>
+      <td style="font-family:'DM Mono',monospace;font-size:11px">${r.date} <span style="color:var(--text3)">${WD[new Date(r.date+'T12:00:00').getDay()]}</span></td>
       <td>${siteBadge(r.site)}</td>
-      <td>${statusBadge(r.status)}</td>
-      <td>${r.status==='pending'?`<button class="btn btn-danger btn-sm" onclick="cancelReq(${r.id})">Cancel</button>`:''}</td>
+      <td>${r.shift_type?shiftBadge(r.shift_type):'<span style="color:var(--text3);font-size:11px">Regular</span>'}</td>
+      <td>${stBadge(r.status)}</td>
+      <td style="display:flex;gap:4px">
+        ${r.status==='pending'?`<button class="btn btn-danger btn-sm" onclick="cancelReq(${r.id})">Cancel</button>`:''}
+        ${r.status==='approved'?`<button class="btn btn-ghost btn-sm" onclick="openSwapModal(${r.id})">⇄ Swap</button>`:''}
+      </td>
     </tr>`;
   });
-  html+='</tbody></table>';
-  wrap.innerHTML=html;
+  h+='</tbody></table>';wrap.innerHTML=h;
 }
 
-function cancelReq(id){
-  requests=requests.filter(r=>r.id!==id);
-  renderCalendar();renderMyRequests();toast('Request cancelled');
+async function cancelReq(id){
+  try{await dbDel('requests',id);reqs=reqs.filter(r=>r.id!==id);renderCal();renderMyReqs();toast('Request cancelled');}
+  catch(e){toast('Error: '+e.message);}
 }
 
-// ══════════════════════════════
+// ══════════════════════════════════════
+// SWAPS (DOCTOR)
+// ══════════════════════════════════════
+function openSwapModal(myId){
+  const my=document.getElementById('sw-my');
+  my.innerHTML='';
+  reqs.filter(r=>r.doctor===curDoc&&r.status==='approved').forEach(r=>{
+    const o=document.createElement('option');o.value=r.id;
+    o.textContent=`${r.date} · ${r.site}${r.shift_type?' '+r.shift_type:''}`;
+    if(r.id===myId)o.selected=true;my.appendChild(o);
+  });
+  const other=document.getElementById('sw-other');
+  other.innerHTML='<option value="">— Select doctor —</option>';
+  [...DOCS.ortho,...DOCS.pedia,...DOCS.internal].filter(d=>d!==curDoc).forEach(d=>{
+    const o=document.createElement('option');o.value=d;o.textContent=d;other.appendChild(o);
+  });
+  other.onchange=()=>{
+    const their=document.getElementById('sw-their');
+    their.innerHTML='<option value="">— Any shift (open request) —</option>';
+    reqs.filter(r=>r.doctor===other.value&&r.status==='approved').forEach(r=>{
+      const o=document.createElement('option');o.value=r.id;
+      o.textContent=`${r.date} · ${r.site}${r.shift_type?' '+r.shift_type:''}`;
+      their.appendChild(o);
+    });
+  };
+  openModal('modal-swap');
+}
+
+async function submitSwap(){
+  const myId=document.getElementById('sw-my').value;
+  const otherDoc=document.getElementById('sw-other').value;
+  const theirId=document.getElementById('sw-their').value;
+  if(!myId||!otherDoc){toast('Please fill in required fields');return;}
+  const myReq=reqs.find(r=>r.id==myId);
+  try{
+    const row={requester:curDoc,requester_req_id:parseInt(myId),target_doctor:otherDoc,
+      target_req_id:theirId?parseInt(theirId):null,status:'swap_pending',
+      note:`${curDoc} wants to swap ${myReq.date}·${myReq.site} with ${otherDoc}`};
+    const ins=await dbIns('swaps',row);swaps.push(ins[0]);
+    closeModal('modal-swap');renderMySwaps();toast('✓ Swap request sent!');
+  }catch(e){toast('Error: '+e.message);}
+}
+
+function renderMySwaps(){
+  const mine=swaps.filter(s=>s.requester===curDoc||s.target_doctor===curDoc);
+  document.getElementById('swap-card').style.display=mine.length&&curDoc?'':'none';
+  if(!mine.length)return;
+  let h=`<table class="req-table"><thead><tr><th>Request</th><th>Status</th></tr></thead><tbody>`;
+  mine.forEach(s=>{h+=`<tr><td style="font-size:12px">${s.note||'Swap request'}</td><td>${stBadge(s.status)}</td></tr>`;});
+  document.getElementById('my-swaps').innerHTML=h+'</tbody></table>';
+}
+
+// ══════════════════════════════════════
 // ADMIN
-// ══════════════════════════════
-function renderAdmin(){
-  renderStats();renderRequests();
-}
+// ══════════════════════════════════════
+function renderAdmin(){renderStats();renderRequests();}
 
 function renderStats(){
-  const pending=requests.filter(r=>r.status==='pending').length;
-  const approved=requests.filter(r=>r.status==='approved').length;
-  const total=requests.length;
-  const conflicts=getConflicts().length;
+  const pending=reqs.filter(r=>r.status==='pending').length;
+  const approved=reqs.filter(r=>r.status==='approved').length;
+  const swapP=swaps.filter(s=>s.status==='swap_pending').length;
+  const cfl=getConflicts().length;
   document.getElementById('admin-stats').innerHTML=`
-    <div class="stat-card"><div class="stat-num">${total}</div><div class="stat-label">Total requests</div></div>
+    <div class="stat-card"><div class="stat-num">${reqs.length}</div><div class="stat-label">Total requests</div></div>
     <div class="stat-card"><div class="stat-num" style="color:var(--warn)">${pending}</div><div class="stat-label">Pending</div></div>
     <div class="stat-card"><div class="stat-num" style="color:var(--success)">${approved}</div><div class="stat-label">Approved</div></div>
-    <div class="stat-card"><div class="stat-num" style="color:var(--danger)">${conflicts}</div><div class="stat-label">Conflicts</div></div>
-  `;
+    <div class="stat-card"><div class="stat-num" style="color:var(--danger)">${cfl+swapP}</div><div class="stat-label">Need attention</div></div>`;
 }
 
 function renderRequests(){
   const fs=document.getElementById('f-status')?.value||'';
-  const fsp=document.getElementById('f-specialty')?.value||'';
+  const fsp=document.getElementById('f-spec')?.value||'';
   const fsi=document.getElementById('f-site')?.value||'';
-  const data=requests.filter(r=>
-    (!fs||r.status===fs)&&(!fsp||r.specialty===fsp)&&(!fsi||r.site===fsi)
-  ).sort((a,b)=>a.date.localeCompare(b.date));
-
-  const wrap=document.getElementById('req-table-wrap');
+  const data=reqs.filter(r=>(!fs||r.status===fs)&&(!fsp||r.specialty===fsp)&&(!fsi||r.site===fsi)).sort((a,b)=>a.date.localeCompare(b.date));
+  const wrap=document.getElementById('req-table');
   if(!data.length){wrap.innerHTML='<div class="empty-state"><div class="icon">🔍</div>No requests match this filter.</div>';return;}
-
-  let html=`<table class="req-table"><thead><tr>
-    <th>Date</th><th>Doctor</th><th>Specialty</th><th>Site</th><th>Status</th><th>Actions</th>
-  </tr></thead><tbody>`;
+  let h=`<table class="req-table"><thead><tr><th>Date</th><th>Doctor</th><th>Specialty</th><th>Site</th><th>Shift</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
   data.forEach(r=>{
-    html+=`<tr>
-      <td style="font-family:'DM Mono',monospace;font-size:12px;white-space:nowrap">${r.date}</td>
+    h+=`<tr>
+      <td style="font-family:'DM Mono',monospace;font-size:11px;white-space:nowrap">${r.date}</td>
       <td>${r.doctor}</td><td>${specBadge(r.specialty)}</td><td>${siteBadge(r.site)}</td>
-      <td>${statusBadge(r.status)}</td>
-      <td style="display:flex;gap:5px;flex-wrap:wrap">
-        ${r.status!=='approved'?`<button class="btn btn-success btn-sm" onclick="setStatus(${r.id},'approved')">✓ Approve</button>`:''}
-        ${r.status!=='rejected'?`<button class="btn btn-danger btn-sm" onclick="setStatus(${r.id},'rejected')">✗ Reject</button>`:''}
-        ${r.status!=='pending'?`<button class="btn btn-ghost btn-sm" onclick="setStatus(${r.id},'pending')">↺ Reset</button>`:''}
+      <td>${r.shift_type?shiftBadge(r.shift_type):'<span style="color:var(--text3);font-size:11px">Regular</span>'}</td>
+      <td>${stBadge(r.status)}</td>
+      <td style="display:flex;gap:4px;flex-wrap:wrap">
+        ${r.status!=='approved'?`<button class="btn btn-success btn-sm" onclick="setStatus(${r.id},'approved')">✓</button>`:''}
+        ${r.status!=='rejected'?`<button class="btn btn-danger btn-sm" onclick="setStatus(${r.id},'rejected')">✗</button>`:''}
+        ${r.status!=='pending'?`<button class="btn btn-ghost btn-sm" onclick="setStatus(${r.id},'pending')">↺</button>`:''}
+        <button class="btn btn-ghost btn-sm" onclick="adminEdit(${r.id})" title="Edit">✏️</button>
       </td>
     </tr>`;
   });
-  html+='</tbody></table>';
-  wrap.innerHTML=html;
-  renderStats();
+  wrap.innerHTML=h+'</tbody></table>';renderStats();
 }
 
-function setStatus(id,status){
-  const r=requests.find(r=>r.id===id);if(r)r.status=status;
-  renderRequests();renderStats();toast(`Request ${status}`);
+async function setStatus(id,status){
+  try{sync(true);await dbUpd('requests',id,{status});const r=reqs.find(r=>r.id===id);if(r)r.status=status;renderRequests();toast(`Request ${status}`);}
+  catch(e){toast('Error: '+e.message);}finally{sync(false);}
 }
-function bulkApprove(){requests.filter(r=>r.status==='pending').forEach(r=>r.status='approved');renderRequests();renderStats();toast('All pending approved');}
-function bulkReject(){requests.filter(r=>r.status==='pending').forEach(r=>r.status='rejected');renderRequests();renderStats();toast('All pending rejected');}
 
-// ══════════════════════════════
-// SCHEDULE
-// ══════════════════════════════
+// Feature 4: Admin can edit any field even after schedule is finalized
+function adminEdit(id){
+  const r=reqs.find(r=>r.id===id);if(!r)return;
+  const newSite=prompt(`Edit site for ${r.doctor} on ${r.date}\nCurrent: ${r.site}\nType ZVULUN or LIN:`,r.site);
+  if(newSite===null)return;
+  if(!['ZVULUN','LIN'].includes(newSite.toUpperCase())){toast('Invalid — use ZVULUN or LIN');return;}
+  let newShift=r.shift_type;
+  if(isSpecial(r.date)){
+    const st=prompt('Shift type? Type: morning or evening',r.shift_type||'morning');
+    if(st&&['morning','evening'].includes(st))newShift=st;
+  }
+  const newStatus=prompt('Status? Type: pending, approved, or rejected',r.status);
+  if(newStatus&&!['pending','approved','rejected'].includes(newStatus)){toast('Invalid status');return;}
+  const patch={site:newSite.toUpperCase(),shift_type:newShift||null};
+  if(newStatus)patch.status=newStatus;
+  dbUpd('requests',id,patch).then(()=>{
+    r.site=patch.site;r.shift_type=patch.shift_type;if(newStatus)r.status=newStatus;
+    renderRequests();renderSchedule();toast('✓ Updated');
+  }).catch(e=>toast('Error: '+e.message));
+}
+
+async function bulkApprove(){
+  const p=reqs.filter(r=>r.status==='pending');sync(true);
+  try{await Promise.all(p.map(r=>dbUpd('requests',r.id,{status:'approved'})));p.forEach(r=>r.status='approved');renderRequests();toast(`✓ ${p.length} approved`);}
+  catch(e){toast('Error: '+e.message);}finally{sync(false);}
+}
+async function bulkReject(){
+  const p=reqs.filter(r=>r.status==='pending');sync(true);
+  try{await Promise.all(p.map(r=>dbUpd('requests',r.id,{status:'rejected'})));p.forEach(r=>r.status='rejected');renderRequests();toast(`✗ ${p.length} rejected`);}
+  catch(e){toast('Error: '+e.message);}finally{sync(false);}
+}
+
+// ══════════════════════════════════════
+// SCHEDULE + MOVE BETWEEN SITES
+// ══════════════════════════════════════
 function populateSchedMonths(){
-  const sel=document.getElementById('sched-month');if(!sel||sel.options.length)return;
+  const sel=document.getElementById('sched-month');
+  if(!sel||sel.options.length)return;
   for(let i=0;i<4;i++){
     const d=new Date(now.getFullYear(),now.getMonth()+i,1);
     const val=`${d.getFullYear()}-${pad(d.getMonth()+1)}`;
@@ -628,242 +775,302 @@ function populateSchedMonths(){
 }
 
 function renderSchedule(){
-  const sel=document.getElementById('sched-month');if(!sel)return;
-  const [y,m]=sel.value.split('-').map(Number);
+  const sel=document.getElementById('sched-month');if(!sel||!sel.value)return;
+  const[y,m]=sel.value.split('-').map(Number);
   const dim=new Date(y,m,0).getDate();
   const specs=['ortho','pedia','internal'];
-  const specShort={ortho:'Ortho',pedia:'Pedia',internal:'Int.Med'};
+  const ss={ortho:'Ortho',pedia:'Pedia',internal:'Int'};
   const sites=['ZVULUN','LIN'];
-  const needed={ZVULUN:2,LIN:1};
 
-  let html=`<table class="sched-table"><thead><tr><th>Date</th>`;
-  sites.forEach(site=>{
-    specs.forEach(sp=>{
-      html+=`<th><span class="tag-${site.toLowerCase()}">${site[0]}</span> ${specShort[sp]}</th>`;
-    });
-  });
-  html+='</tr></thead><tbody>';
+  let h=`<table class="sched-table"><thead><tr><th>Date</th>`;
+  sites.forEach(site=>specs.forEach(sp=>{h+=`<th><span class="tag-${site.toLowerCase()}">${site[0]}</span> ${ss[sp]}</th>`;}));
+  h+='</tr></thead><tbody>';
 
   for(let d=1;d<=dim;d++){
     const ds=`${y}-${pad(m)}-${pad(d)}`;
-    const date=new Date(y,m-1,d);
-    const dow=date.getDay();
-    const isWk=dow===5||dow===6;
-    html+=`<tr${isWk?' class="weekend"':''}><td style="font-size:11px;font-family:'DM Mono',monospace;white-space:nowrap">${ds}<br><span style="color:var(--text3)">${WEEKDAYS[dow]}</span></td>`;
-    sites.forEach(site=>{
-      specs.forEach(sp=>{
-        const appr=requests.filter(r=>r.date===ds&&r.site===site&&r.specialty===sp&&r.status==='approved');
-        const n=needed[site];
-        let cell='';
-        if(!appr.length){
-          cell=`<span class="slot-empty">— empty —</span>`;
-        } else {
-          appr.slice(0,n).forEach(r=>{
-            const surname=r.doctor.replace('Dr. ','').split(' ')[0];
-            cell+=`<span class="slot-${site[0].toLowerCase()}">${surname}</span>`;
-          });
-          for(let i=appr.length;i<n;i++) cell+=`<span class="slot-empty">+needed</span>`;
+    const dow=new Date(ds+'T12:00:00').getDay();
+    const special=isSpecial(ds);
+    const hn=holName(ds);
+    const rc=hn?'holiday-row':((dow===5||dow===6)?'weekend-row':'');
+
+    if(special){
+      ['morning','evening'].forEach((st,si)=>{
+        h+=`<tr class="${rc}">`;
+        if(si===0){
+          h+=`<td rowspan="2" style="font-size:10px;font-family:'DM Mono',monospace;vertical-align:middle;white-space:nowrap">
+            ${ds}<br><span style="color:var(--text3)">${WD[dow]}</span>${hn?`<br><span style="color:var(--warn);font-size:9px">${hn}</span>`:''}
+          </td>`;
         }
-        html+=`<td>${cell}</td>`;
+        sites.forEach(site=>{specs.forEach(sp=>{
+          const appr=reqs.filter(r=>r.date===ds&&r.site===site&&r.specialty===sp&&r.status==='approved'&&r.shift_type===st);
+          const n=NEEDED[site];
+          let cell=`<div style="font-size:9px;color:var(--text3)">${st==='morning'?'🌅':'🌙'}</div>`;
+          if(!appr.length)cell+=`<span class="slot-empty">empty</span>`;
+          else{appr.slice(0,n).forEach(r=>{const sn=r.doctor.replace('Dr. ','').split(' ')[0];cell+=`<span class="slot-${site[0].toLowerCase()}" onclick="openMoveModal(${r.id})" title="Click to move">${sn}</span>`;});for(let i=appr.length;i<n;i++)cell+=`<span class="slot-empty">+need</span>`;}
+          h+=`<td>${cell}</td>`;
+        });});
+        h+='</tr>';
       });
-    });
-    html+='</tr>';
+    } else {
+      h+=`<tr class="${rc}"><td style="font-size:10px;font-family:'DM Mono',monospace;white-space:nowrap">${ds}<br><span style="color:var(--text3)">${WD[dow]}</span></td>`;
+      sites.forEach(site=>{specs.forEach(sp=>{
+        const appr=reqs.filter(r=>r.date===ds&&r.site===site&&r.specialty===sp&&r.status==='approved'&&!r.shift_type);
+        const n=NEEDED[site];
+        let cell='';
+        if(!appr.length)cell=`<span class="slot-empty">empty</span>`;
+        else{appr.slice(0,n).forEach(r=>{const sn=r.doctor.replace('Dr. ','').split(' ')[0];cell+=`<span class="slot-${site[0].toLowerCase()}" onclick="openMoveModal(${r.id})" title="Click to move">${sn}</span>`;});for(let i=appr.length;i<n;i++)cell+=`<span class="slot-empty">+need</span>`;}
+        h+=`<td>${cell}</td>`;
+      });});
+      h+='</tr>';
+    }
   }
-  html+='</tbody></table>';
-  document.getElementById('sched-wrap').innerHTML=html;
+  document.getElementById('sched-grid').innerHTML=h+'</tbody></table>';
 }
 
-// ══════════════════════════════
+// Feature 2: Move doctor between sites
+function openMoveModal(id){
+  moveId=id;const r=reqs.find(r=>r.id===id);if(!r)return;
+  document.getElementById('move-title').textContent=`Move ${r.doctor}`;
+  document.getElementById('move-desc').textContent=`Currently: ${r.site} on ${r.date}${r.shift_type?' ('+r.shift_type+')':''}`;
+  document.getElementById('move-site').value=r.site==='ZVULUN'?'LIN':'ZVULUN';
+  const sp=isSpecial(r.date);
+  document.getElementById('move-shift-row').style.display=sp?'':'none';
+  if(sp&&r.shift_type)document.getElementById('move-shift').value=r.shift_type;
+  openModal('modal-move');
+}
+async function applyMove(){
+  const r=reqs.find(r=>r.id===moveId);if(!r)return;
+  const newSite=document.getElementById('move-site').value;
+  const newShift=isSpecial(r.date)?document.getElementById('move-shift').value:null;
+  try{
+    await dbUpd('requests',r.id,{site:newSite,shift_type:newShift});
+    r.site=newSite;r.shift_type=newShift;
+    closeModal('modal-move');renderSchedule();renderRequests();toast(`✓ ${r.doctor} moved to ${newSite}`);
+  }catch(e){toast('Error: '+e.message);}
+}
+
+// ══════════════════════════════════════
 // CONFLICTS
-// ══════════════════════════════
+// ══════════════════════════════════════
 function getConflicts(){
   const out=[];
-  const needed={ZVULUN:2,LIN:1};
-  const dates=[...new Set(requests.map(r=>r.date))].sort();
-  dates.forEach(date=>{
-    ['ZVULUN','LIN'].forEach(site=>{
-      ['ortho','pedia','internal'].forEach(sp=>{
-        const appr=requests.filter(r=>r.date===date&&r.site===site&&r.specialty===sp&&r.status==='approved');
-        const pend=requests.filter(r=>r.date===date&&r.site===site&&r.specialty===sp&&r.status==='pending');
-        const n=needed[site];
-        if(appr.length+pend.length>n&&pend.length>0){
-          out.push({date,site,specialty:sp,approved:appr,pending:pend,needed:n});
-        }
-      });
-    });
+  [...new Set(reqs.map(r=>r.date))].sort().forEach(date=>{
+    const sp2=isSpecial(date)?['morning','evening']:[null];
+    ['ZVULUN','LIN'].forEach(site=>{['ortho','pedia','internal'].forEach(sp=>{sp2.forEach(st=>{
+      const ap=reqs.filter(r=>r.date===date&&r.site===site&&r.specialty===sp&&r.status==='approved'&&r.shift_type==st);
+      const pe=reqs.filter(r=>r.date===date&&r.site===site&&r.specialty===sp&&r.status==='pending'&&r.shift_type==st);
+      if(ap.length+pe.length>NEEDED[site]&&pe.length>0)out.push({date,site,specialty:sp,shift_type:st,approved:ap,pending:pe,needed:NEEDED[site]});
+    });});});
   });
   return out;
 }
 
 function renderConflicts(){
-  conflictList=getConflicts();
-  const wrap=document.getElementById('conflicts-wrap');
-  if(!conflictList.length){
-    wrap.innerHTML='<div class="empty-state"><div class="icon">✅</div>No conflicts — all pending requests fit within slot limits.</div>';
-    return;
-  }
-  let html='';
-  conflictList.forEach((c,i)=>{
-    html+=`<div class="conflict-item">
+  cflList=getConflicts();
+  const wrap=document.getElementById('conflicts-list');
+  if(!cflList.length){wrap.innerHTML='<div class="empty-state"><div class="icon">✅</div>No conflicts.</div>';return;}
+  let h='';
+  cflList.forEach((c,i)=>{
+    h+=`<div class="conflict-item">
       <div>
-        <div style="font-size:13px;font-weight:600">${c.date} · ${c.site} · ${specLabel(c.specialty)}</div>
-        <div style="font-size:12px;color:var(--text2);margin-top:2px">${c.approved.length} approved · ${c.pending.length} pending · slot capacity: ${c.needed}</div>
+        <div style="font-size:13px;font-weight:600">${c.date} · ${c.site} · ${specLbl(c.specialty)}${c.shift_type?' · '+c.shift_type:''}</div>
+        <div style="font-size:12px;color:var(--text2);margin-top:2px">${c.approved.length} approved · ${c.pending.length} pending · capacity: ${c.needed}</div>
       </div>
-      <button class="btn btn-warn btn-sm" onclick="openConflict(${i})">Resolve →</button>
+      <button class="btn btn-warn btn-sm" onclick="openCflModal(${i})">Resolve →</button>
     </div>`;
   });
-  wrap.innerHTML=html;
-  renderStats();
+  wrap.innerHTML=h;renderStats();
 }
-
-function openConflict(i){
-  activeConflictIdx=i;
-  const c=conflictList[i];
-  document.getElementById('cm-title').textContent=`${c.date} · ${c.site} · ${specLabel(c.specialty)}`;
-  document.getElementById('cm-sub').textContent=`Select exactly ${c.needed} doctor(s) to approve. Others will be rejected.`;
+function openCflModal(i){
+  cflIdx=i;const c=cflList[i];
+  document.getElementById('cm-title').textContent=`${c.date} · ${c.site} · ${specLbl(c.specialty)}${c.shift_type?' · '+c.shift_type:''}`;
+  document.getElementById('cm-sub').textContent=`Select up to ${c.needed} doctor(s) to approve. Others will be rejected.`;
   const all=[...c.approved,...c.pending];
-  let html='';
-  all.forEach(r=>{
-    html+=`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
+  document.getElementById('cm-body').innerHTML=all.map(r=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
       <input type="checkbox" id="cr-${r.id}" ${r.status==='approved'?'checked':''} style="width:16px;height:16px;cursor:pointer">
       <label for="cr-${r.id}" style="flex:1;font-size:13px;cursor:pointer">${r.doctor}</label>
-      ${statusBadge(r.status)}
-    </div>`;
-  });
-  document.getElementById('cm-body').innerHTML=html;
+      ${stBadge(r.status)}
+    </div>`).join('');
   openModal('modal-conflict');
 }
-
-function applyConflict(){
-  const c=conflictList[activeConflictIdx];
-  const all=[...c.approved,...c.pending];
+async function applyConflict(){
+  const c=cflList[cflIdx];const all=[...c.approved,...c.pending];
   const checked=all.filter(r=>document.getElementById('cr-'+r.id)?.checked);
-  if(checked.length>c.needed){toast(`Please select at most ${c.needed} doctor(s)`);return;}
-  all.forEach(r=>{
-    r.status=document.getElementById('cr-'+r.id)?.checked?'approved':'rejected';
-  });
-  closeModal('modal-conflict');renderConflicts();renderRequests();toast('Conflict resolved ✓');
+  if(checked.length>c.needed){toast(`Select at most ${c.needed}`);return;}
+  sync(true);
+  try{
+    await Promise.all(all.map(r=>{const s=document.getElementById('cr-'+r.id)?.checked?'approved':'rejected';r.status=s;return dbUpd('requests',r.id,{status:s});}));
+    closeModal('modal-conflict');renderConflicts();renderRequests();toast('Conflict resolved ✓');
+  }catch(e){toast('Error: '+e.message);}finally{sync(false);}
 }
 
-// ══════════════════════════════
-// AUTO-SCHEDULE
-// ══════════════════════════════
-function autoSchedule(){
-  const needed={ZVULUN:2,LIN:1};
-  const shiftCounts={};
-  requests.filter(r=>r.status==='approved').forEach(r=>{shiftCounts[r.doctor]=(shiftCounts[r.doctor]||0)+1;});
-
-  const groups={};
-  requests.filter(r=>r.status==='pending').forEach(r=>{
-    const k=`${r.date}__${r.site}__${r.specialty}`;
-    if(!groups[k])groups[k]=[];
-    groups[k].push(r);
+// ══════════════════════════════════════
+// SWAPS (ADMIN)
+// ══════════════════════════════════════
+function renderSwapsAdmin(){
+  const wrap=document.getElementById('swaps-list');
+  if(!swaps.length){wrap.innerHTML='<div class="empty-state"><div class="icon">⇄</div>No swap requests yet.</div>';return;}
+  let h=`<table class="req-table"><thead><tr><th>Request</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+  swaps.forEach(s=>{
+    h+=`<tr>
+      <td style="font-size:12px">${s.note||`${s.requester} ⇄ ${s.target_doctor}`}</td>
+      <td>${stBadge(s.status)}</td>
+      <td style="display:flex;gap:4px">
+        ${s.status==='swap_pending'?`
+          <button class="btn btn-success btn-sm" onclick="setSwapStatus(${s.id},'swap_approved')">✓ Approve</button>
+          <button class="btn btn-danger btn-sm" onclick="setSwapStatus(${s.id},'swap_rejected')">✗ Reject</button>`:''}
+        ${s.status!=='swap_pending'?`<button class="btn btn-ghost btn-sm" onclick="setSwapStatus(${s.id},'swap_pending')">↺</button>`:''}
+      </td>
+    </tr>`;
   });
+  wrap.innerHTML=h+'</tbody></table>';renderStats();
+}
 
-  let approved=0,rejected=0;
-  Object.entries(groups).forEach(([key,reqs])=>{
-    const [date,site,sp]=key.split('__');
-    const n=needed[site];
-    const already=requests.filter(r=>r.date===date&&r.site===site&&r.specialty===sp&&r.status==='approved').length;
+async function setSwapStatus(id,status){
+  sync(true);
+  try{
+    await dbUpd('swaps',id,{status});
+    const s=swaps.find(s=>s.id===id);if(s)s.status=status;
+    // If approved and both req IDs exist, swap the shifts
+    if(status==='swap_approved'&&s?.requester_req_id&&s?.target_req_id){
+      const rA=reqs.find(r=>r.id===s.requester_req_id);
+      const rB=reqs.find(r=>r.id===s.target_req_id);
+      if(rA&&rB){
+        const[tSite,tShift,tDate]=[rA.site,rA.shift_type,rA.date];
+        await dbUpd('requests',rA.id,{site:rB.site,shift_type:rB.shift_type,date:rB.date});
+        await dbUpd('requests',rB.id,{site:tSite,shift_type:tShift,date:tDate});
+        rA.site=rB.site;rA.shift_type=rB.shift_type;rA.date=rB.date;
+        rB.site=tSite;rB.shift_type=tShift;rB.date=tDate;
+      }
+      toast('✓ Swap approved & shifts exchanged!');
+    }else{toast(`Swap ${status.replace('swap_','')}`);}
+    renderSwapsAdmin();renderRequests();
+  }catch(e){toast('Error: '+e.message);}finally{sync(false);}
+}
+
+// ══════════════════════════════════════
+// HOLIDAYS
+// ══════════════════════════════════════
+async function addHoliday(){
+  const date=document.getElementById('hol-date').value;
+  const name=document.getElementById('hol-name').value.trim();
+  if(!date||!name){toast('Enter date and name');return;}
+  if(holidays.find(h=>h.date===date)){toast('Already added');return;}
+  try{
+    const ins=await dbIns('holidays',{date,name});holidays.push(ins[0]);
+  }catch(e){holidays.push({id:Date.now(),date,name});toast('Saved locally (run SQL to persist)');}
+  document.getElementById('hol-date').value='';document.getElementById('hol-name').value='';
+  renderHolidays();renderCal();toast('Holiday added ✓');
+}
+async function removeHoliday(id){
+  try{await dbDel('holidays',id);}catch(e){}
+  holidays=holidays.filter(h=>h.id!==id);renderHolidays();renderCal();toast('Removed');
+}
+function renderHolidays(){
+  const wrap=document.getElementById('holidays-list');
+  if(!holidays.length){wrap.innerHTML='<div class="empty-state" style="padding:20px"><div class="icon">📅</div>No holidays added yet.</div>';return;}
+  let h=`<table class="req-table"><thead><tr><th>Date</th><th>Name</th><th></th></tr></thead><tbody>`;
+  holidays.sort((a,b)=>a.date.localeCompare(b.date)).forEach(hol=>{
+    h+=`<tr><td style="font-family:'DM Mono',monospace;font-size:12px">${hol.date}</td><td>${hol.name}</td>
+    <td><button class="btn btn-danger btn-sm" onclick="removeHoliday(${hol.id})">Remove</button></td></tr>`;
+  });
+  wrap.innerHTML=h+'</tbody></table>';
+}
+
+// ══════════════════════════════════════
+// AUTO-SCHEDULE
+// ══════════════════════════════════════
+async function autoSchedule(){
+  const counts={};
+  reqs.filter(r=>r.status==='approved').forEach(r=>counts[r.doctor]=(counts[r.doctor]||0)+1);
+  const groups={};
+  reqs.filter(r=>r.status==='pending').forEach(r=>{
+    const k=`${r.date}__${r.site}__${r.specialty}__${r.shift_type||''}`;
+    if(!groups[k])groups[k]=[];groups[k].push(r);
+  });
+  const updates=[];let app=0,rej=0;
+  Object.entries(groups).forEach(([key,rs])=>{
+    const[date,site,sp]=key.split('__');
+    const n=NEEDED[site];
+    const already=reqs.filter(r=>r.date===date&&r.site===site&&r.specialty===sp&&r.status==='approved').length;
     const slots=n-already;
-    if(slots<=0){reqs.forEach(r=>{r.status='rejected';rejected++;});return;}
-    reqs.sort((a,b)=>(shiftCounts[a.doctor]||0)-(shiftCounts[b.doctor]||0));
-    reqs.forEach((r,i)=>{
-      if(i<slots){r.status='approved';shiftCounts[r.doctor]=(shiftCounts[r.doctor]||0)+1;approved++;}
-      else{r.status='rejected';rejected++;}
+    rs.sort((a,b)=>(counts[a.doctor]||0)-(counts[b.doctor]||0));
+    rs.forEach((r,i)=>{
+      if(i<slots&&slots>0){r.status='approved';counts[r.doctor]=(counts[r.doctor]||0)+1;app++;updates.push({id:r.id,s:'approved'});}
+      else{r.status='rejected';rej++;updates.push({id:r.id,s:'rejected'});}
     });
   });
-
-  renderRequests();renderStats();
-  toast(`⚡ Auto-scheduled: ${approved} approved, ${rejected} rejected`);
+  sync(true);
+  try{
+    await Promise.all(updates.map(u=>dbUpd('requests',u.id,{status:u.s})));
+    renderRequests();renderStats();toast(`⚡ ${app} approved, ${rej} rejected`);
+  }catch(e){toast('Error: '+e.message);}finally{sync(false);}
 }
 
-// ══════════════════════════════
+// ══════════════════════════════════════
 // DOCTORS
-// ══════════════════════════════
+// ══════════════════════════════════════
 function renderDoctors(){
-  const specs=['ortho','pedia','internal'];
-  document.getElementById('doctor-cols').innerHTML=specs.map(sp=>`
+  document.getElementById('doctor-cols').innerHTML=['ortho','pedia','internal'].map(sp=>`
     <div class="spec-col">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">${specBadge(sp)}<span style="color:var(--text3);font-size:12px">(${DOCTORS[sp].length})</span></div>
-      <div id="dl-${sp}">${DOCTORS[sp].map((d,i)=>`
-        <div class="doctor-item">
-          <span>${d}</span>
-          <button class="btn btn-danger btn-sm" onclick="removeDoc('${sp}',${i})">×</button>
-        </div>`).join('')}
-      </div>
-      <div class="add-row">
-        <input type="text" id="nd-${sp}" placeholder="Dr. Lastname F.">
-        <button class="btn btn-primary btn-sm" onclick="addDoc('${sp}')">+ Add</button>
-      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">${specBadge(sp)}<span style="color:var(--text3);font-size:11px">(${DOCS[sp].length})</span></div>
+      <div>${DOCS[sp].map((d,i)=>`<div class="doctor-item"><span>${d}</span><button class="btn btn-danger btn-sm" onclick="removeDoc('${sp}',${i})">×</button></div>`).join('')}</div>
+      <div class="add-row"><input type="text" id="nd-${sp}" placeholder="Dr. Name"><button class="btn btn-primary btn-sm" onclick="addDoc('${sp}')">+</button></div>
     </div>`).join('');
 }
+function addDoc(sp){const inp=document.getElementById('nd-'+sp);const name=inp.value.trim();if(!name)return;if(!name.startsWith('Dr.')){toast('Name must start with "Dr."');return;}DOCS[sp].push(name);inp.value='';renderDoctors();updateDocSelect();toast('Added ✓');}
+function removeDoc(sp,i){DOCS[sp].splice(i,1);renderDoctors();toast('Removed');}
 
-function addDoc(sp){
-  const inp=document.getElementById('nd-'+sp);
-  const name=inp.value.trim();
-  if(!name){return;}
-  if(!name.startsWith('Dr.')){toast('Name should start with "Dr."');return;}
-  DOCTORS[sp].push(name);inp.value='';renderDoctors();
-  updateDoctorSelect();toast('Doctor added ✓');
-}
-function removeDoc(sp,i){
-  DOCTORS[sp].splice(i,1);renderDoctors();toast('Doctor removed');
-}
-
-// ══════════════════════════════
+// ══════════════════════════════════════
 // LINKS
-// ══════════════════════════════
+// ══════════════════════════════════════
 function renderLinks(){
   const m=MONTHS[now.getMonth()],y=now.getFullYear();
-  const deadline=new Date(now.getFullYear(),now.getMonth(),10).toLocaleDateString('en-GB');
+  const dl=new Date(now.getFullYear(),now.getMonth(),10).toLocaleDateString('en-GB');
+  const link=document.getElementById('app-link').value;
   document.getElementById('wa-msg').textContent=
 `Dear Team,
 
-Please submit your preferred shifts for ${m} ${y} using the link below:
+Please submit your preferred shifts for ${m} ${y}:
 
-🔗 https://clinicsched.app/portal?clinic=zvulun-lin
+🔗 ${link}
 
 Instructions:
 1. Open the link in your browser
 2. Select your specialty and name
-3. Click on the days you wish to work
-4. Choose the site for each day (ZVULUN or LIN)
-5. Click "Submit request" for each shift
+3. Click the days you wish to work
+4. Choose ZVULUN or LIN for each day
+5. On Fridays, Saturdays & holidays — choose Morning 🌅 or Evening 🌙
 
-⏰ Submission deadline: ${deadline}
+After the schedule is published, you can also request shift swaps with colleagues through the app.
+
+⏰ Submission deadline: ${dl}
 
 Thank you,
-Medical Director — Zvulun & LIN Clinics`;
+Medical Director`;
 }
-
-function copyLink(){
-  navigator.clipboard.writeText('https://clinicsched.app/portal?clinic=zvulun-lin')
-    .then(()=>toast('Link copied!')).catch(()=>toast('Copy the link manually'));
-}
-function copyWA(){
-  navigator.clipboard.writeText(document.getElementById('wa-msg').textContent)
-    .then(()=>toast('Message copied!')).catch(()=>toast('Select and copy the text manually'));
-}
-function openWhatsApp(){
-  const msg=document.getElementById('wa-msg').textContent;
-  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
-}
+function copyLink(){navigator.clipboard.writeText(document.getElementById('app-link').value).then(()=>toast('Copied!')).catch(()=>toast('Copy manually'));}
+function copyWA(){navigator.clipboard.writeText(document.getElementById('wa-msg').textContent).then(()=>toast('Copied!')).catch(()=>toast('Select and copy manually'));}
+function openWA(){window.open('https://wa.me/?text='+encodeURIComponent(document.getElementById('wa-msg').textContent),'_blank');}
 
 function exportCSV(){
-  const headers='ID,Doctor,Specialty,Date,Site,Status';
-  const rows=requests.map(r=>`${r.id},"${r.doctor}","${specLabel(r.specialty)}","${r.date}","${r.site}","${r.status}"`);
-  const csv=[headers,...rows].join('\n');
+  const h='ID,Doctor,Specialty,Date,Site,Shift Type,Status';
+  const rows=reqs.map(r=>`${r.id},"${r.doctor}","${specLbl(r.specialty)}","${r.date}","${r.site}","${r.shift_type||'Regular'}","${r.status}"`);
   const a=document.createElement('a');
-  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
-  a.download='clinic_schedule.csv';a.click();
-  toast('CSV exported ✓');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent([h,...rows].join('\n'));
+  a.download='clinic_schedule.csv';a.click();toast('Exported ✓');
 }
 
-// ══════════════════════════════
+// ══════════════════════════════════════
 // INIT
-// ══════════════════════════════
-renderCalendar();
+// ══════════════════════════════════════
+(async()=>{
+  showLoad(true);
+  renderCal();
+  await loadAll();
+  showLoad(false);
+})();
 </script>
 </body>
 </html>
