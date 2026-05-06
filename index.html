@@ -42,7 +42,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .btn-warn{background:var(--warn-light);color:var(--warn)}
 .btn-publish{background:linear-gradient(135deg,#1a7a4a,#2563a8);color:#fff;font-weight:600}
 .btn-sm{padding:4px 10px;font-size:12px}
-select,input[type=text],input[type=password],input[type=date]{padding:7px 11px;border:1px solid var(--border);border-radius:var(--radius);font-family:inherit;font-size:13px;background:var(--surface);color:var(--text)}
+select,input[type=text],input[type=password],input[type=date],input[type=number]{padding:7px 11px;border:1px solid var(--border);border-radius:var(--radius);font-family:inherit;font-size:13px;background:var(--surface);color:var(--text)}
 select:focus,input:focus{outline:none;border-color:var(--accent)}
 
 /* LOGIN */
@@ -64,7 +64,7 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
 .pin-error{color:var(--danger);font-size:12px;min-height:16px}
 .login-back{font-size:12px;color:var(--text3);cursor:pointer;text-decoration:underline;background:none;border:none;font-family:inherit}
 
-/* DOCTOR BAR */
+/* DOC BAR */
 .doc-bar{background:var(--accent-light);border:1px solid #b3cff5;border-radius:var(--radius);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .doc-bar-name{font-size:13px;font-weight:600;color:var(--accent)}
 .doc-bar-info{font-size:12px;color:var(--text2)}
@@ -155,6 +155,19 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
 .publish-banner.unpublished{background:var(--surface2)}
 .publish-dot{width:10px;height:10px;border-radius:50%;background:var(--success);display:inline-block}
 .publish-dot.off{background:var(--text3)}
+
+/* SLOT RULES */
+.rules-table{width:100%;border-collapse:collapse;font-size:13px}
+.rules-table th{padding:8px 11px;text-align:left;font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);white-space:nowrap}
+.rules-table td{padding:9px 11px;border-bottom:1px solid var(--border);vertical-align:middle}
+.rules-table tr:last-child td{border-bottom:none}
+.rules-table tbody tr:hover td{background:var(--surface2)}
+.rule-add-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:14px 0;border-top:1px solid var(--border);margin-top:8px}
+.rule-add-row select,.rule-add-row input[type=number]{padding:7px 10px;font-size:13px}
+.need-badge{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-size:13px;font-weight:700;font-family:'DM Mono',monospace}
+.need-2{background:var(--surface2);color:var(--text2)}
+.need-3{background:var(--warn-light);color:var(--warn)}
+.need-4{background:var(--danger-light);color:var(--danger)}
 
 /* MODALS */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;z-index:200;opacity:0;pointer-events:none;transition:opacity .2s}
@@ -280,7 +293,7 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
 
   <div class="content">
 
-    <!-- ══ DOCTOR PORTAL ══ -->
+    <!-- DOCTOR PORTAL -->
     <div class="panel active" id="panel-doctor">
       <div class="doc-bar">
         <div>
@@ -330,7 +343,7 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
       </div>
     </div>
 
-    <!-- ══ ADMIN ══ -->
+    <!-- ADMIN -->
     <div class="panel" id="panel-admin">
       <div class="stats-row" id="admin-stats"></div>
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
@@ -340,6 +353,7 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
           <button class="itab" id="itab-publish" onclick="showAdminTab('publish')">📢 Publish</button>
           <button class="itab" id="itab-conflicts" onclick="showAdminTab('conflicts')">Conflicts</button>
           <button class="itab" id="itab-swaps" onclick="showAdminTab('swaps')">Swaps</button>
+          <button class="itab" id="itab-rules" onclick="showAdminTab('rules')">⚡ Slot Rules</button>
           <button class="itab" id="itab-holidays" onclick="showAdminTab('holidays')">Holidays</button>
           <button class="itab" id="itab-doctors" onclick="showAdminTab('doctors')">Doctors &amp; PINs</button>
           <button class="itab" id="itab-links" onclick="showAdminTab('links')">Share</button>
@@ -351,10 +365,8 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
         </div>
       </div>
 
-      <!-- REQUESTS TAB -->
       <div id="tab-req">
         <div class="card">
-          <!-- FIX 1: Added Doctor and Shift filters -->
           <div class="toolbar">
             <select id="f-status" onchange="renderRequests()"><option value="">All statuses</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select>
             <select id="f-spec" onchange="renderRequests()"><option value="">All specialties</option><option value="ortho">Orthopedics</option><option value="pedia">Pediatrics</option><option value="internal">Internal</option></select>
@@ -382,7 +394,7 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
       <div id="tab-publish" style="display:none">
         <div class="card">
           <div class="card-title">Publish Final Schedule</div>
-          <p style="font-size:13px;color:var(--text2);margin-bottom:18px">Published schedules are visible to all doctors in the Final Schedule tab. You can still edit after publishing.</p>
+          <p style="font-size:13px;color:var(--text2);margin-bottom:18px">Published schedules are visible to doctors in their Final Schedule tab. You can still edit after publishing.</p>
           <div id="publish-months-list"></div>
         </div>
       </div>
@@ -390,9 +402,50 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
       <div id="tab-conflicts" style="display:none">
         <div class="card"><div class="card-title">Conflicts</div><div id="conflicts-list"></div></div>
       </div>
+
       <div id="tab-swaps" style="display:none">
         <div class="card"><div class="card-title">Swap requests</div><div id="swaps-list"></div></div>
       </div>
+
+      <!-- SLOT RULES TAB -->
+      <div id="tab-rules" style="display:none">
+        <div class="card">
+          <div class="card-title">Slot Rules — Doctors needed per shift</div>
+          <p style="font-size:13px;color:var(--text2);margin-bottom:6px">Default: ZVULUN = 2, LIN = 1. Add rules below to override for specific days, specialties, and shift types.</p>
+          <div class="info-box" style="margin-bottom:14px">Rules apply every week on that day of week. A more specific rule (with shift type) overrides a general one.</div>
+          <div style="overflow-x:auto">
+            <table class="rules-table">
+              <thead><tr><th>Day</th><th>Specialty</th><th>Site</th><th>Shift</th><th>Doctors needed</th><th></th></tr></thead>
+              <tbody id="rules-tbody"></tbody>
+            </table>
+          </div>
+          <!-- Add new rule -->
+          <div class="rule-add-row">
+            <select id="r-day" style="min-width:110px">
+              <option value="0">Sunday</option><option value="1">Monday</option><option value="2">Tuesday</option>
+              <option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option>
+              <option value="6">Saturday</option>
+            </select>
+            <select id="r-spec">
+              <option value="ortho">Orthopedics</option>
+              <option value="pedia">Pediatrics</option>
+              <option value="internal">Internal Med</option>
+            </select>
+            <select id="r-site">
+              <option value="ZVULUN">ZVULUN</option>
+              <option value="LIN">LIN</option>
+            </select>
+            <select id="r-shift">
+              <option value="">Regular (weekday)</option>
+              <option value="morning">Morning</option>
+              <option value="evening">Evening</option>
+            </select>
+            <input type="number" id="r-needed" value="3" min="1" max="10" style="width:70px;text-align:center">
+            <button class="btn btn-primary btn-sm" onclick="addRule()">+ Add rule</button>
+          </div>
+        </div>
+      </div>
+
       <div id="tab-holidays" style="display:none">
         <div class="card">
           <div class="card-title">Holidays &amp; Special days</div>
@@ -405,6 +458,7 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
           <div id="holidays-list"></div>
         </div>
       </div>
+
       <div id="tab-doctors" style="display:none">
         <div class="card">
           <div class="card-title">Doctor roster &amp; PINs</div>
@@ -412,6 +466,7 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
           <div class="doctor-cols" id="doctor-cols"></div>
         </div>
       </div>
+
       <div id="tab-links" style="display:none">
         <div class="card">
           <div class="card-title">Share with doctors</div>
@@ -440,7 +495,7 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
   <div class="modal">
     <h3 id="modal-shift-title">Request a shift</h3>
     <div class="modal-row"><label>Date</label><input type="text" id="m-date" readonly style="background:var(--surface2)"></div>
-    <div class="modal-row"><label>Site</label><select id="m-site"><option value="ZVULUN">ZVULUN (2 doctors/specialty)</option><option value="LIN">LIN (1 doctor/specialty)</option></select></div>
+    <div class="modal-row"><label>Site</label><select id="m-site"><option value="ZVULUN">ZVULUN</option><option value="LIN">LIN</option></select></div>
     <div class="modal-row" id="m-shift-row" style="display:none">
       <label>Shift time</label>
       <div class="shift-toggle">
@@ -546,14 +601,14 @@ async function dbDel(t,id){const r=await fetch(api(t,'id=eq.'+id),{method:'DELET
 // ══════════════════════════════════════
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
 const WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-const NEEDED={ZVULUN:2,LIN:1};
 const ADMIN_PW='Moked2026';
 const DEFAULT_PIN='1234';
+// Default needed: ZVULUN=2, LIN=1 — overridden by slot_rules
+const DEFAULT_NEEDED={ZVULUN:2,LIN:1};
 
-// FIX 2: Doctors stored in Supabase, not localStorage
 let DOCS={ortho:[],pedia:[],internal:[]};
-let reqs=[],swaps=[],holidays=[];
-let publishedMonths={}; // still localStorage for simplicity
+let reqs=[],swaps=[],holidays=[],slotRules=[];
+let publishedMonths={};
 
 function loadPublished(){try{const s=localStorage.getItem('clinicsched_published');if(s)return JSON.parse(s);}catch(e){}return {};}
 function savePublished(){localStorage.setItem('clinicsched_published',JSON.stringify(publishedMonths));}
@@ -565,8 +620,33 @@ let curDoc=null,curSpec=null,selDate=null,selShift='morning';
 let adminOk=false,pendBtn=null;
 let cflList=[],cflIdx=null,moveId=null;
 let pinBuffer='';
-let loginSelectedSpec='',loginSelectedName='',loginSelectedDocId=null;
+let loginSelectedSpec='',loginSelectedName='';
 let volunteerSlot=null;
+
+// ══════════════════════════════════════
+// SLOT RULES LOGIC
+// ══════════════════════════════════════
+// Returns how many doctors are needed for a given date+site+specialty+shiftType
+function getNeeded(dateStr, site, specialty, shiftType){
+  const dow=new Date(dateStr+'T12:00:00').getDay();
+  // Find most specific matching rule: with shift_type match first, then null shift_type
+  const matches=slotRules.filter(r=>
+    r.day_of_week===dow &&
+    r.specialty===specialty &&
+    r.site===site &&
+    r.shift_type==(shiftType||null)
+  );
+  if(matches.length>0) return matches[0].doctors_needed;
+  // Fallback to rule without shift_type restriction
+  const general=slotRules.filter(r=>
+    r.day_of_week===dow &&
+    r.specialty===specialty &&
+    r.site===site &&
+    r.shift_type===null
+  );
+  if(general.length>0) return general[0].doctors_needed;
+  return DEFAULT_NEEDED[site]||2;
+}
 
 // ══════════════════════════════════════
 // UTILS
@@ -588,27 +668,23 @@ function getAllDocs(){return[...DOCS.ortho,...DOCS.pedia,...DOCS.internal];}
 function getDocPin(name){const d=getAllDocs().find(d=>d.name===name);return d?d.pin||DEFAULT_PIN:DEFAULT_PIN;}
 function getDocId(name){const d=getAllDocs().find(d=>d.name===name);return d?d.id:null;}
 function monthKey(y,m){return`${y}-${pad(m)}`;}
+function needBadgeClass(n){return n<=2?'need-2':n===3?'need-3':'need-4';}
 
 // ══════════════════════════════════════
-// LOAD ALL DATA (including doctors from Supabase)
+// DATA LOAD
 // ══════════════════════════════════════
 async function loadAll(){
   sync(true);
   try{
-    // Load doctors from Supabase
     const docs=await dbGet('doctors');
     DOCS={ortho:[],pedia:[],internal:[]};
     docs.forEach(d=>{if(DOCS[d.specialty])DOCS[d.specialty].push(d);});
-
-    // Seed default doctors if table is empty
-    if(docs.length===0) await seedDefaultDoctors();
-
+    if(docs.length===0)await seedDefaultDoctors();
     reqs=await dbGet('requests');
     try{swaps=await dbGet('swaps');}catch(e){swaps=[];}
     try{holidays=await dbGet('holidays');}catch(e){holidays=[];}
-
-    renderCal();renderMyReqs();renderMySwaps();
-    populateDoctorFilter();
+    try{slotRules=await dbGet('slot_rules');}catch(e){slotRules=[];}
+    renderCal();renderMyReqs();renderMySwaps();populateDoctorFilter();
     if(document.getElementById('panel-admin').classList.contains('active'))renderAdmin();
   }catch(e){toast('⚠️ DB: '+e.message);}
   finally{sync(false);}
@@ -626,27 +702,17 @@ async function seedDefaultDoctors(){
               'Dr. Frenkel F.','Dr. Goren G.','Dr. Halevi H.','Dr. Inbar I.','Dr. Jakobson J.',
               'Dr. Kadosh K.','Dr. Lasri L.','Dr. Manor M.','Dr. Navon N.','Dr. Ofir O.']
   };
-  for(const sp of Object.keys(base)){
-    for(const name of base[sp]){
-      try{
-        const ins=await dbIns('doctors',{name,specialty:sp,pin:DEFAULT_PIN});
-        DOCS[sp].push(ins[0]);
-      }catch(e){}
-    }
+  for(const sp of Object.keys(base))for(const name of base[sp]){
+    try{const ins=await dbIns('doctors',{name,specialty:sp,pin:DEFAULT_PIN});DOCS[sp].push(ins[0]);}catch(e){}
   }
 }
 
 setInterval(loadAll,30000);
 
-// Populate doctor filter dropdown
 function populateDoctorFilter(){
-  const sel=document.getElementById('f-doctor');
-  if(!sel)return;
-  const cur=sel.value;
-  sel.innerHTML='<option value="">All doctors</option>';
-  getAllDocs().sort((a,b)=>a.name.localeCompare(b.name)).forEach(d=>{
-    const o=document.createElement('option');o.value=d.name;o.textContent=d.name;sel.appendChild(o);
-  });
+  const sel=document.getElementById('f-doctor');if(!sel)return;
+  const cur=sel.value;sel.innerHTML='<option value="">All doctors</option>';
+  getAllDocs().sort((a,b)=>a.name.localeCompare(b.name)).forEach(d=>{const o=document.createElement('option');o.value=d.name;o.textContent=d.name;sel.appendChild(o);});
   sel.value=cur;
 }
 
@@ -665,7 +731,6 @@ function loginStep1Next(){
   const name=document.getElementById('login-name').value;
   if(!sp||!name){toast('Please select your specialty and name');return;}
   loginSelectedSpec=sp;loginSelectedName=name;
-  loginSelectedDocId=getDocId(name);
   document.getElementById('login-greeting').textContent=`Hello, ${name.replace('Dr.','')} 👋`;
   document.getElementById('login-step1').style.display='none';
   document.getElementById('login-step2').style.display='flex';
@@ -681,49 +746,32 @@ function checkPin(){
     document.getElementById('login-screen').style.display='none';
     document.getElementById('doc-bar-name').textContent=curDoc;
     document.getElementById('doc-bar-info').textContent=specLbl(curSpec)+' · Logged in';
-    renderCal();renderMyReqs();renderMySwaps();
-    toast(`Welcome ${curDoc.replace('Dr.','')} ✓`);
-  }else{
-    document.getElementById('pin-error').textContent='❌ Incorrect PIN. Try again.';
-    pinBuffer='';updatePinDisplay();
-  }
+    renderCal();renderMyReqs();renderMySwaps();toast(`Welcome ${curDoc.replace('Dr.','')} ✓`);
+  }else{document.getElementById('pin-error').textContent='❌ Incorrect PIN. Try again.';pinBuffer='';updatePinDisplay();}
 }
 function logoutDoctor(){
   curDoc=null;curSpec=null;pinBuffer='';
   document.getElementById('login-specialty').value='';
   document.getElementById('login-name').innerHTML='<option value="">— Select name —</option>';
-  document.getElementById('login-step1').style.display='flex';
-  document.getElementById('login-step2').style.display='none';
+  document.getElementById('login-step1').style.display='flex';document.getElementById('login-step2').style.display='none';
   document.getElementById('login-screen').style.display='flex';
   document.querySelectorAll('.view-tabs .tab').forEach((t,i)=>t.classList.toggle('active',i===0));
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('panel-doctor').classList.add('active');
 }
-function openChangePinModal(){
-  document.getElementById('cp-current').value='';document.getElementById('cp-new').value='';
-  document.getElementById('cp-confirm').value='';document.getElementById('cp-error').style.display='none';
-  openModal('modal-changepin');
-}
+function openChangePinModal(){document.getElementById('cp-current').value='';document.getElementById('cp-new').value='';document.getElementById('cp-confirm').value='';document.getElementById('cp-error').style.display='none';openModal('modal-changepin');}
 async function changePinSubmit(){
-  const curr=document.getElementById('cp-current').value;
-  const nw=document.getElementById('cp-new').value;
-  const conf=document.getElementById('cp-confirm').value;
+  const curr=document.getElementById('cp-current').value,nw=document.getElementById('cp-new').value,conf=document.getElementById('cp-confirm').value;
   const err=document.getElementById('cp-error');
   if(curr!==getDocPin(curDoc)){err.textContent='Current PIN is incorrect';err.style.display='block';return;}
   if(!/^\d{4}$/.test(nw)){err.textContent='New PIN must be exactly 4 digits';err.style.display='block';return;}
   if(nw!==conf){err.textContent='PINs do not match';err.style.display='block';return;}
   const docId=getDocId(curDoc);
-  if(docId){
-    try{
-      await dbUpd('doctors',docId,{pin:nw});
-      const d=getAllDocs().find(d=>d.name===curDoc);if(d)d.pin=nw;
-      closeModal('modal-changepin');toast('PIN changed ✓');
-    }catch(e){toast('Error: '+e.message);}
-  }
+  if(docId){try{await dbUpd('doctors',docId,{pin:nw});const d=getAllDocs().find(d=>d.name===curDoc);if(d)d.pin=nw;closeModal('modal-changepin');toast('PIN changed ✓');}catch(e){toast('Error: '+e.message);}}
 }
 
 // ══════════════════════════════════════
-// ADMIN PASSWORD
+// ADMIN / PANEL NAV
 // ══════════════════════════════════════
 function showPanel(name,btn){
   if(name==='admin'&&!adminOk){
@@ -751,7 +799,7 @@ function showDocTab(name){
   if(name==='myswaps')renderMySwaps();
 }
 function showAdminTab(name){
-  ['req','sched','publish','conflicts','swaps','holidays','doctors','links'].forEach(t=>{
+  ['req','sched','publish','conflicts','swaps','rules','holidays','doctors','links'].forEach(t=>{
     document.getElementById('tab-'+t).style.display=t===name?'':'none';
     const b=document.getElementById('itab-'+t);if(b)b.classList.toggle('active',t===name);
   });
@@ -759,9 +807,52 @@ function showAdminTab(name){
   if(name==='publish')renderPublishTab();
   if(name==='conflicts')renderConflicts();
   if(name==='swaps')renderSwapsAdmin();
+  if(name==='rules')renderRules();
   if(name==='holidays')renderHolidays();
   if(name==='doctors')renderDoctors();
   if(name==='links')renderLinks();
+}
+
+// ══════════════════════════════════════
+// SLOT RULES MANAGEMENT
+// ══════════════════════════════════════
+function renderRules(){
+  const tbody=document.getElementById('rules-tbody');
+  if(!slotRules.length){tbody.innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--text3);padding:20px;font-style:italic">No custom rules yet — using defaults (ZVULUN=2, LIN=1)</td></tr>`;return;}
+  tbody.innerHTML=slotRules.map(r=>{
+    const n=r.doctors_needed;
+    return`<tr>
+      <td><strong>${WD[r.day_of_week]}</strong></td>
+      <td>${specBadge(r.specialty)}</td>
+      <td>${siteBadge(r.site)}</td>
+      <td>${r.shift_type?shiftBadge(r.shift_type):'<span style="color:var(--text3);font-size:11px">Regular / All</span>'}</td>
+      <td><span class="need-badge ${needBadgeClass(n)}">${n}</span></td>
+      <td><button class="btn btn-danger btn-sm" onclick="deleteRule(${r.id})">Remove</button></td>
+    </tr>`;
+  }).join('');
+}
+
+async function addRule(){
+  const day=parseInt(document.getElementById('r-day').value);
+  const specialty=document.getElementById('r-spec').value;
+  const site=document.getElementById('r-site').value;
+  const shiftRaw=document.getElementById('r-shift').value;
+  const shift_type=shiftRaw||null;
+  const doctors_needed=parseInt(document.getElementById('r-needed').value);
+  if(!doctors_needed||doctors_needed<1){toast('Enter a valid number');return;}
+  // Check duplicate
+  if(slotRules.find(r=>r.day_of_week===day&&r.specialty===specialty&&r.site===site&&r.shift_type==shift_type)){
+    toast('A rule for this combination already exists. Remove it first.');return;
+  }
+  try{
+    const ins=await dbIns('slot_rules',{day_of_week:day,specialty,site,shift_type,doctors_needed});
+    slotRules.push(ins[0]);renderRules();toast('Rule added ✓');
+  }catch(e){toast('Error: '+e.message);}
+}
+
+async function deleteRule(id){
+  try{await dbDel('slot_rules',id);slotRules=slotRules.filter(r=>r.id!==id);renderRules();toast('Rule removed');}
+  catch(e){toast('Error: '+e.message);}
 }
 
 // ══════════════════════════════════════
@@ -772,7 +863,7 @@ function nextMonth(){calM++;if(calM>12){calM=1;calY++;}renderCal();}
 function renderCal(){
   document.getElementById('cal-label').textContent=`${MONTHS[calM-1]} ${calY}`;
   const grid=document.getElementById('cal-grid');grid.innerHTML='';
-  const first=new Date(calY,calM-1,1).getDay();const dim=new Date(calY,calM,0).getDate();
+  const first=new Date(calY,calM-1,1).getDay(),dim=new Date(calY,calM,0).getDate();
   const todayStr=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
   for(let i=0;i<first;i++){const b=document.createElement('div');b.className='cal-day empty';grid.appendChild(b);}
   for(let d=1;d<=dim;d++){
@@ -837,10 +928,7 @@ function renderMyReqs(){
   });
   wrap.innerHTML=h+'</tbody></table>';
 }
-async function cancelReq(id){
-  try{await dbDel('requests',id);reqs=reqs.filter(r=>r.id!==id);renderCal();renderMyReqs();toast('Request cancelled');}
-  catch(e){toast('Error: '+e.message);}
-}
+async function cancelReq(id){try{await dbDel('requests',id);reqs=reqs.filter(r=>r.id!==id);renderCal();renderMyReqs();toast('Request cancelled');}catch(e){toast('Error: '+e.message);}}
 
 // ══════════════════════════════════════
 // FINAL SCHEDULE (DOCTOR)
@@ -848,29 +936,21 @@ async function cancelReq(id){
 function renderFinalScheduleDoctor(){
   const container=document.getElementById('final-sched-container');
   const pubMonths=Object.entries(publishedMonths).filter(([k,v])=>v).map(([k])=>k).sort();
-  if(!pubMonths.length){
-    container.innerHTML=`<div class="card"><div class="empty-state"><div class="icon">📅</div><strong>No schedule published yet.</strong><br>The medical director will publish the schedule when ready.</div></div>`;
-    return;
-  }
+  if(!pubMonths.length){container.innerHTML=`<div class="card"><div class="empty-state"><div class="icon">📅</div><strong>No schedule published yet.</strong><br>The medical director will publish the schedule when ready.</div></div>`;return;}
   container.innerHTML=pubMonths.map(mk=>{const[y,m]=mk.split('-').map(Number);return buildFinalSchedHTML(y,m);}).join('');
 }
-
 function buildFinalSchedHTML(y,m){
   const dim=new Date(y,m,0).getDate();
   const specs=['ortho','pedia','internal'];
   const specShort={ortho:'Ortho',pedia:'Pedia',internal:'Int'};
   const sites=['ZVULUN','LIN'];
   let html=`<div class="card" style="margin-bottom:14px">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
-      <div style="font-size:16px;font-weight:600">${MONTHS[m-1]} ${y} — Final Schedule
-        <span style="font-size:12px;font-weight:400;color:var(--success);margin-left:8px">✓ Published</span>
-      </div>
-    </div>
+    <div style="font-size:16px;font-weight:600;margin-bottom:10px">${MONTHS[m-1]} ${y} — Final Schedule <span style="font-size:12px;font-weight:400;color:var(--success)">✓ Published</span></div>
     <div class="legend">
       <div class="legend-item"><span class="fs-slot-z" style="font-size:10px">Name</span> ZVULUN</div>
       <div class="legend-item"><span class="fs-slot-l" style="font-size:10px">Name</span> LIN</div>
       <div class="legend-item"><span class="fs-slot-empty" style="font-size:10px;cursor:default">+ Empty</span> Click to volunteer</div>
-      <div class="legend-item" style="margin-left:auto"><span style="font-size:11px;background:var(--accent-light);border:2px solid var(--accent);border-radius:5px;padding:1px 7px;color:var(--accent)">★ You</span> Your shift</div>
+      <div class="legend-item" style="margin-left:auto"><span style="font-size:11px;background:var(--accent-light);border:2px solid var(--accent);border-radius:5px;padding:1px 7px;color:var(--accent)">★ You</span></div>
     </div>
     <div class="final-sched-scroll" style="margin-top:12px">
     <table class="final-sched-table"><thead><tr><th>Date</th>`;
@@ -878,58 +958,47 @@ function buildFinalSchedHTML(y,m){
   html+='</tr></thead><tbody>';
   for(let d=1;d<=dim;d++){
     const ds=`${y}-${pad(m)}-${pad(d)}`;const dow=new Date(ds+'T12:00:00').getDay();
-    const special=isSpecial(ds);const hn=holName(ds);
-    const isWk=dow===5||dow===6;
+    const special=isSpecial(ds);const hn=holName(ds);const isWk=dow===5||dow===6;
     const hasMyShift=reqs.some(r=>r.date===ds&&r.doctor===curDoc&&r.status==='approved');
     const rc=hasMyShift?'my-shift-row':(hn?'holiday-row':(isWk?'weekend-row':''));
     if(special){
       ['morning','evening'].forEach((st,si)=>{
         html+=`<tr class="${rc}">`;
-        if(si===0){
-          html+=`<td class="date-cell" rowspan="2" style="vertical-align:middle">
-            <strong>${ds}</strong><br><span style="color:var(--text3)">${WD[dow]}</span>
-            ${hn?`<br><span style="color:var(--warn);font-size:10px">${hn}</span>`:''}
-            ${hasMyShift?`<br><span style="color:var(--accent);font-size:10px;font-weight:600">● Your shift</span>`:''}
-          </td>`;
-        }
+        if(si===0){html+=`<td class="date-cell" rowspan="2" style="vertical-align:middle"><strong>${ds}</strong><br><span style="color:var(--text3)">${WD[dow]}</span>${hn?`<br><span style="color:var(--warn);font-size:10px">${hn}</span>`:''}${hasMyShift?`<br><span style="color:var(--accent);font-size:10px;font-weight:600">● Your shift</span>`:''}</td>`;}
         sites.forEach(site=>{specs.forEach(sp=>{
+          const n=getNeeded(ds,site,sp,st);
           const appr=reqs.filter(r=>r.date===ds&&r.site===site&&r.specialty===sp&&r.status==='approved'&&r.shift_type===st);
-          const n=NEEDED[site];
-          let cell=`<div style="font-size:9px;color:var(--text3);margin-bottom:2px">${st==='morning'?'🌅':'🌙'}</div>`;
+          let cell=`<div style="font-size:9px;color:var(--text3);margin-bottom:2px">${st==='morning'?'🌅':'🌙'} (${n} needed)</div>`;
           appr.forEach(r=>{const isMe=r.doctor===curDoc;const sn=r.doctor.replace('Dr. ','').split(' ')[0];cell+=`<span class="fs-slot-${site[0].toLowerCase()}${isMe?' fs-slot-mine':''}" title="${r.doctor}">${isMe?'★ '+sn:sn}</span>`;});
           for(let i=appr.length;i<n;i++)cell+=`<span class="fs-slot-empty" onclick="openVolunteer('${ds}','${site}','${sp}','${st}')">+ Empty</span>`;
           html+=`<td>${cell}</td>`;
-        });});
-        html+='</tr>';
+        });});html+='</tr>';
       });
     }else{
       html+=`<tr class="${rc}"><td class="date-cell"><strong>${ds}</strong><br><span style="color:var(--text3)">${WD[dow]}</span>${hasMyShift?`<br><span style="color:var(--accent);font-size:10px;font-weight:600">● Your shift</span>`:''}</td>`;
       sites.forEach(site=>{specs.forEach(sp=>{
+        const n=getNeeded(ds,site,sp,null);
         const appr=reqs.filter(r=>r.date===ds&&r.site===site&&r.specialty===sp&&r.status==='approved'&&!r.shift_type);
-        const n=NEEDED[site];let cell='';
+        let cell='';
         appr.forEach(r=>{const isMe=r.doctor===curDoc;const sn=r.doctor.replace('Dr. ','').split(' ')[0];cell+=`<span class="fs-slot-${site[0].toLowerCase()}${isMe?' fs-slot-mine':''}" title="${r.doctor}">${isMe?'★ '+sn:sn}</span>`;});
         for(let i=appr.length;i<n;i++)cell+=`<span class="fs-slot-empty" onclick="openVolunteer('${ds}','${site}','${sp}',null)">+ Empty</span>`;
         html+=`<td>${cell}</td>`;
-      });});
-      html+='</tr>';
+      });});html+='</tr>';
     }
   }
   return html+'</tbody></table></div></div>';
 }
-
 function openVolunteer(date,site,specialty,shiftType){
   if(!curDoc){toast('Please log in first');return;}
-  volunteerSlot={date,site,specialty,shift_type:shiftType};
-  const shiftStr=shiftType?` (${shiftType==='morning'?'🌅 Morning':'🌙 Evening'})`:'';
+  volunteerSlot={date,site,specialty,shift_type:shiftType==='null'?null:shiftType};
+  const shiftStr=shiftType&&shiftType!=='null'?` (${shiftType==='morning'?'🌅 Morning':'🌙 Evening'})`:'';
   document.getElementById('volunteer-info').innerHTML=`<strong>${date}</strong> · <span class="tag-${site.toLowerCase()}">${site}</span> · ${specLbl(specialty)}${shiftStr}`;
   openModal('modal-volunteer');
 }
 async function submitVolunteer(){
   if(!volunteerSlot)return;
   const{date,site,specialty,shift_type}=volunteerSlot;
-  if(reqs.find(r=>r.doctor===curDoc&&r.date===date&&r.site===site&&r.shift_type==shift_type)){
-    toast('You already have a request for this slot');closeModal('modal-volunteer');return;
-  }
+  if(reqs.find(r=>r.doctor===curDoc&&r.date===date&&r.site===site&&r.shift_type==shift_type)){toast('You already have a request for this slot');closeModal('modal-volunteer');return;}
   try{
     const row={doctor:curDoc,specialty:curSpec,date,site,status:'pending',shift_type};
     const ins=await dbIns('requests',row);reqs.push(ins[0]);
@@ -941,26 +1010,24 @@ async function submitVolunteer(){
 // PUBLISH TAB
 // ══════════════════════════════════════
 function renderPublishTab(){
-  const container=document.getElementById('publish-months-list');
   const months=[];
   for(let i=-1;i<=3;i++){const d=new Date(now.getFullYear(),now.getMonth()+i,1);months.push({y:d.getFullYear(),m:d.getMonth()+1,label:`${MONTHS[d.getMonth()]} ${d.getFullYear()}`});}
-  container.innerHTML=months.map(({y,m,label})=>{
+  document.getElementById('publish-months-list').innerHTML=months.map(({y,m,label})=>{
     const mk=monthKey(y,m);const isPub=!!publishedMonths[mk];
-    const approvedCount=reqs.filter(r=>r.date.startsWith(mk)&&r.status==='approved').length;
-    const pendingCount=reqs.filter(r=>r.date.startsWith(mk)&&r.status==='pending').length;
+    const app=reqs.filter(r=>r.date.startsWith(mk)&&r.status==='approved').length;
+    const pen=reqs.filter(r=>r.date.startsWith(mk)&&r.status==='pending').length;
     return`<div class="publish-banner ${isPub?'published':'unpublished'}">
       <div style="display:flex;align-items:center;gap:10px">
         <span class="publish-dot ${isPub?'':'off'}"></span>
         <div>
           <div style="font-size:14px;font-weight:600">${label}</div>
-          <div style="font-size:12px;color:var(--text2);margin-top:2px">${approvedCount} approved · ${pendingCount} pending
+          <div style="font-size:12px;color:var(--text2);margin-top:2px">${app} approved · ${pen} pending
             ${isPub?'<span style="color:var(--success);font-weight:500;margin-left:8px">● Published</span>':'<span style="color:var(--text3);margin-left:8px">Not published</span>'}
           </div>
         </div>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        ${!isPub
-          ?`<button class="btn btn-publish" onclick="publishMonth('${mk}')">📢 Publish Schedule</button>`
+        ${!isPub?`<button class="btn btn-publish" onclick="publishMonth('${mk}')">📢 Publish Schedule</button>`
           :`<button class="btn btn-success btn-sm" onclick="publishMonth('${mk}')">↺ Re-publish</button>
             <button class="btn btn-danger btn-sm" onclick="unpublishMonth('${mk}')">Unpublish</button>`}
       </div>
@@ -968,7 +1035,7 @@ function renderPublishTab(){
   }).join('');
 }
 function publishMonth(mk){publishedMonths[mk]=true;savePublished();renderPublishTab();toast('✓ Schedule published!');}
-function unpublishMonth(mk){if(!confirm('Unpublish? Doctors will no longer see it.'))return;publishedMonths[mk]=false;savePublished();renderPublishTab();toast('Schedule unpublished');}
+function unpublishMonth(mk){if(!confirm('Unpublish? Doctors will no longer see it.'))return;publishedMonths[mk]=false;savePublished();renderPublishTab();toast('Unpublished');}
 
 // ══════════════════════════════════════
 // ADMIN — REQUESTS
@@ -985,30 +1052,24 @@ function renderStats(){
     <div class="stat-card"><div class="stat-num" style="color:var(--success)">${approved}</div><div class="stat-label">Approved</div></div>
     <div class="stat-card"><div class="stat-num" style="color:var(--danger)">${cfl+swapP}</div><div class="stat-label">Need attention</div></div>`;
 }
-
-// FIX 1: Filter by doctor name and shift type
 function renderRequests(){
   const fs=document.getElementById('f-status')?.value||'';
   const fsp=document.getElementById('f-spec')?.value||'';
   const fsi=document.getElementById('f-site')?.value||'';
   const fdoc=document.getElementById('f-doctor')?.value||'';
   const fsh=document.getElementById('f-shift')?.value||'';
-
-  let data=reqs.filter(r=>{
+  const data=reqs.filter(r=>{
     if(fs&&r.status!==fs)return false;
     if(fsp&&r.specialty!==fsp)return false;
     if(fsi&&r.site!==fsi)return false;
     if(fdoc&&r.doctor!==fdoc)return false;
-    if(fsh){
-      if(fsh==='regular'&&r.shift_type!=null)return false;
-      if(fsh==='morning'&&r.shift_type!=='morning')return false;
-      if(fsh==='evening'&&r.shift_type!=='evening')return false;
-    }
+    if(fsh==='regular'&&r.shift_type!=null)return false;
+    if(fsh==='morning'&&r.shift_type!=='morning')return false;
+    if(fsh==='evening'&&r.shift_type!=='evening')return false;
     return true;
   }).sort((a,b)=>a.date.localeCompare(b.date));
-
   const wrap=document.getElementById('req-table');
-  if(!data.length){wrap.innerHTML='<div class="empty-state"><div class="icon">🔍</div>No requests match this filter.</div>';return;}
+  if(!data.length){wrap.innerHTML='<div class="empty-state"><div class="icon">🔍</div>No requests match.</div>';return;}
   let h=`<table class="req-table"><thead><tr><th>Date</th><th>Doctor</th><th>Specialty</th><th>Site</th><th>Shift</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
   data.forEach(r=>{
     h+=`<tr><td style="font-family:'DM Mono',monospace;font-size:11px;white-space:nowrap">${r.date}</td>
@@ -1024,7 +1085,6 @@ function renderRequests(){
   });
   wrap.innerHTML=h+'</tbody></table>';renderStats();
 }
-
 async function setStatus(id,status){
   try{sync(true);await dbUpd('requests',id,{status});const r=reqs.find(r=>r.id===id);if(r)r.status=status;renderRequests();toast(`Request ${status}`);}
   catch(e){toast('Error: '+e.message);}finally{sync(false);}
@@ -1040,19 +1100,11 @@ function adminEdit(id){
   const patch={site:newSite.toUpperCase(),shift_type:newShift||null};if(newStatus)patch.status=newStatus;
   dbUpd('requests',id,patch).then(()=>{r.site=patch.site;r.shift_type=patch.shift_type;if(newStatus)r.status=newStatus;renderRequests();renderSchedule();toast('Updated ✓');}).catch(e=>toast('Error: '+e.message));
 }
-async function bulkApprove(){
-  const p=reqs.filter(r=>r.status==='pending');sync(true);
-  try{await Promise.all(p.map(r=>dbUpd('requests',r.id,{status:'approved'})));p.forEach(r=>r.status='approved');renderRequests();toast(`✓ ${p.length} approved`);}
-  catch(e){toast('Error: '+e.message);}finally{sync(false);}
-}
-async function bulkReject(){
-  const p=reqs.filter(r=>r.status==='pending');sync(true);
-  try{await Promise.all(p.map(r=>dbUpd('requests',r.id,{status:'rejected'})));p.forEach(r=>r.status='rejected');renderRequests();toast(`✗ ${p.length} rejected`);}
-  catch(e){toast('Error: '+e.message);}finally{sync(false);}
-}
+async function bulkApprove(){const p=reqs.filter(r=>r.status==='pending');sync(true);try{await Promise.all(p.map(r=>dbUpd('requests',r.id,{status:'approved'})));p.forEach(r=>r.status='approved');renderRequests();toast(`✓ ${p.length} approved`);}catch(e){toast('Error: '+e.message);}finally{sync(false);}}
+async function bulkReject(){const p=reqs.filter(r=>r.status==='pending');sync(true);try{await Promise.all(p.map(r=>dbUpd('requests',r.id,{status:'rejected'})));p.forEach(r=>r.status='rejected');renderRequests();toast(`✗ ${p.length} rejected`);}catch(e){toast('Error: '+e.message);}finally{sync(false);}}
 
 // ══════════════════════════════════════
-// SCHEDULE + MOVE
+// SCHEDULE + MOVE (uses getNeeded)
 // ══════════════════════════════════════
 function populateSchedMonths(){
   const sel=document.getElementById('sched-month');if(!sel||sel.options.length)return;
@@ -1073,8 +1125,9 @@ function renderSchedule(){
         h+=`<tr class="${rc}">`;
         if(si===0)h+=`<td rowspan="2" style="font-size:10px;font-family:'DM Mono',monospace;vertical-align:middle;white-space:nowrap">${ds}<br><span style="color:var(--text3)">${WD[dow]}</span>${hn?`<br><span style="color:var(--warn);font-size:9px">${hn}</span>`:''}</td>`;
         sites.forEach(site=>{specs.forEach(sp=>{
+          const n=getNeeded(ds,site,sp,st);
           const appr=reqs.filter(r=>r.date===ds&&r.site===site&&r.specialty===sp&&r.status==='approved'&&r.shift_type===st);
-          const n=NEEDED[site];let cell=`<div style="font-size:9px;color:var(--text3)">${st==='morning'?'🌅':'🌙'}</div>`;
+          let cell=`<div style="font-size:9px;color:var(--text3)">${st==='morning'?'🌅':'🌙'} (${n})</div>`;
           if(!appr.length)cell+=`<span class="slot-empty">empty</span>`;
           else{appr.slice(0,n).forEach(r=>{const sn=r.doctor.replace('Dr. ','').split(' ')[0];cell+=`<span class="slot-${site[0].toLowerCase()}" onclick="openMoveModal(${r.id})">${sn}</span>`;});for(let i=appr.length;i<n;i++)cell+=`<span class="slot-empty">+need</span>`;}
           h+=`<td>${cell}</td>`;
@@ -1083,8 +1136,9 @@ function renderSchedule(){
     }else{
       h+=`<tr class="${rc}"><td style="font-size:10px;font-family:'DM Mono',monospace;white-space:nowrap">${ds}<br><span style="color:var(--text3)">${WD[dow]}</span></td>`;
       sites.forEach(site=>{specs.forEach(sp=>{
+        const n=getNeeded(ds,site,sp,null);
         const appr=reqs.filter(r=>r.date===ds&&r.site===site&&r.specialty===sp&&r.status==='approved'&&!r.shift_type);
-        const n=NEEDED[site];let cell='';
+        let cell='';
         if(!appr.length)cell=`<span class="slot-empty">empty</span>`;
         else{appr.slice(0,n).forEach(r=>{const sn=r.doctor.replace('Dr. ','').split(' ')[0];cell+=`<span class="slot-${site[0].toLowerCase()}" onclick="openMoveModal(${r.id})">${sn}</span>`;});for(let i=appr.length;i<n;i++)cell+=`<span class="slot-empty">+need</span>`;}
         h+=`<td>${cell}</td>`;
@@ -1111,96 +1165,17 @@ async function applyMove(){
 }
 
 // ══════════════════════════════════════
-// FIX 3: IMPROVED AUTO-SCHEDULER
-// Strategy: fill slots greedily, prioritise emptier slots,
-// balance shift counts across doctors
-// ══════════════════════════════════════
-async function autoSchedule(){
-  showLoad(true,'Auto-scheduling…');
-  try{
-    // Current shift counts
-    const counts={};
-    reqs.filter(r=>r.status==='approved').forEach(r=>counts[r.doctor]=(counts[r.doctor]||0)+1);
-
-    // Build all pending groups keyed by date+site+specialty+shift_type
-    const groups={};
-    reqs.filter(r=>r.status==='pending').forEach(r=>{
-      const k=`${r.date}||${r.site}||${r.specialty}||${r.shift_type||''}`;
-      if(!groups[k])groups[k]=[];
-      groups[k].push(r);
-    });
-
-    const updates=[];
-    let totalApproved=0,totalRejected=0;
-
-    // Sort groups: fill slots with fewest approved first (prioritise empty slots)
-    const sortedGroups=Object.entries(groups).sort(([ka],[kb])=>{
-      const[da,sa,spa,sha]=ka.split('||');
-      const[db,sb,spb,shb]=kb.split('||');
-      const approvedA=reqs.filter(r=>r.date===da&&r.site===sa&&r.specialty===spa&&r.status==='approved'&&r.shift_type==(sha||null)).length;
-      const approvedB=reqs.filter(r=>r.date===db&&r.site===sb&&r.specialty===spb&&r.status==='approved'&&r.shift_type==(shb||null)).length;
-      return approvedA-approvedB; // fill emptiest slots first
-    });
-
-    for(const[key,pendingReqs] of sortedGroups){
-      const[date,site,specialty,shiftTypeRaw]=key.split('||');
-      const shiftType=shiftTypeRaw||null;
-      const n=NEEDED[site];
-
-      // How many approved slots already filled?
-      const alreadyApproved=reqs.filter(r=>
-        r.date===date&&r.site===site&&r.specialty===specialty&&
-        r.status==='approved'&&r.shift_type==(shiftType||null)
-      ).length;
-
-      const slotsAvailable=n-alreadyApproved;
-
-      if(slotsAvailable<=0){
-        // Slot already full — reject all pending for this slot
-        pendingReqs.forEach(r=>{r.status='rejected';totalRejected++;updates.push({id:r.id,s:'rejected'});});
-        continue;
-      }
-
-      // Sort candidates: fewest total shifts first (fairness), then by request time (id)
-      const candidates=[...pendingReqs].sort((a,b)=>(counts[a.doctor]||0)-(counts[b.doctor]||0)||(a.id-b.id));
-
-      candidates.forEach((r,i)=>{
-        if(i<slotsAvailable){
-          r.status='approved';
-          counts[r.doctor]=(counts[r.doctor]||0)+1;
-          totalApproved++;
-          updates.push({id:r.id,s:'approved'});
-        }else{
-          r.status='rejected';
-          totalRejected++;
-          updates.push({id:r.id,s:'rejected'});
-        }
-      });
-    }
-
-    // Push all updates to DB in parallel batches of 10
-    const batchSize=10;
-    for(let i=0;i<updates.length;i+=batchSize){
-      await Promise.all(updates.slice(i,i+batchSize).map(u=>dbUpd('requests',u.id,{status:u.s})));
-    }
-
-    renderRequests();renderStats();
-    toast(`⚡ Auto-scheduled: ${totalApproved} approved, ${totalRejected} not needed`);
-  }catch(e){toast('Error: '+e.message);}
-  finally{showLoad(false);}
-}
-
-// ══════════════════════════════════════
-// CONFLICTS
+// CONFLICTS (uses getNeeded)
 // ══════════════════════════════════════
 function getConflicts(){
   const out=[];
   [...new Set(reqs.map(r=>r.date))].sort().forEach(date=>{
     const sp2=isSpecial(date)?['morning','evening']:[null];
     ['ZVULUN','LIN'].forEach(site=>{['ortho','pedia','internal'].forEach(sp=>{sp2.forEach(st=>{
+      const n=getNeeded(date,site,sp,st);
       const ap=reqs.filter(r=>r.date===date&&r.site===site&&r.specialty===sp&&r.status==='approved'&&r.shift_type==st);
       const pe=reqs.filter(r=>r.date===date&&r.site===site&&r.specialty===sp&&r.status==='pending'&&r.shift_type==st);
-      if(ap.length+pe.length>NEEDED[site]&&pe.length>0)out.push({date,site,specialty:sp,shift_type:st,approved:ap,pending:pe,needed:NEEDED[site]});
+      if(ap.length+pe.length>n&&pe.length>0)out.push({date,site,specialty:sp,shift_type:st,approved:ap,pending:pe,needed:n});
     });});});
   });return out;
 }
@@ -1211,8 +1186,7 @@ function renderConflicts(){
     <div><div style="font-size:13px;font-weight:600">${c.date} · ${c.site} · ${specLbl(c.specialty)}${c.shift_type?' · '+c.shift_type:''}</div>
     <div style="font-size:12px;color:var(--text2);margin-top:2px">${c.approved.length} approved · ${c.pending.length} pending · capacity: ${c.needed}</div></div>
     <button class="btn btn-warn btn-sm" onclick="openCflModal(${i})">Resolve →</button>
-  </div>`).join('');
-  renderStats();
+  </div>`).join('');renderStats();
 }
 function openCflModal(i){
   cflIdx=i;const c=cflList[i];
@@ -1225,9 +1199,45 @@ function openCflModal(i){
 async function applyConflict(){
   const c=cflList[cflIdx];const all=[...c.approved,...c.pending];
   if(all.filter(r=>document.getElementById('cr-'+r.id)?.checked).length>c.needed){toast(`Select at most ${c.needed}`);return;}
-  sync(true);
-  try{await Promise.all(all.map(r=>{const s=document.getElementById('cr-'+r.id)?.checked?'approved':'rejected';r.status=s;return dbUpd('requests',r.id,{status:s});}));closeModal('modal-conflict');renderConflicts();renderRequests();toast('Resolved ✓');}
-  catch(e){toast('Error: '+e.message);}finally{sync(false);}
+  sync(true);try{await Promise.all(all.map(r=>{const s=document.getElementById('cr-'+r.id)?.checked?'approved':'rejected';r.status=s;return dbUpd('requests',r.id,{status:s});}));closeModal('modal-conflict');renderConflicts();renderRequests();toast('Resolved ✓');}catch(e){toast('Error: '+e.message);}finally{sync(false);}
+}
+
+// ══════════════════════════════════════
+// AUTO-SCHEDULE (uses getNeeded)
+// ══════════════════════════════════════
+async function autoSchedule(){
+  showLoad(true,'Auto-scheduling…');
+  try{
+    const counts={};
+    reqs.filter(r=>r.status==='approved').forEach(r=>counts[r.doctor]=(counts[r.doctor]||0)+1);
+    const groups={};
+    reqs.filter(r=>r.status==='pending').forEach(r=>{
+      const k=`${r.date}||${r.site}||${r.specialty}||${r.shift_type||''}`;
+      if(!groups[k])groups[k]=[];groups[k].push(r);
+    });
+    const sortedGroups=Object.entries(groups).sort(([ka],[kb])=>{
+      const[da,sa,spa,sha]=ka.split('||');const[db,sb,spb,shb]=kb.split('||');
+      const nA=reqs.filter(r=>r.date===da&&r.site===sa&&r.specialty===spa&&r.status==='approved'&&r.shift_type==(sha||null)).length;
+      const nB=reqs.filter(r=>r.date===db&&r.site===sb&&r.specialty===spb&&r.status==='approved'&&r.shift_type==(shb||null)).length;
+      return nA-nB;
+    });
+    const updates=[];let totalApp=0,totalRej=0;
+    for(const[key,pendingReqs] of sortedGroups){
+      const[date,site,specialty,shiftTypeRaw]=key.split('||');
+      const shiftType=shiftTypeRaw||null;
+      const n=getNeeded(date,site,specialty,shiftType);
+      const already=reqs.filter(r=>r.date===date&&r.site===site&&r.specialty===specialty&&r.status==='approved'&&r.shift_type==(shiftType||null)).length;
+      const slots=n-already;
+      const candidates=[...pendingReqs].sort((a,b)=>(counts[a.doctor]||0)-(counts[b.doctor]||0)||(a.id-b.id));
+      candidates.forEach((r,i)=>{
+        if(i<slots&&slots>0){r.status='approved';counts[r.doctor]=(counts[r.doctor]||0)+1;totalApp++;updates.push({id:r.id,s:'approved'});}
+        else{r.status='rejected';totalRej++;updates.push({id:r.id,s:'rejected'});}
+      });
+    }
+    const batchSize=10;
+    for(let i=0;i<updates.length;i+=batchSize)await Promise.all(updates.slice(i,i+batchSize).map(u=>dbUpd('requests',u.id,{status:u.s})));
+    renderRequests();renderStats();toast(`⚡ ${totalApp} approved, ${totalRej} not needed`);
+  }catch(e){toast('Error: '+e.message);}finally{showLoad(false);}
 }
 
 // ══════════════════════════════════════
@@ -1246,7 +1256,7 @@ function openSwapModal(myId){
   openModal('modal-swap');
 }
 async function submitSwap(){
-  const myId=document.getElementById('sw-my').value;const otherDoc=document.getElementById('sw-other').value;const theirId=document.getElementById('sw-their').value;
+  const myId=document.getElementById('sw-my').value,otherDoc=document.getElementById('sw-other').value,theirId=document.getElementById('sw-their').value;
   if(!myId||!otherDoc){toast('Please fill in required fields');return;}
   const myReq=reqs.find(r=>r.id==myId);
   try{
@@ -1270,11 +1280,10 @@ function renderSwapsAdmin(){
   wrap.innerHTML=h+'</tbody></table>';renderStats();
 }
 async function setSwapStatus(id,status){
-  sync(true);
-  try{
+  sync(true);try{
     await dbUpd('swaps',id,{status});const s=swaps.find(s=>s.id===id);if(s)s.status=status;
     if(status==='swap_approved'&&s?.requester_req_id&&s?.target_req_id){
-      const rA=reqs.find(r=>r.id===s.requester_req_id);const rB=reqs.find(r=>r.id===s.target_req_id);
+      const rA=reqs.find(r=>r.id===s.requester_req_id),rB=reqs.find(r=>r.id===s.target_req_id);
       if(rA&&rB){const[tS,tSh,tD]=[rA.site,rA.shift_type,rA.date];await dbUpd('requests',rA.id,{site:rB.site,shift_type:rB.shift_type,date:rB.date});await dbUpd('requests',rB.id,{site:tS,shift_type:tSh,date:tD});rA.site=rB.site;rA.shift_type=rB.shift_type;rA.date=rB.date;rB.site=tS;rB.shift_type=tSh;rB.date=tD;}
       toast('✓ Swap approved & shifts exchanged!');
     }else toast(`Swap ${status.replace('swap_','')}`);
@@ -1286,11 +1295,10 @@ async function setSwapStatus(id,status){
 // HOLIDAYS
 // ══════════════════════════════════════
 async function addHoliday(){
-  const date=document.getElementById('hol-date').value;const name=document.getElementById('hol-name').value.trim();
+  const date=document.getElementById('hol-date').value,name=document.getElementById('hol-name').value.trim();
   if(!date||!name){toast('Enter date and name');return;}
   if(holidays.find(h=>h.date===date)){toast('Already added');return;}
-  try{const ins=await dbIns('holidays',{date,name});holidays.push(ins[0]);}
-  catch(e){holidays.push({id:Date.now(),date,name});}
+  try{const ins=await dbIns('holidays',{date,name});holidays.push(ins[0]);}catch(e){holidays.push({id:Date.now(),date,name});}
   document.getElementById('hol-date').value='';document.getElementById('hol-name').value='';
   renderHolidays();renderCal();toast('Holiday added ✓');
 }
@@ -1304,17 +1312,15 @@ function renderHolidays(){
 }
 
 // ══════════════════════════════════════
-// DOCTORS & PINs (now from Supabase)
+// DOCTORS & PINs
 // ══════════════════════════════════════
 function renderDoctors(){
   document.getElementById('doctor-cols').innerHTML=['ortho','pedia','internal'].map(sp=>`
     <div class="spec-col">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">${specBadge(sp)}<span style="color:var(--text3);font-size:11px">(${(DOCS[sp]||[]).length})</span></div>
-      <div>${(DOCS[sp]||[]).map((d,i)=>`<div class="doctor-item">
-        <span class="doc-name">${d.name}</span>
+      <div>${(DOCS[sp]||[]).map((d,i)=>`<div class="doctor-item"><span class="doc-name">${d.name}</span>
         <span class="pin-badge" onclick="adminResetPin(${d.id},'${d.name}')">PIN: ${d.pin||DEFAULT_PIN}</span>
-        <button class="btn btn-danger btn-sm" onclick="removeDoc(${d.id},'${sp}')">×</button>
-      </div>`).join('')}</div>
+        <button class="btn btn-danger btn-sm" onclick="removeDoc(${d.id},'${sp}')">×</button></div>`).join('')}</div>
       <div class="add-row">
         <input type="text" id="nd-${sp}" placeholder="Dr. Name" style="min-width:100px">
         <input type="text" id="np-${sp}" placeholder="PIN" maxlength="4" style="width:56px;text-align:center">
@@ -1322,36 +1328,22 @@ function renderDoctors(){
       </div>
     </div>`).join('');
 }
-
 async function adminResetPin(id,name){
   const newPin=prompt(`Reset PIN for ${name}\nEnter new 4-digit PIN (blank = 1234):`,'');
   if(newPin===null)return;const pin=newPin.trim()||DEFAULT_PIN;
   if(!/^\d{4}$/.test(pin)){toast('PIN must be 4 digits');return;}
-  try{
-    await dbUpd('doctors',id,{pin});
-    const d=getAllDocs().find(d=>d.id===id);if(d)d.pin=pin;
-    renderDoctors();populateDoctorFilter();toast(`✓ PIN reset for ${name}`);
-  }catch(e){toast('Error: '+e.message);}
+  try{await dbUpd('doctors',id,{pin});const d=getAllDocs().find(d=>d.id===id);if(d)d.pin=pin;renderDoctors();toast(`✓ PIN reset for ${name}`);}catch(e){toast('Error: '+e.message);}
 }
-
 async function addDoc(sp){
-  const nameInp=document.getElementById('nd-'+sp);const pinInp=document.getElementById('np-'+sp);
-  const name=nameInp.value.trim();const pin=pinInp.value.trim()||DEFAULT_PIN;
+  const nameInp=document.getElementById('nd-'+sp),pinInp=document.getElementById('np-'+sp);
+  const name=nameInp.value.trim(),pin=pinInp.value.trim()||DEFAULT_PIN;
   if(!name)return;if(!name.startsWith('Dr.')){toast('Name must start with "Dr."');return;}
   if(!/^\d{4}$/.test(pin)){toast('PIN must be 4 digits');return;}
-  try{
-    const ins=await dbIns('doctors',{name,specialty:sp,pin});
-    if(!DOCS[sp])DOCS[sp]=[];DOCS[sp].push(ins[0]);
-    nameInp.value='';pinInp.value='';renderDoctors();populateDoctorFilter();toast('Doctor added ✓');
-  }catch(e){toast('Error: '+e.message);}
+  try{const ins=await dbIns('doctors',{name,specialty:sp,pin});if(!DOCS[sp])DOCS[sp]=[];DOCS[sp].push(ins[0]);nameInp.value='';pinInp.value='';renderDoctors();populateDoctorFilter();toast('Doctor added ✓');}catch(e){toast('Error: '+e.message);}
 }
-
 async function removeDoc(id,sp){
   if(!confirm('Remove this doctor?'))return;
-  try{
-    await dbDel('doctors',id);DOCS[sp]=(DOCS[sp]||[]).filter(d=>d.id!==id);
-    renderDoctors();populateDoctorFilter();toast('Removed');
-  }catch(e){toast('Error: '+e.message);}
+  try{await dbDel('doctors',id);DOCS[sp]=(DOCS[sp]||[]).filter(d=>d.id!==id);renderDoctors();populateDoctorFilter();toast('Removed');}catch(e){toast('Error: '+e.message);}
 }
 
 // ══════════════════════════════════════
@@ -1372,11 +1364,11 @@ Instructions:
 1. Open the link in your browser
 2. Select your specialty and name
 3. Enter your PIN (default: 1234)
-4. Go to "My Shifts" to request shifts
-5. Go to "Final Schedule" to see the published schedule
+4. Click days you wish to work
+5. On Fridays, Saturdays & holidays — choose 🌅 Morning or 🌙 Evening
+6. Check "Final Schedule" once published
 
-💡 You can change your PIN after login.
-⏰ Submission deadline: ${dl}
+⏰ Deadline: ${dl}
 
 Thank you,
 Medical Director`;
