@@ -69,11 +69,12 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
 .doc-bar-name{font-size:13px;font-weight:600;color:var(--accent)}
 .doc-bar-info{font-size:12px;color:var(--text2)}
 
-/* INNER TABS */
+/* TABS */
 .doc-inner-tabs,.admin-inner-tabs{display:flex;gap:3px;border-bottom:1px solid var(--border);flex-wrap:wrap}
 .ditab,.itab{padding:6px 13px;border-radius:8px 8px 0 0;border:none;background:transparent;cursor:pointer;font-size:13px;font-family:inherit;color:var(--text2);font-weight:500;transition:all .15s;border-bottom:2px solid transparent}
 .ditab:hover,.itab:hover{background:var(--surface2)}
 .ditab.active,.itab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.ditab .notif{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:var(--danger);color:#fff;font-size:10px;font-weight:700;margin-left:4px}
 
 /* CALENDAR */
 .cal-wrapper{overflow-x:auto}
@@ -108,6 +109,8 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
 .badge-swap_pending{background:#e8f0fb;color:var(--accent)}
 .badge-swap_approved{background:var(--success-light);color:var(--success)}
 .badge-swap_rejected{background:var(--danger-light);color:var(--danger)}
+.badge-giveaway{background:#f0e6ff;color:#6b3fa8}
+.badge-claimed{background:var(--warn-light);color:var(--warn)}
 
 /* STATS */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
@@ -143,8 +146,9 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
 .fs-slot-z{background:var(--zvulun-light);color:var(--zvulun);font-size:11px;border-radius:5px;padding:2px 7px;display:inline-block;margin:1px;font-weight:500}
 .fs-slot-l{background:var(--lin-light);color:var(--lin);font-size:11px;border-radius:5px;padding:2px 7px;display:inline-block;margin:1px;font-weight:500}
 .fs-slot-mine{outline:2px solid var(--accent);outline-offset:1px;border-radius:5px}
+.fs-slot-giveaway{background:#f0e6ff;color:#6b3fa8;font-size:11px;border-radius:5px;padding:2px 7px;display:inline-block;margin:1px;font-weight:500;border:1.5px dashed #9b5de5}
 .fs-slot-empty{background:#fff3cd;border:1.5px dashed #e0a800;color:#856404;font-size:11px;border-radius:5px;padding:2px 8px;display:inline-block;margin:1px;cursor:pointer;font-weight:500;transition:all .15s}
-.fs-slot-empty:hover{background:#ffe69c;border-color:var(--warn)}
+.fs-slot-empty:hover{background:#ffe69c}
 .weekend-row td{background:#fffdf5}
 .holiday-row td{background:#fff8e1}
 .my-shift-row td{background:#f0f6ff}
@@ -156,14 +160,24 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
 .publish-dot{width:10px;height:10px;border-radius:50%;background:var(--success);display:inline-block}
 .publish-dot.off{background:var(--text3)}
 
+/* AVAILABLE SHIFTS CARDS */
+.avail-card{background:linear-gradient(135deg,#f5f0ff,#ede8ff);border:1.5px solid #c4b5fd;border-radius:var(--radius-lg);padding:16px 18px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.avail-card-info{display:flex;flex-direction:column;gap:3px}
+.avail-card-title{font-size:13px;font-weight:600;color:#5b21b6}
+.avail-card-sub{font-size:12px;color:var(--text2)}
+
+/* SWAP REQUEST CARD */
+.swap-req-card{background:var(--accent-light);border:1.5px solid #93c5fd;border-radius:var(--radius-lg);padding:14px 18px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.swap-req-card-info{display:flex;flex-direction:column;gap:3px}
+.swap-req-card-title{font-size:13px;font-weight:600;color:var(--accent)}
+.swap-req-card-sub{font-size:12px;color:var(--text2)}
+
 /* SLOT RULES */
 .rules-table{width:100%;border-collapse:collapse;font-size:13px}
 .rules-table th{padding:8px 11px;text-align:left;font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);white-space:nowrap}
 .rules-table td{padding:9px 11px;border-bottom:1px solid var(--border);vertical-align:middle}
 .rules-table tr:last-child td{border-bottom:none}
-.rules-table tbody tr:hover td{background:var(--surface2)}
 .rule-add-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:14px 0;border-top:1px solid var(--border);margin-top:8px}
-.rule-add-row select,.rule-add-row input[type=number]{padding:7px 10px;font-size:13px}
 .need-badge{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-size:13px;font-weight:700;font-family:'DM Mono',monospace}
 .need-2{background:var(--surface2);color:var(--text2)}
 .need-3{background:var(--warn-light);color:var(--warn)}
@@ -172,7 +186,7 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
 /* MODALS */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;z-index:200;opacity:0;pointer-events:none;transition:opacity .2s}
 .overlay.open{opacity:1;pointer-events:all}
-.modal{background:var(--surface);border-radius:var(--radius-lg);padding:26px;width:420px;max-width:calc(100vw - 28px);transform:translateY(8px);transition:transform .2s;max-height:90vh;overflow-y:auto}
+.modal{background:var(--surface);border-radius:var(--radius-lg);padding:26px;width:440px;max-width:calc(100vw - 28px);transform:translateY(8px);transition:transform .2s;max-height:90vh;overflow-y:auto}
 .overlay.open .modal{transform:translateY(0)}
 .modal h3{font-size:15px;font-weight:600;margin-bottom:18px}
 .modal-row{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
@@ -189,7 +203,7 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
 .spec-col{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px}
 .doctor-item{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;gap:6px}
 .doctor-item:last-child{border-bottom:none}
-.doctor-item .doc-name{flex:1;font-size:12px}
+.doctor-item .doc-name{flex:1}
 .doctor-item .pin-badge{font-family:'DM Mono',monospace;font-size:11px;background:var(--surface2);border:1px solid var(--border);border-radius:5px;padding:2px 7px;color:var(--text2);cursor:pointer;white-space:nowrap}
 .add-row{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
 .add-row input{flex:1;font-size:12px;padding:5px 9px;min-width:80px}
@@ -219,6 +233,8 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
 .legend-item{display:flex;align-items:center;gap:5px}
 .conflict-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid var(--border)}
 .conflict-item:last-child{border-bottom:none}
+.section-title{font-size:14px;font-weight:600;margin-bottom:12px;color:var(--text)}
+.section-divider{height:1px;background:var(--border);margin:18px 0}
 </style>
 </head>
 <body>
@@ -308,8 +324,10 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
       <div class="doc-inner-tabs">
         <button class="ditab active" id="ditab-myshifts" onclick="showDocTab('myshifts')">📋 My Shifts</button>
         <button class="ditab" id="ditab-finalschedule" onclick="showDocTab('finalschedule')">📅 Final Schedule</button>
-        <button class="ditab" id="ditab-myswaps" onclick="showDocTab('myswaps')">⇄ Swap Requests</button>
+        <button class="ditab" id="ditab-exchange" onclick="showDocTab('exchange')">🔄 Available &amp; Swaps</button>
       </div>
+
+      <!-- MY SHIFTS TAB -->
       <div id="dtab-myshifts">
         <div class="card">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
@@ -330,17 +348,35 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
           <div style="font-size:11px;color:var(--text2);margin-top:8px">🟡 Friday / Saturday / Holiday — morning &amp; evening shifts available</div>
         </div>
         <div class="card">
-          <div class="card-title">My shift requests</div>
-          <div id="my-requests"><div class="empty-state"><div class="icon">📋</div>Click a day on the calendar to request a shift.</div></div>
+          <div class="card-title">My approved shifts</div>
+          <div id="my-requests"></div>
         </div>
       </div>
+
+      <!-- FINAL SCHEDULE TAB -->
       <div id="dtab-finalschedule" style="display:none"><div id="final-sched-container"></div></div>
-      <div id="dtab-myswaps" style="display:none">
+
+      <!-- AVAILABLE & SWAPS TAB -->
+      <div id="dtab-exchange" style="display:none">
+        <!-- Available shifts from same specialty -->
         <div class="card">
-          <div class="card-title">My swap requests</div>
-          <div id="my-swaps"><div class="empty-state"><div class="icon">⇄</div>No swap requests yet.</div></div>
+          <div class="section-title">🎁 Available shifts — same specialty</div>
+          <p style="font-size:12px;color:var(--text2);margin-bottom:14px">These doctors want to give away their shifts. Click "Take this shift" to claim one — it goes to the medical director for approval.</p>
+          <div id="available-shifts-list"></div>
+        </div>
+        <!-- Incoming swap requests -->
+        <div class="card">
+          <div class="section-title">⇄ Swap requests sent to me</div>
+          <p style="font-size:12px;color:var(--text2);margin-bottom:14px">Another doctor wants to swap shifts with you. Accept or decline below.</p>
+          <div id="incoming-swaps-list"></div>
+        </div>
+        <!-- My outgoing requests -->
+        <div class="card">
+          <div class="section-title">📤 My requests</div>
+          <div id="my-outgoing-list"></div>
         </div>
       </div>
+
     </div>
 
     <!-- ADMIN -->
@@ -352,7 +388,7 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
           <button class="itab" id="itab-sched" onclick="showAdminTab('sched')">Schedule</button>
           <button class="itab" id="itab-publish" onclick="showAdminTab('publish')">📢 Publish</button>
           <button class="itab" id="itab-conflicts" onclick="showAdminTab('conflicts')">Conflicts</button>
-          <button class="itab" id="itab-swaps" onclick="showAdminTab('swaps')">Swaps</button>
+          <button class="itab" id="itab-exchange" onclick="showAdminTab('exchange')">🔄 Swaps &amp; Giveaways</button>
           <button class="itab" id="itab-rules" onclick="showAdminTab('rules')">⚡ Slot Rules</button>
           <button class="itab" id="itab-holidays" onclick="showAdminTab('holidays')">Holidays</button>
           <button class="itab" id="itab-doctors" onclick="showAdminTab('doctors')">Doctors &amp; PINs</button>
@@ -394,7 +430,7 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
       <div id="tab-publish" style="display:none">
         <div class="card">
           <div class="card-title">Publish Final Schedule</div>
-          <p style="font-size:13px;color:var(--text2);margin-bottom:18px">Published schedules are visible to doctors in their Final Schedule tab. You can still edit after publishing.</p>
+          <p style="font-size:13px;color:var(--text2);margin-bottom:18px">Published schedules are visible to doctors in their Final Schedule tab.</p>
           <div id="publish-months-list"></div>
         </div>
       </div>
@@ -403,43 +439,36 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
         <div class="card"><div class="card-title">Conflicts</div><div id="conflicts-list"></div></div>
       </div>
 
-      <div id="tab-swaps" style="display:none">
-        <div class="card"><div class="card-title">Swap requests</div><div id="swaps-list"></div></div>
+      <!-- ADMIN SWAPS & GIVEAWAYS TAB -->
+      <div id="tab-exchange" style="display:none">
+        <div class="card">
+          <div class="section-title">🎁 Giveaway claims — awaiting your approval</div>
+          <p style="font-size:12px;color:var(--text2);margin-bottom:14px">A doctor claimed another's giveaway shift. Approve to transfer the shift.</p>
+          <div id="admin-giveaways-list"></div>
+          <div class="section-divider"></div>
+          <div class="section-title">⇄ Swap requests — awaiting your approval</div>
+          <p style="font-size:12px;color:var(--text2);margin-bottom:14px">Both doctors have agreed. Approve to exchange their shifts.</p>
+          <div id="admin-swaps-list"></div>
+        </div>
       </div>
 
-      <!-- SLOT RULES TAB -->
       <div id="tab-rules" style="display:none">
         <div class="card">
           <div class="card-title">Slot Rules — Doctors needed per shift</div>
-          <p style="font-size:13px;color:var(--text2);margin-bottom:6px">Default: ZVULUN = 2, LIN = 1. Add rules below to override for specific days, specialties, and shift types.</p>
-          <div class="info-box" style="margin-bottom:14px">Rules apply every week on that day of week. A more specific rule (with shift type) overrides a general one.</div>
-          <div style="overflow-x:auto">
-            <table class="rules-table">
-              <thead><tr><th>Day</th><th>Specialty</th><th>Site</th><th>Shift</th><th>Doctors needed</th><th></th></tr></thead>
-              <tbody id="rules-tbody"></tbody>
-            </table>
-          </div>
-          <!-- Add new rule -->
+          <p style="font-size:13px;color:var(--text2);margin-bottom:6px">Default: ZVULUN=2, LIN=1. Add exceptions below.</p>
+          <div class="info-box" style="margin-bottom:14px">Rules apply every week on that day. A rule with a specific shift type overrides a general one.</div>
+          <div style="overflow-x:auto"><table class="rules-table">
+            <thead><tr><th>Day</th><th>Specialty</th><th>Site</th><th>Shift</th><th>Needed</th><th></th></tr></thead>
+            <tbody id="rules-tbody"></tbody>
+          </table></div>
           <div class="rule-add-row">
             <select id="r-day" style="min-width:110px">
               <option value="0">Sunday</option><option value="1">Monday</option><option value="2">Tuesday</option>
-              <option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option>
-              <option value="6">Saturday</option>
+              <option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option>
             </select>
-            <select id="r-spec">
-              <option value="ortho">Orthopedics</option>
-              <option value="pedia">Pediatrics</option>
-              <option value="internal">Internal Med</option>
-            </select>
-            <select id="r-site">
-              <option value="ZVULUN">ZVULUN</option>
-              <option value="LIN">LIN</option>
-            </select>
-            <select id="r-shift">
-              <option value="">Regular (weekday)</option>
-              <option value="morning">Morning</option>
-              <option value="evening">Evening</option>
-            </select>
+            <select id="r-spec"><option value="ortho">Orthopedics</option><option value="pedia">Pediatrics</option><option value="internal">Internal Med</option></select>
+            <select id="r-site"><option value="ZVULUN">ZVULUN</option><option value="LIN">LIN</option></select>
+            <select id="r-shift"><option value="">Regular</option><option value="morning">Morning</option><option value="evening">Evening</option></select>
             <input type="number" id="r-needed" value="3" min="1" max="10" style="width:70px;text-align:center">
             <button class="btn btn-primary btn-sm" onclick="addRule()">+ Add rule</button>
           </div>
@@ -449,7 +478,6 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
       <div id="tab-holidays" style="display:none">
         <div class="card">
           <div class="card-title">Holidays &amp; Special days</div>
-          <p style="font-size:12px;color:var(--text2);margin-bottom:12px">Holidays get morning &amp; evening shifts like Fridays/Saturdays.</p>
           <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
             <input type="date" id="hol-date">
             <input type="text" id="hol-name" placeholder="e.g. Rosh Hashana" style="flex:1;min-width:140px">
@@ -462,7 +490,7 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
       <div id="tab-doctors" style="display:none">
         <div class="card">
           <div class="card-title">Doctor roster &amp; PINs</div>
-          <p style="font-size:12px;color:var(--text2);margin-bottom:14px">Changes are saved to the database — all doctors see updated names immediately. Click a PIN to reset it.</p>
+          <p style="font-size:12px;color:var(--text2);margin-bottom:14px">Changes saved to database immediately. Click a PIN to reset.</p>
           <div class="doctor-cols" id="doctor-cols"></div>
         </div>
       </div>
@@ -511,6 +539,35 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
   </div>
 </div>
 
+<!-- GIVE AWAY MODAL -->
+<div class="overlay" id="modal-giveaway">
+  <div class="modal">
+    <h3>Give away a shift</h3>
+    <div class="info-box">This shift will be visible to other doctors of your specialty. Anyone can claim it, and the medical director will approve the transfer.</div>
+    <div class="modal-row"><label>Select the shift to give away</label><select id="ga-shift"></select></div>
+    <div class="modal-row"><label>Reason (optional)</label><input type="text" id="ga-reason" placeholder="e.g. personal commitment, holiday…"></div>
+    <div class="modal-btns">
+      <button class="btn btn-ghost" onclick="closeModal('modal-giveaway')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitGiveaway()">Give away</button>
+    </div>
+  </div>
+</div>
+
+<!-- SWAP REQUEST MODAL -->
+<div class="overlay" id="modal-swap">
+  <div class="modal">
+    <h3>Request shift swap</h3>
+    <div class="info-box">Doctor B will need to accept before this reaches the medical director for final approval.</div>
+    <div class="modal-row"><label>My shift to give</label><select id="sw-my"></select></div>
+    <div class="modal-row"><label>Doctor to swap with</label><select id="sw-other"></select></div>
+    <div class="modal-row"><label>Their shift I want (optional)</label><select id="sw-their"></select></div>
+    <div class="modal-btns">
+      <button class="btn btn-ghost" onclick="closeModal('modal-swap')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitSwap()">Send swap request</button>
+    </div>
+  </div>
+</div>
+
 <!-- VOLUNTEER MODAL -->
 <div class="overlay" id="modal-volunteer">
   <div class="modal">
@@ -520,21 +577,6 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
     <div class="modal-btns">
       <button class="btn btn-ghost" onclick="closeModal('modal-volunteer')">Cancel</button>
       <button class="btn btn-primary" onclick="submitVolunteer()">Yes, request this shift</button>
-    </div>
-  </div>
-</div>
-
-<!-- SWAP MODAL -->
-<div class="overlay" id="modal-swap">
-  <div class="modal">
-    <h3>Request shift swap</h3>
-    <div class="info-box">Ask another doctor to swap shifts. The medical director will approve or reject.</div>
-    <div class="modal-row"><label>My shift to give away</label><select id="sw-my"></select></div>
-    <div class="modal-row"><label>Doctor to swap with</label><select id="sw-other"></select></div>
-    <div class="modal-row"><label>Their shift I want (optional)</label><select id="sw-their"></select></div>
-    <div class="modal-btns">
-      <button class="btn btn-ghost" onclick="closeModal('modal-swap')">Cancel</button>
-      <button class="btn btn-primary" onclick="submitSwap()">Send request</button>
     </div>
   </div>
 </div>
@@ -603,7 +645,6 @@ const MONTHS=['January','February','March','April','May','June','July','August',
 const WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const ADMIN_PW='Moked2026';
 const DEFAULT_PIN='1234';
-// Default needed: ZVULUN=2, LIN=1 — overridden by slot_rules
 const DEFAULT_NEEDED={ZVULUN:2,LIN:1};
 
 let DOCS={ortho:[],pedia:[],internal:[]};
@@ -624,27 +665,14 @@ let loginSelectedSpec='',loginSelectedName='';
 let volunteerSlot=null;
 
 // ══════════════════════════════════════
-// SLOT RULES LOGIC
+// SLOT RULES
 // ══════════════════════════════════════
-// Returns how many doctors are needed for a given date+site+specialty+shiftType
-function getNeeded(dateStr, site, specialty, shiftType){
+function getNeeded(dateStr,site,specialty,shiftType){
   const dow=new Date(dateStr+'T12:00:00').getDay();
-  // Find most specific matching rule: with shift_type match first, then null shift_type
-  const matches=slotRules.filter(r=>
-    r.day_of_week===dow &&
-    r.specialty===specialty &&
-    r.site===site &&
-    r.shift_type==(shiftType||null)
-  );
-  if(matches.length>0) return matches[0].doctors_needed;
-  // Fallback to rule without shift_type restriction
-  const general=slotRules.filter(r=>
-    r.day_of_week===dow &&
-    r.specialty===specialty &&
-    r.site===site &&
-    r.shift_type===null
-  );
-  if(general.length>0) return general[0].doctors_needed;
+  const specific=slotRules.filter(r=>r.day_of_week===dow&&r.specialty===specialty&&r.site===site&&r.shift_type==(shiftType||null));
+  if(specific.length)return specific[0].doctors_needed;
+  const general=slotRules.filter(r=>r.day_of_week===dow&&r.specialty===specialty&&r.site===site&&r.shift_type===null);
+  if(general.length)return general[0].doctors_needed;
   return DEFAULT_NEEDED[site]||2;
 }
 
@@ -657,7 +685,7 @@ function sync(on){document.getElementById('sync-dot').className='sync-dot'+(on?'
 function showLoad(on,msg='Connecting…'){const el=document.getElementById('loading-overlay');el.classList.toggle('show',on);document.getElementById('loading-msg').textContent=msg;}
 const specLbl=s=>({ortho:'Orthopedics',pedia:'Pediatrics',internal:'Internal Med'}[s]||s);
 const specBadge=s=>`<span class="badge badge-${s}">${specLbl(s)}</span>`;
-const stBadge=s=>{const m={pending:'Pending',approved:'Approved',rejected:'Rejected',swap_pending:'Swap Pending',swap_approved:'Swap Approved',swap_rejected:'Swap Rejected'};return`<span class="badge badge-${s.replace(/ /g,'_')}">${m[s]||s}</span>`;};
+const stBadge=s=>{const m={pending:'Pending',approved:'Approved',rejected:'Rejected',swap_pending:'Swap Pending',swap_approved:'Swap Approved',swap_rejected:'Swap Rejected',giveaway:'Give Away',claimed:'Claimed'};return`<span class="badge badge-${s.replace(/ /g,'_')}">${m[s]||s}</span>`;};
 const siteBadge=s=>`<span class="tag-${s.toLowerCase()}">${s}</span>`;
 const shiftBadge=t=>t?`<span class="tag-${t}">${t==='morning'?'🌅 Morning':'🌙 Evening'}</span>`:'';
 function isSpecial(ds){const dow=new Date(ds+'T12:00:00').getDay();return dow===5||dow===6||holidays.some(h=>h.date===ds);}
@@ -667,8 +695,10 @@ function closeModal(id){document.getElementById(id).classList.remove('open');}
 function getAllDocs(){return[...DOCS.ortho,...DOCS.pedia,...DOCS.internal];}
 function getDocPin(name){const d=getAllDocs().find(d=>d.name===name);return d?d.pin||DEFAULT_PIN:DEFAULT_PIN;}
 function getDocId(name){const d=getAllDocs().find(d=>d.name===name);return d?d.id:null;}
+function getDocSpec(name){for(const sp of Object.keys(DOCS)){if((DOCS[sp]||[]).find(d=>d.name===name))return sp;}return null;}
 function monthKey(y,m){return`${y}-${pad(m)}`;}
 function needBadgeClass(n){return n<=2?'need-2':n===3?'need-3':'need-4';}
+function shiftDesc(r){return`${r.date} · ${r.site}${r.shift_type?' · '+r.shift_type:''}`;}
 
 // ══════════════════════════════════════
 // DATA LOAD
@@ -684,31 +714,16 @@ async function loadAll(){
     try{swaps=await dbGet('swaps');}catch(e){swaps=[];}
     try{holidays=await dbGet('holidays');}catch(e){holidays=[];}
     try{slotRules=await dbGet('slot_rules');}catch(e){slotRules=[];}
-    renderCal();renderMyReqs();renderMySwaps();populateDoctorFilter();
+    renderCal();renderMyReqs();renderExchangeTab();populateDoctorFilter();updateExchangeNotif();
     if(document.getElementById('panel-admin').classList.contains('active'))renderAdmin();
   }catch(e){toast('⚠️ DB: '+e.message);}
   finally{sync(false);}
 }
-
 async function seedDefaultDoctors(){
-  const base={
-    ortho:['Dr. Cohen A.','Dr. Levy B.','Dr. Ben-David C.','Dr. Katz D.','Dr. Shapiro E.',
-           'Dr. Mizrahi F.','Dr. Goldberg G.','Dr. Peretz H.','Dr. Azulay I.','Dr. Rotem J.',
-           'Dr. Segal K.','Dr. Dayan L.','Dr. Har-El M.','Dr. Biton N.','Dr. Erez O.'],
-    pedia:['Dr. Friedman A.','Dr. Stern B.','Dr. Blum C.','Dr. Nir D.','Dr. Oren E.',
-           'Dr. Tal F.','Dr. Gal G.','Dr. Haim H.','Dr. Ziv I.','Dr. Bar J.',
-           'Dr. Lior K.','Dr. Mor L.','Dr. Noa M.','Dr. Paz N.','Dr. Raz O.'],
-    internal:['Dr. Avraham A.','Dr. Ben-Ami B.','Dr. Carmi C.','Dr. Dror D.','Dr. Even E.',
-              'Dr. Frenkel F.','Dr. Goren G.','Dr. Halevi H.','Dr. Inbar I.','Dr. Jakobson J.',
-              'Dr. Kadosh K.','Dr. Lasri L.','Dr. Manor M.','Dr. Navon N.','Dr. Ofir O.']
-  };
-  for(const sp of Object.keys(base))for(const name of base[sp]){
-    try{const ins=await dbIns('doctors',{name,specialty:sp,pin:DEFAULT_PIN});DOCS[sp].push(ins[0]);}catch(e){}
-  }
+  const base={ortho:['Dr. Cohen A.','Dr. Levy B.','Dr. Ben-David C.','Dr. Katz D.','Dr. Shapiro E.','Dr. Mizrahi F.','Dr. Goldberg G.','Dr. Peretz H.','Dr. Azulay I.','Dr. Rotem J.','Dr. Segal K.','Dr. Dayan L.','Dr. Har-El M.','Dr. Biton N.','Dr. Erez O.'],pedia:['Dr. Friedman A.','Dr. Stern B.','Dr. Blum C.','Dr. Nir D.','Dr. Oren E.','Dr. Tal F.','Dr. Gal G.','Dr. Haim H.','Dr. Ziv I.','Dr. Bar J.','Dr. Lior K.','Dr. Mor L.','Dr. Noa M.','Dr. Paz N.','Dr. Raz O.'],internal:['Dr. Avraham A.','Dr. Ben-Ami B.','Dr. Carmi C.','Dr. Dror D.','Dr. Even E.','Dr. Frenkel F.','Dr. Goren G.','Dr. Halevi H.','Dr. Inbar I.','Dr. Jakobson J.','Dr. Kadosh K.','Dr. Lasri L.','Dr. Manor M.','Dr. Navon N.','Dr. Ofir O.']};
+  for(const sp of Object.keys(base))for(const name of base[sp]){try{const ins=await dbIns('doctors',{name,specialty:sp,pin:DEFAULT_PIN});DOCS[sp].push(ins[0]);}catch(e){}}
 }
-
 setInterval(loadAll,30000);
-
 function populateDoctorFilter(){
   const sel=document.getElementById('f-doctor');if(!sel)return;
   const cur=sel.value;sel.innerHTML='<option value="">All doctors</option>';
@@ -716,19 +731,26 @@ function populateDoctorFilter(){
   sel.value=cur;
 }
 
+// Notification badge on Exchange tab
+function updateExchangeNotif(){
+  const btn=document.getElementById('ditab-exchange');if(!btn||!curDoc)return;
+  const incomingSwaps=swaps.filter(s=>s.type==='swap'&&s.target_doctor===curDoc&&s.target_approval==='pending').length;
+  const availableGiveaways=swaps.filter(s=>s.type==='giveaway'&&s.status==='giveaway'&&s.requester!==curDoc&&getDocSpec(s.requester)===curSpec).length;
+  const total=incomingSwaps+availableGiveaways;
+  const existing=btn.querySelector('.notif');if(existing)existing.remove();
+  if(total>0){const n=document.createElement('span');n.className='notif';n.textContent=total;btn.appendChild(n);}
+}
+
 // ══════════════════════════════════════
 // LOGIN
 // ══════════════════════════════════════
 function loginSpecChange(){
-  const sp=document.getElementById('login-specialty').value;
-  loginSelectedSpec=sp;
-  const sel=document.getElementById('login-name');
-  sel.innerHTML='<option value="">— Select name —</option>';
+  const sp=document.getElementById('login-specialty').value;loginSelectedSpec=sp;
+  const sel=document.getElementById('login-name');sel.innerHTML='<option value="">— Select name —</option>';
   if(sp)(DOCS[sp]||[]).forEach(d=>{const o=document.createElement('option');o.value=d.name;o.textContent=d.name;sel.appendChild(o);});
 }
 function loginStep1Next(){
-  const sp=document.getElementById('login-specialty').value;
-  const name=document.getElementById('login-name').value;
+  const sp=document.getElementById('login-specialty').value,name=document.getElementById('login-name').value;
   if(!sp||!name){toast('Please select your specialty and name');return;}
   loginSelectedSpec=sp;loginSelectedName=name;
   document.getElementById('login-greeting').textContent=`Hello, ${name.replace('Dr.','')} 👋`;
@@ -746,7 +768,8 @@ function checkPin(){
     document.getElementById('login-screen').style.display='none';
     document.getElementById('doc-bar-name').textContent=curDoc;
     document.getElementById('doc-bar-info').textContent=specLbl(curSpec)+' · Logged in';
-    renderCal();renderMyReqs();renderMySwaps();toast(`Welcome ${curDoc.replace('Dr.','')} ✓`);
+    renderCal();renderMyReqs();renderExchangeTab();updateExchangeNotif();
+    toast(`Welcome ${curDoc.replace('Dr.','')} ✓`);
   }else{document.getElementById('pin-error').textContent='❌ Incorrect PIN. Try again.';pinBuffer='';updatePinDisplay();}
 }
 function logoutDoctor(){
@@ -771,7 +794,7 @@ async function changePinSubmit(){
 }
 
 // ══════════════════════════════════════
-// ADMIN / PANEL NAV
+// PANEL / TAB NAV
 // ══════════════════════════════════════
 function showPanel(name,btn){
   if(name==='admin'&&!adminOk){
@@ -791,68 +814,26 @@ function checkPw(){
 function cancelAdmin(){document.getElementById('pw-screen').style.display='none';document.querySelectorAll('.view-tabs .tab').forEach((t,i)=>t.classList.toggle('active',i===0));}
 
 function showDocTab(name){
-  ['myshifts','finalschedule','myswaps'].forEach(t=>{
+  ['myshifts','finalschedule','exchange'].forEach(t=>{
     document.getElementById('dtab-'+t).style.display=t===name?'':'none';
     const b=document.getElementById('ditab-'+t);if(b)b.classList.toggle('active',t===name);
   });
   if(name==='finalschedule')renderFinalScheduleDoctor();
-  if(name==='myswaps')renderMySwaps();
+  if(name==='exchange')renderExchangeTab();
 }
 function showAdminTab(name){
-  ['req','sched','publish','conflicts','swaps','rules','holidays','doctors','links'].forEach(t=>{
+  ['req','sched','publish','conflicts','exchange','rules','holidays','doctors','links'].forEach(t=>{
     document.getElementById('tab-'+t).style.display=t===name?'':'none';
     const b=document.getElementById('itab-'+t);if(b)b.classList.toggle('active',t===name);
   });
   if(name==='sched'){populateSchedMonths();renderSchedule();}
   if(name==='publish')renderPublishTab();
   if(name==='conflicts')renderConflicts();
-  if(name==='swaps')renderSwapsAdmin();
+  if(name==='exchange')renderAdminExchange();
   if(name==='rules')renderRules();
   if(name==='holidays')renderHolidays();
   if(name==='doctors')renderDoctors();
   if(name==='links')renderLinks();
-}
-
-// ══════════════════════════════════════
-// SLOT RULES MANAGEMENT
-// ══════════════════════════════════════
-function renderRules(){
-  const tbody=document.getElementById('rules-tbody');
-  if(!slotRules.length){tbody.innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--text3);padding:20px;font-style:italic">No custom rules yet — using defaults (ZVULUN=2, LIN=1)</td></tr>`;return;}
-  tbody.innerHTML=slotRules.map(r=>{
-    const n=r.doctors_needed;
-    return`<tr>
-      <td><strong>${WD[r.day_of_week]}</strong></td>
-      <td>${specBadge(r.specialty)}</td>
-      <td>${siteBadge(r.site)}</td>
-      <td>${r.shift_type?shiftBadge(r.shift_type):'<span style="color:var(--text3);font-size:11px">Regular / All</span>'}</td>
-      <td><span class="need-badge ${needBadgeClass(n)}">${n}</span></td>
-      <td><button class="btn btn-danger btn-sm" onclick="deleteRule(${r.id})">Remove</button></td>
-    </tr>`;
-  }).join('');
-}
-
-async function addRule(){
-  const day=parseInt(document.getElementById('r-day').value);
-  const specialty=document.getElementById('r-spec').value;
-  const site=document.getElementById('r-site').value;
-  const shiftRaw=document.getElementById('r-shift').value;
-  const shift_type=shiftRaw||null;
-  const doctors_needed=parseInt(document.getElementById('r-needed').value);
-  if(!doctors_needed||doctors_needed<1){toast('Enter a valid number');return;}
-  // Check duplicate
-  if(slotRules.find(r=>r.day_of_week===day&&r.specialty===specialty&&r.site===site&&r.shift_type==shift_type)){
-    toast('A rule for this combination already exists. Remove it first.');return;
-  }
-  try{
-    const ins=await dbIns('slot_rules',{day_of_week:day,specialty,site,shift_type,doctors_needed});
-    slotRules.push(ins[0]);renderRules();toast('Rule added ✓');
-  }catch(e){toast('Error: '+e.message);}
-}
-
-async function deleteRule(id){
-  try{await dbDel('slot_rules',id);slotRules=slotRules.filter(r=>r.id!==id);renderRules();toast('Rule removed');}
-  catch(e){toast('Error: '+e.message);}
 }
 
 // ══════════════════════════════════════
@@ -871,8 +852,7 @@ function renderCal(){
     const special=isSpecial(ds);const past=ds<todayStr;
     const cell=document.createElement('div');
     cell.className='cal-day'+(past?' past':'')+(ds===todayStr?' today':'')+(special?' special':'');
-    const dn=document.createElement('div');dn.className='day-num';
-    dn.textContent=d;dn.style.color=dow===6?'var(--accent)':dow===5?'var(--danger)':'var(--text2)';cell.appendChild(dn);
+    const dn=document.createElement('div');dn.className='day-num';dn.textContent=d;dn.style.color=dow===6?'var(--accent)':dow===5?'var(--danger)':'var(--text2)';cell.appendChild(dn);
     const hn=holName(ds);
     if(hn||dow===5||dow===6){const l=document.createElement('div');l.className='day-label';l.textContent=hn||(dow===5?'Friday':'Saturday');cell.appendChild(l);}
     const sl=document.createElement('div');sl.className='shifts-list';
@@ -911,24 +891,335 @@ async function submitRequest(){
     closeModal('modal-shift');renderCal();renderMyReqs();toast('✓ Shift request submitted!');
   }catch(e){toast('Error: '+e.message);}finally{btn.disabled=false;btn.textContent='Submit request';}
 }
+
 function renderMyReqs(){
   const wrap=document.getElementById('my-requests');
-  const mine=reqs.filter(r=>r.doctor===curDoc).sort((a,b)=>a.date.localeCompare(b.date));
-  if(!mine.length){wrap.innerHTML='<div class="empty-state"><div class="icon">📋</div>No requests yet — click a day on the calendar.</div>';return;}
-  let h=`<table class="req-table"><thead><tr><th>Date</th><th>Site</th><th>Shift</th><th>Status</th><th></th></tr></thead><tbody>`;
-  mine.forEach(r=>{
-    h+=`<tr><td style="font-family:'DM Mono',monospace;font-size:11px">${r.date} <span style="color:var(--text3)">${WD[new Date(r.date+'T12:00:00').getDay()]}</span></td>
-    <td>${siteBadge(r.site)}</td>
-    <td>${r.shift_type?shiftBadge(r.shift_type):'<span style="color:var(--text3);font-size:11px">Regular</span>'}</td>
-    <td>${stBadge(r.status)}</td>
-    <td style="display:flex;gap:4px">
-      ${r.status==='pending'?`<button class="btn btn-danger btn-sm" onclick="cancelReq(${r.id})">Cancel</button>`:''}
-      ${r.status==='approved'?`<button class="btn btn-ghost btn-sm" onclick="openSwapModal(${r.id})">⇄ Swap</button>`:''}
-    </td></tr>`;
+  const mine=reqs.filter(r=>r.doctor===curDoc&&r.status==='approved').sort((a,b)=>a.date.localeCompare(b.date));
+  const pending=reqs.filter(r=>r.doctor===curDoc&&r.status==='pending').sort((a,b)=>a.date.localeCompare(b.date));
+  if(!mine.length&&!pending.length){wrap.innerHTML='<div class="empty-state"><div class="icon">📋</div>No requests yet — click a day on the calendar.</div>';return;}
+  let h='';
+  if(mine.length){
+    h+=`<table class="req-table"><thead><tr><th>Date</th><th>Site</th><th>Shift</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+    mine.forEach(r=>{
+      // Check if this shift is already given away
+      const givenAway=swaps.find(s=>s.type==='giveaway'&&s.requester_req_id===r.id&&['giveaway','claimed'].includes(s.status));
+      h+=`<tr><td style="font-family:'DM Mono',monospace;font-size:11px">${r.date} <span style="color:var(--text3)">${WD[new Date(r.date+'T12:00:00').getDay()]}</span></td>
+      <td>${siteBadge(r.site)}</td>
+      <td>${r.shift_type?shiftBadge(r.shift_type):'<span style="color:var(--text3);font-size:11px">Regular</span>'}</td>
+      <td>${givenAway?stBadge(givenAway.status):stBadge(r.status)}</td>
+      <td style="display:flex;gap:4px;flex-wrap:wrap">
+        ${!givenAway?`<button class="btn btn-ghost btn-sm" onclick="openGiveawayModal(${r.id})">🎁 Give away</button>`:''}
+        ${!givenAway?`<button class="btn btn-ghost btn-sm" onclick="openSwapModal(${r.id})">⇄ Swap</button>`:''}
+        ${givenAway&&givenAway.status==='giveaway'?`<button class="btn btn-danger btn-sm" onclick="cancelGiveaway(${givenAway.id})">Cancel giveaway</button>`:''}
+      </td></tr>`;
+    });
+    h+='</tbody></table>';
+  }
+  if(pending.length){
+    h+=`<div style="font-size:12px;font-weight:600;color:var(--text2);margin-top:14px;margin-bottom:6px">Pending requests</div>`;
+    h+=`<table class="req-table"><thead><tr><th>Date</th><th>Site</th><th>Shift</th><th>Status</th><th></th></tr></thead><tbody>`;
+    pending.forEach(r=>{
+      h+=`<tr><td style="font-family:'DM Mono',monospace;font-size:11px">${r.date} <span style="color:var(--text3)">${WD[new Date(r.date+'T12:00:00').getDay()]}</span></td>
+      <td>${siteBadge(r.site)}</td>
+      <td>${r.shift_type?shiftBadge(r.shift_type):'<span style="color:var(--text3);font-size:11px">Regular</span>'}</td>
+      <td>${stBadge(r.status)}</td>
+      <td><button class="btn btn-danger btn-sm" onclick="cancelReq(${r.id})">Cancel</button></td></tr>`;
+    });
+    h+='</tbody></table>';
+  }
+  wrap.innerHTML=h;
+}
+async function cancelReq(id){try{await dbDel('requests',id);reqs=reqs.filter(r=>r.id!==id);renderCal();renderMyReqs();toast('Request cancelled');}catch(e){toast('Error: '+e.message);}}
+
+// ══════════════════════════════════════
+// GIVE AWAY
+// ══════════════════════════════════════
+function openGiveawayModal(reqId){
+  const sel=document.getElementById('ga-shift');sel.innerHTML='';
+  const approvedShifts=reqs.filter(r=>r.doctor===curDoc&&r.status==='approved');
+  // Filter out already given away
+  const givenIds=swaps.filter(s=>s.type==='giveaway'&&s.requester===curDoc&&['giveaway','claimed'].includes(s.status)).map(s=>s.requester_req_id);
+  const available=approvedShifts.filter(r=>!givenIds.includes(r.id));
+  if(!available.length){toast('No eligible approved shifts to give away');return;}
+  available.forEach(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=shiftDesc(r);if(r.id===reqId)o.selected=true;sel.appendChild(o);});
+  document.getElementById('ga-reason').value='';
+  openModal('modal-giveaway');
+}
+
+async function submitGiveaway(){
+  const reqId=parseInt(document.getElementById('ga-shift').value);
+  const reason=document.getElementById('ga-reason').value.trim();
+  const r=reqs.find(r=>r.id===reqId);if(!r)return;
+  try{
+    const row={
+      type:'giveaway',requester:curDoc,requester_req_id:reqId,
+      specialty:curSpec,status:'giveaway',
+      target_approval:'n/a',admin_status:'pending',
+      note:`${curDoc} giving away: ${shiftDesc(r)}${reason?' — '+reason:''}`
+    };
+    const ins=await dbIns('swaps',row);swaps.push(ins[0]);
+    closeModal('modal-giveaway');renderMyReqs();renderExchangeTab();
+    toast('✓ Shift posted as available for others!');
+  }catch(e){toast('Error: '+e.message);}
+}
+
+async function cancelGiveaway(swapId){
+  try{await dbDel('swaps',swapId);swaps=swaps.filter(s=>s.id!==swapId);renderMyReqs();renderExchangeTab();toast('Giveaway cancelled');}
+  catch(e){toast('Error: '+e.message);}
+}
+
+// Doctor claims a giveaway
+async function claimGiveaway(swapId){
+  const s=swaps.find(s=>s.id===swapId);if(!s)return;
+  const origReq=reqs.find(r=>r.id===s.requester_req_id);
+  if(!origReq)return;
+  // Mark as claimed, set claimer
+  try{
+    await dbUpd('swaps',swapId,{status:'claimed',target_doctor:curDoc,note:s.note+` → claimed by ${curDoc}`});
+    s.status='claimed';s.target_doctor=curDoc;
+    renderExchangeTab();updateExchangeNotif();
+    toast('✓ Claim submitted! Waiting for medical director approval.');
+  }catch(e){toast('Error: '+e.message);}
+}
+
+// ══════════════════════════════════════
+// SWAP (two-step)
+// ══════════════════════════════════════
+function openSwapModal(myId){
+  const my=document.getElementById('sw-my');my.innerHTML='';
+  const givenIds=swaps.filter(s=>s.type==='giveaway'&&s.requester===curDoc&&['giveaway','claimed'].includes(s.status)).map(s=>s.requester_req_id);
+  reqs.filter(r=>r.doctor===curDoc&&r.status==='approved'&&!givenIds.includes(r.id)).forEach(r=>{
+    const o=document.createElement('option');o.value=r.id;o.textContent=shiftDesc(r);if(r.id===myId)o.selected=true;my.appendChild(o);
+  });
+  const other=document.getElementById('sw-other');
+  other.innerHTML='<option value="">— Select doctor —</option>';
+  // Only same specialty
+  (DOCS[curSpec]||[]).filter(d=>d.name!==curDoc).forEach(d=>{const o=document.createElement('option');o.value=d.name;o.textContent=d.name;other.appendChild(o);});
+  other.onchange=()=>{
+    const their=document.getElementById('sw-their');their.innerHTML='<option value="">— Any shift (open request) —</option>';
+    reqs.filter(r=>r.doctor===other.value&&r.status==='approved').forEach(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=shiftDesc(r);their.appendChild(o);});
+  };
+  openModal('modal-swap');
+}
+
+async function submitSwap(){
+  const myId=document.getElementById('sw-my').value;
+  const otherDoc=document.getElementById('sw-other').value;
+  const theirId=document.getElementById('sw-their').value;
+  if(!myId||!otherDoc){toast('Please fill in required fields');return;}
+  const myReq=reqs.find(r=>r.id==myId);
+  try{
+    const row={
+      type:'swap',requester:curDoc,requester_req_id:parseInt(myId),
+      target_doctor:otherDoc,target_req_id:theirId?parseInt(theirId):null,
+      specialty:curSpec,
+      status:'swap_pending',target_approval:'pending',admin_status:'pending',
+      note:`${curDoc} wants to swap ${shiftDesc(myReq)} with ${otherDoc}`
+    };
+    const ins=await dbIns('swaps',row);swaps.push(ins[0]);
+    closeModal('modal-swap');renderMyReqs();renderExchangeTab();
+    toast('✓ Swap request sent to '+otherDoc+' for approval!');
+  }catch(e){toast('Error: '+e.message);}
+}
+
+// Doctor B responds to incoming swap request
+async function respondSwap(swapId, accepted){
+  const s=swaps.find(s=>s.id===swapId);if(!s)return;
+  if(accepted){
+    // Doctor B accepts → now goes to admin
+    await dbUpd('swaps',swapId,{target_approval:'accepted',status:'swap_pending',note:s.note+` → accepted by ${curDoc}`});
+    s.target_approval='accepted';
+    toast('✓ Swap accepted! Now waiting for medical director approval.');
+  }else{
+    await dbUpd('swaps',swapId,{target_approval:'declined',status:'swap_rejected',note:s.note+` → declined by ${curDoc}`});
+    s.target_approval='declined';s.status='swap_rejected';
+    toast('Swap declined.');
+  }
+  renderExchangeTab();updateExchangeNotif();
+}
+
+// ══════════════════════════════════════
+// EXCHANGE TAB (DOCTOR)
+// ══════════════════════════════════════
+function renderExchangeTab(){
+  renderAvailableShifts();
+  renderIncomingSwaps();
+  renderOutgoingRequests();
+  updateExchangeNotif();
+}
+
+function renderAvailableShifts(){
+  const wrap=document.getElementById('available-shifts-list');
+  // Giveaways from same specialty, not my own, not yet claimed
+  const available=swaps.filter(s=>
+    s.type==='giveaway'&&s.status==='giveaway'&&
+    s.requester!==curDoc&&
+    getDocSpec(s.requester)===curSpec
+  );
+  if(!available.length){wrap.innerHTML='<div class="empty-state" style="padding:20px"><div class="icon">🎁</div>No available shifts from your specialty right now.</div>';return;}
+  wrap.innerHTML=available.map(s=>{
+    const r=reqs.find(r=>r.id===s.requester_req_id);
+    return`<div class="avail-card">
+      <div class="avail-card-info">
+        <div class="avail-card-title">🎁 ${s.requester} is giving away a shift</div>
+        <div class="avail-card-sub">${r?shiftDesc(r):'Shift details unavailable'} · ${specLbl(curSpec)}</div>
+        ${s.note?`<div style="font-size:11px;color:var(--text3);margin-top:2px">${s.note.split('—')[1]||''}</div>`:''}
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="claimGiveaway(${s.id})">Take this shift</button>
+    </div>`;
+  }).join('');
+}
+
+function renderIncomingSwaps(){
+  const wrap=document.getElementById('incoming-swaps-list');
+  const incoming=swaps.filter(s=>s.type==='swap'&&s.target_doctor===curDoc&&s.target_approval==='pending');
+  if(!incoming.length){wrap.innerHTML='<div class="empty-state" style="padding:20px"><div class="icon">⇄</div>No incoming swap requests.</div>';return;}
+  wrap.innerHTML=incoming.map(s=>{
+    const myR=reqs.find(r=>r.id===s.target_req_id);
+    const theirR=reqs.find(r=>r.id===s.requester_req_id);
+    return`<div class="swap-req-card">
+      <div class="swap-req-card-info">
+        <div class="swap-req-card-title">⇄ ${s.requester} wants to swap with you</div>
+        <div class="swap-req-card-sub">Their shift: <strong>${theirR?shiftDesc(theirR):'—'}</strong></div>
+        ${myR?`<div class="swap-req-card-sub">Wants your shift: <strong>${shiftDesc(myR)}</strong></div>`:'<div class="swap-req-card-sub">Open request (any of your shifts)</div>'}
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn btn-success btn-sm" onclick="respondSwap(${s.id},true)">✓ Accept</button>
+        <button class="btn btn-danger btn-sm" onclick="respondSwap(${s.id},false)">✗ Decline</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderOutgoingRequests(){
+  const wrap=document.getElementById('my-outgoing-list');
+  const outgoing=swaps.filter(s=>s.requester===curDoc);
+  if(!outgoing.length){wrap.innerHTML='<div class="empty-state" style="padding:20px"><div class="icon">📤</div>No outgoing requests.</div>';return;}
+  let h=`<table class="req-table"><thead><tr><th>Type</th><th>Details</th><th>Status</th><th></th></tr></thead><tbody>`;
+  outgoing.forEach(s=>{
+    const typeLabel=s.type==='giveaway'?'🎁 Giveaway':'⇄ Swap';
+    const statusLabel=s.type==='giveaway'
+      ?(s.status==='giveaway'?'Awaiting claim':s.status==='claimed'?'Claimed — admin pending':'Done')
+      :(s.target_approval==='pending'?'Waiting for '+s.target_doctor:s.target_approval==='declined'?'Declined by '+s.target_doctor:s.admin_status==='pending'?'Admin review':s.admin_status);
+    h+=`<tr>
+      <td>${typeLabel}</td>
+      <td style="font-size:12px">${s.note||'—'}</td>
+      <td><span class="badge badge-${s.type==='giveaway'?s.status:s.target_approval==='pending'?'swap_pending':s.target_approval==='declined'?'swap_rejected':'swap_pending'}">${statusLabel}</span></td>
+      <td>${s.status==='giveaway'||s.target_approval==='pending'?`<button class="btn btn-danger btn-sm" onclick="cancelExchangeReq(${s.id})">Cancel</button>`:''}</td>
+    </tr>`;
   });
   wrap.innerHTML=h+'</tbody></table>';
 }
-async function cancelReq(id){try{await dbDel('requests',id);reqs=reqs.filter(r=>r.id!==id);renderCal();renderMyReqs();toast('Request cancelled');}catch(e){toast('Error: '+e.message);}}
+
+async function cancelExchangeReq(id){
+  try{await dbDel('swaps',id);swaps=swaps.filter(s=>s.id!==id);renderExchangeTab();renderMyReqs();toast('Request cancelled');}
+  catch(e){toast('Error: '+e.message);}
+}
+
+// ══════════════════════════════════════
+// ADMIN EXCHANGE TAB
+// ══════════════════════════════════════
+function renderAdminExchange(){
+  renderAdminGiveaways();
+  renderAdminSwaps();
+}
+
+function renderAdminGiveaways(){
+  const wrap=document.getElementById('admin-giveaways-list');
+  const claimed=swaps.filter(s=>s.type==='giveaway'&&s.status==='claimed'&&s.admin_status==='pending');
+  if(!claimed.length){wrap.innerHTML='<div class="empty-state" style="padding:16px"><div class="icon">🎁</div>No giveaway claims awaiting approval.</div>';return;}
+  let h=`<table class="req-table"><thead><tr><th>Giver</th><th>Claimer</th><th>Shift details</th><th>Actions</th></tr></thead><tbody>`;
+  claimed.forEach(s=>{
+    const r=reqs.find(r=>r.id===s.requester_req_id);
+    h+=`<tr>
+      <td>${s.requester}</td>
+      <td><strong>${s.target_doctor}</strong></td>
+      <td style="font-size:12px">${r?shiftDesc(r):'—'}</td>
+      <td style="display:flex;gap:4px">
+        <button class="btn btn-success btn-sm" onclick="approveGiveaway(${s.id})">✓ Approve</button>
+        <button class="btn btn-danger btn-sm" onclick="rejectGiveaway(${s.id})">✗ Reject</button>
+      </td>
+    </tr>`;
+  });
+  wrap.innerHTML=h+'</tbody></table>';
+}
+
+async function approveGiveaway(swapId){
+  const s=swaps.find(s=>s.id===swapId);if(!s)return;
+  const origReq=reqs.find(r=>r.id===s.requester_req_id);if(!origReq)return;
+  const claimer=s.target_doctor;
+  const claimerSpec=getDocSpec(claimer);
+  sync(true);
+  try{
+    // Transfer the shift: update the original request to the claimer
+    await dbUpd('requests',origReq.id,{doctor:claimer,specialty:claimerSpec});
+    origReq.doctor=claimer;origReq.specialty=claimerSpec;
+    // Mark swap as approved
+    await dbUpd('swaps',swapId,{admin_status:'approved',status:'swap_approved'});
+    s.admin_status='approved';s.status='swap_approved';
+    renderAdminExchange();renderRequests();toast('✓ Giveaway approved — shift transferred to '+claimer);
+  }catch(e){toast('Error: '+e.message);}finally{sync(false);}
+}
+
+async function rejectGiveaway(swapId){
+  const s=swaps.find(s=>s.id===swapId);if(!s)return;
+  try{
+    await dbUpd('swaps',swapId,{admin_status:'rejected',status:'giveaway'});// Put back to giveaway state
+    s.admin_status='rejected';s.status='giveaway';s.target_doctor=null;
+    renderAdminExchange();toast('Giveaway claim rejected — shift put back as available');
+  }catch(e){toast('Error: '+e.message);}
+}
+
+function renderAdminSwaps(){
+  const wrap=document.getElementById('admin-swaps-list');
+  // Swaps where doctor B has accepted, now awaiting admin
+  const ready=swaps.filter(s=>s.type==='swap'&&s.target_approval==='accepted'&&s.admin_status==='pending');
+  if(!ready.length){wrap.innerHTML='<div class="empty-state" style="padding:16px"><div class="icon">⇄</div>No swap requests awaiting your approval.</div>';return;}
+  let h=`<table class="req-table"><thead><tr><th>Doctor A</th><th>Doctor B</th><th>Details</th><th>Actions</th></tr></thead><tbody>`;
+  ready.forEach(s=>{
+    const rA=reqs.find(r=>r.id===s.requester_req_id);
+    const rB=s.target_req_id?reqs.find(r=>r.id===s.target_req_id):null;
+    h+=`<tr>
+      <td>${s.requester}<br><span style="font-size:11px;color:var(--text2)">${rA?shiftDesc(rA):'—'}</span></td>
+      <td>${s.target_doctor}<br><span style="font-size:11px;color:var(--text2)">${rB?shiftDesc(rB):'any shift'}</span></td>
+      <td style="font-size:12px">${s.note||'—'}</td>
+      <td style="display:flex;gap:4px">
+        <button class="btn btn-success btn-sm" onclick="approveSwap(${s.id})">✓ Approve</button>
+        <button class="btn btn-danger btn-sm" onclick="rejectSwap(${s.id})">✗ Reject</button>
+      </td>
+    </tr>`;
+  });
+  wrap.innerHTML=h+'</tbody></table>';
+}
+
+async function approveSwap(swapId){
+  const s=swaps.find(s=>s.id===swapId);if(!s)return;
+  const rA=reqs.find(r=>r.id===s.requester_req_id);
+  const rB=s.target_req_id?reqs.find(r=>r.id===s.target_req_id):null;
+  sync(true);
+  try{
+    if(rA&&rB){
+      // Swap the shift details
+      const[tSite,tShift,tDate,tDoc,tSpec]=[rA.site,rA.shift_type,rA.date,rA.doctor,rA.specialty];
+      await dbUpd('requests',rA.id,{site:rB.site,shift_type:rB.shift_type,date:rB.date,doctor:rB.doctor,specialty:rB.specialty});
+      await dbUpd('requests',rB.id,{site:tSite,shift_type:tShift,date:tDate,doctor:tDoc,specialty:tSpec});
+      rA.site=rB.site;rA.shift_type=rB.shift_type;rA.date=rB.date;
+      rB.site=tSite;rB.shift_type=tShift;rB.date=tDate;
+    }
+    await dbUpd('swaps',swapId,{admin_status:'approved',status:'swap_approved'});
+    s.admin_status='approved';s.status='swap_approved';
+    renderAdminExchange();renderRequests();toast('✓ Swap approved & shifts exchanged!');
+  }catch(e){toast('Error: '+e.message);}finally{sync(false);}
+}
+
+async function rejectSwap(swapId){
+  const s=swaps.find(s=>s.id===swapId);if(!s)return;
+  try{
+    await dbUpd('swaps',swapId,{admin_status:'rejected',status:'swap_rejected'});
+    s.admin_status='rejected';s.status='swap_rejected';
+    renderAdminExchange();toast('Swap rejected.');
+  }catch(e){toast('Error: '+e.message);}
+}
 
 // ══════════════════════════════════════
 // FINAL SCHEDULE (DOCTOR)
@@ -936,20 +1227,19 @@ async function cancelReq(id){try{await dbDel('requests',id);reqs=reqs.filter(r=>
 function renderFinalScheduleDoctor(){
   const container=document.getElementById('final-sched-container');
   const pubMonths=Object.entries(publishedMonths).filter(([k,v])=>v).map(([k])=>k).sort();
-  if(!pubMonths.length){container.innerHTML=`<div class="card"><div class="empty-state"><div class="icon">📅</div><strong>No schedule published yet.</strong><br>The medical director will publish the schedule when ready.</div></div>`;return;}
+  if(!pubMonths.length){container.innerHTML=`<div class="card"><div class="empty-state"><div class="icon">📅</div><strong>No schedule published yet.</strong></div></div>`;return;}
   container.innerHTML=pubMonths.map(mk=>{const[y,m]=mk.split('-').map(Number);return buildFinalSchedHTML(y,m);}).join('');
 }
 function buildFinalSchedHTML(y,m){
   const dim=new Date(y,m,0).getDate();
-  const specs=['ortho','pedia','internal'];
-  const specShort={ortho:'Ortho',pedia:'Pedia',internal:'Int'};
-  const sites=['ZVULUN','LIN'];
+  const specs=['ortho','pedia','internal'];const specShort={ortho:'Ortho',pedia:'Pedia',internal:'Int'};const sites=['ZVULUN','LIN'];
   let html=`<div class="card" style="margin-bottom:14px">
     <div style="font-size:16px;font-weight:600;margin-bottom:10px">${MONTHS[m-1]} ${y} — Final Schedule <span style="font-size:12px;font-weight:400;color:var(--success)">✓ Published</span></div>
     <div class="legend">
       <div class="legend-item"><span class="fs-slot-z" style="font-size:10px">Name</span> ZVULUN</div>
       <div class="legend-item"><span class="fs-slot-l" style="font-size:10px">Name</span> LIN</div>
-      <div class="legend-item"><span class="fs-slot-empty" style="font-size:10px;cursor:default">+ Empty</span> Click to volunteer</div>
+      <div class="legend-item"><span style="background:#f0e6ff;color:#6b3fa8;font-size:10px;border-radius:5px;padding:1px 6px;border:1.5px dashed #9b5de5">Name</span> Given away</div>
+      <div class="legend-item"><span class="fs-slot-empty" style="font-size:10px;cursor:default">+ Empty</span> Volunteer</div>
       <div class="legend-item" style="margin-left:auto"><span style="font-size:11px;background:var(--accent-light);border:2px solid var(--accent);border-radius:5px;padding:1px 7px;color:var(--accent)">★ You</span></div>
     </div>
     <div class="final-sched-scroll" style="margin-top:12px">
@@ -964,12 +1254,17 @@ function buildFinalSchedHTML(y,m){
     if(special){
       ['morning','evening'].forEach((st,si)=>{
         html+=`<tr class="${rc}">`;
-        if(si===0){html+=`<td class="date-cell" rowspan="2" style="vertical-align:middle"><strong>${ds}</strong><br><span style="color:var(--text3)">${WD[dow]}</span>${hn?`<br><span style="color:var(--warn);font-size:10px">${hn}</span>`:''}${hasMyShift?`<br><span style="color:var(--accent);font-size:10px;font-weight:600">● Your shift</span>`:''}</td>`;}
+        if(si===0)html+=`<td class="date-cell" rowspan="2" style="vertical-align:middle"><strong>${ds}</strong><br><span style="color:var(--text3)">${WD[dow]}</span>${hn?`<br><span style="color:var(--warn);font-size:10px">${hn}</span>`:''}${hasMyShift?`<br><span style="color:var(--accent);font-size:10px;font-weight:600">● Your shift</span>`:''}</td>`;
         sites.forEach(site=>{specs.forEach(sp=>{
           const n=getNeeded(ds,site,sp,st);
           const appr=reqs.filter(r=>r.date===ds&&r.site===site&&r.specialty===sp&&r.status==='approved'&&r.shift_type===st);
-          let cell=`<div style="font-size:9px;color:var(--text3);margin-bottom:2px">${st==='morning'?'🌅':'🌙'} (${n} needed)</div>`;
-          appr.forEach(r=>{const isMe=r.doctor===curDoc;const sn=r.doctor.replace('Dr. ','').split(' ')[0];cell+=`<span class="fs-slot-${site[0].toLowerCase()}${isMe?' fs-slot-mine':''}" title="${r.doctor}">${isMe?'★ '+sn:sn}</span>`;});
+          let cell=`<div style="font-size:9px;color:var(--text3);margin-bottom:2px">${st==='morning'?'🌅':'🌙'} (${n})</div>`;
+          appr.forEach(r=>{
+            const isMe=r.doctor===curDoc;const sn=r.doctor.replace('Dr. ','').split(' ')[0];
+            const givenAway=swaps.find(s=>s.type==='giveaway'&&s.requester_req_id===r.id&&s.status==='giveaway');
+            if(givenAway)cell+=`<span class="fs-slot-giveaway" title="${r.doctor} — giving away">${sn} 🎁</span>`;
+            else cell+=`<span class="fs-slot-${site[0].toLowerCase()}${isMe?' fs-slot-mine':''}" title="${r.doctor}">${isMe?'★ '+sn:sn}</span>`;
+          });
           for(let i=appr.length;i<n;i++)cell+=`<span class="fs-slot-empty" onclick="openVolunteer('${ds}','${site}','${sp}','${st}')">+ Empty</span>`;
           html+=`<td>${cell}</td>`;
         });});html+='</tr>';
@@ -980,7 +1275,12 @@ function buildFinalSchedHTML(y,m){
         const n=getNeeded(ds,site,sp,null);
         const appr=reqs.filter(r=>r.date===ds&&r.site===site&&r.specialty===sp&&r.status==='approved'&&!r.shift_type);
         let cell='';
-        appr.forEach(r=>{const isMe=r.doctor===curDoc;const sn=r.doctor.replace('Dr. ','').split(' ')[0];cell+=`<span class="fs-slot-${site[0].toLowerCase()}${isMe?' fs-slot-mine':''}" title="${r.doctor}">${isMe?'★ '+sn:sn}</span>`;});
+        appr.forEach(r=>{
+          const isMe=r.doctor===curDoc;const sn=r.doctor.replace('Dr. ','').split(' ')[0];
+          const givenAway=swaps.find(s=>s.type==='giveaway'&&s.requester_req_id===r.id&&s.status==='giveaway');
+          if(givenAway)cell+=`<span class="fs-slot-giveaway" title="${r.doctor} — giving away">${sn} 🎁</span>`;
+          else cell+=`<span class="fs-slot-${site[0].toLowerCase()}${isMe?' fs-slot-mine':''}" title="${r.doctor}">${isMe?'★ '+sn:sn}</span>`;
+        });
         for(let i=appr.length;i<n;i++)cell+=`<span class="fs-slot-empty" onclick="openVolunteer('${ds}','${site}','${sp}',null)">+ Empty</span>`;
         html+=`<td>${cell}</td>`;
       });});html+='</tr>';
@@ -988,6 +1288,7 @@ function buildFinalSchedHTML(y,m){
   }
   return html+'</tbody></table></div></div>';
 }
+
 function openVolunteer(date,site,specialty,shiftType){
   if(!curDoc){toast('Please log in first');return;}
   volunteerSlot={date,site,specialty,shift_type:shiftType==='null'?null:shiftType};
@@ -1007,11 +1308,10 @@ async function submitVolunteer(){
 }
 
 // ══════════════════════════════════════
-// PUBLISH TAB
+// PUBLISH
 // ══════════════════════════════════════
 function renderPublishTab(){
-  const months=[];
-  for(let i=-1;i<=3;i++){const d=new Date(now.getFullYear(),now.getMonth()+i,1);months.push({y:d.getFullYear(),m:d.getMonth()+1,label:`${MONTHS[d.getMonth()]} ${d.getFullYear()}`});}
+  const months=[];for(let i=-1;i<=3;i++){const d=new Date(now.getFullYear(),now.getMonth()+i,1);months.push({y:d.getFullYear(),m:d.getMonth()+1,label:`${MONTHS[d.getMonth()]} ${d.getFullYear()}`});}
   document.getElementById('publish-months-list').innerHTML=months.map(({y,m,label})=>{
     const mk=monthKey(y,m);const isPub=!!publishedMonths[mk];
     const app=reqs.filter(r=>r.date.startsWith(mk)&&r.status==='approved').length;
@@ -1019,23 +1319,19 @@ function renderPublishTab(){
     return`<div class="publish-banner ${isPub?'published':'unpublished'}">
       <div style="display:flex;align-items:center;gap:10px">
         <span class="publish-dot ${isPub?'':'off'}"></span>
-        <div>
-          <div style="font-size:14px;font-weight:600">${label}</div>
-          <div style="font-size:12px;color:var(--text2);margin-top:2px">${app} approved · ${pen} pending
-            ${isPub?'<span style="color:var(--success);font-weight:500;margin-left:8px">● Published</span>':'<span style="color:var(--text3);margin-left:8px">Not published</span>'}
-          </div>
-        </div>
+        <div><div style="font-size:14px;font-weight:600">${label}</div>
+        <div style="font-size:12px;color:var(--text2);margin-top:2px">${app} approved · ${pen} pending ${isPub?'<span style="color:var(--success);font-weight:500;margin-left:8px">● Published</span>':'<span style="color:var(--text3);margin-left:8px">Not published</span>'}</div></div>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        ${!isPub?`<button class="btn btn-publish" onclick="publishMonth('${mk}')">📢 Publish Schedule</button>`
+        ${!isPub?`<button class="btn btn-publish" onclick="publishMonth('${mk}')">📢 Publish</button>`
           :`<button class="btn btn-success btn-sm" onclick="publishMonth('${mk}')">↺ Re-publish</button>
             <button class="btn btn-danger btn-sm" onclick="unpublishMonth('${mk}')">Unpublish</button>`}
       </div>
     </div>`;
   }).join('');
 }
-function publishMonth(mk){publishedMonths[mk]=true;savePublished();renderPublishTab();toast('✓ Schedule published!');}
-function unpublishMonth(mk){if(!confirm('Unpublish? Doctors will no longer see it.'))return;publishedMonths[mk]=false;savePublished();renderPublishTab();toast('Unpublished');}
+function publishMonth(mk){publishedMonths[mk]=true;savePublished();renderPublishTab();toast('✓ Published!');}
+function unpublishMonth(mk){if(!confirm('Unpublish?'))return;publishedMonths[mk]=false;savePublished();renderPublishTab();toast('Unpublished');}
 
 // ══════════════════════════════════════
 // ADMIN — REQUESTS
@@ -1044,28 +1340,18 @@ function renderAdmin(){renderStats();renderRequests();}
 function renderStats(){
   const pending=reqs.filter(r=>r.status==='pending').length;
   const approved=reqs.filter(r=>r.status==='approved').length;
-  const swapP=swaps.filter(s=>s.status==='swap_pending').length;
-  const cfl=getConflicts().length;
+  const needAttention=getConflicts().length+swaps.filter(s=>(s.status==='claimed'||s.target_approval==='accepted')&&s.admin_status==='pending').length;
   document.getElementById('admin-stats').innerHTML=`
     <div class="stat-card"><div class="stat-num">${reqs.length}</div><div class="stat-label">Total requests</div></div>
     <div class="stat-card"><div class="stat-num" style="color:var(--warn)">${pending}</div><div class="stat-label">Pending</div></div>
     <div class="stat-card"><div class="stat-num" style="color:var(--success)">${approved}</div><div class="stat-label">Approved</div></div>
-    <div class="stat-card"><div class="stat-num" style="color:var(--danger)">${cfl+swapP}</div><div class="stat-label">Need attention</div></div>`;
+    <div class="stat-card"><div class="stat-num" style="color:var(--danger)">${needAttention}</div><div class="stat-label">Need attention</div></div>`;
 }
 function renderRequests(){
-  const fs=document.getElementById('f-status')?.value||'';
-  const fsp=document.getElementById('f-spec')?.value||'';
-  const fsi=document.getElementById('f-site')?.value||'';
-  const fdoc=document.getElementById('f-doctor')?.value||'';
-  const fsh=document.getElementById('f-shift')?.value||'';
+  const fs=document.getElementById('f-status')?.value||'';const fsp=document.getElementById('f-spec')?.value||'';const fsi=document.getElementById('f-site')?.value||'';const fdoc=document.getElementById('f-doctor')?.value||'';const fsh=document.getElementById('f-shift')?.value||'';
   const data=reqs.filter(r=>{
-    if(fs&&r.status!==fs)return false;
-    if(fsp&&r.specialty!==fsp)return false;
-    if(fsi&&r.site!==fsi)return false;
-    if(fdoc&&r.doctor!==fdoc)return false;
-    if(fsh==='regular'&&r.shift_type!=null)return false;
-    if(fsh==='morning'&&r.shift_type!=='morning')return false;
-    if(fsh==='evening'&&r.shift_type!=='evening')return false;
+    if(fs&&r.status!==fs)return false;if(fsp&&r.specialty!==fsp)return false;if(fsi&&r.site!==fsi)return false;if(fdoc&&r.doctor!==fdoc)return false;
+    if(fsh==='regular'&&r.shift_type!=null)return false;if(fsh==='morning'&&r.shift_type!=='morning')return false;if(fsh==='evening'&&r.shift_type!=='evening')return false;
     return true;
   }).sort((a,b)=>a.date.localeCompare(b.date));
   const wrap=document.getElementById('req-table');
@@ -1085,13 +1371,10 @@ function renderRequests(){
   });
   wrap.innerHTML=h+'</tbody></table>';renderStats();
 }
-async function setStatus(id,status){
-  try{sync(true);await dbUpd('requests',id,{status});const r=reqs.find(r=>r.id===id);if(r)r.status=status;renderRequests();toast(`Request ${status}`);}
-  catch(e){toast('Error: '+e.message);}finally{sync(false);}
-}
+async function setStatus(id,status){try{sync(true);await dbUpd('requests',id,{status});const r=reqs.find(r=>r.id===id);if(r)r.status=status;renderRequests();toast(`Request ${status}`);}catch(e){toast('Error: '+e.message);}finally{sync(false);}}
 function adminEdit(id){
   const r=reqs.find(r=>r.id===id);if(!r)return;
-  const newSite=prompt(`Site for ${r.doctor} on ${r.date}\nCurrent: ${r.site}\nType ZVULUN or LIN:`,r.site);
+  const newSite=prompt(`Site for ${r.doctor} on ${r.date}\nType ZVULUN or LIN:`,r.site);
   if(newSite===null)return;if(!['ZVULUN','LIN'].includes(newSite.toUpperCase())){toast('Use ZVULUN or LIN');return;}
   let newShift=r.shift_type;
   if(isSpecial(r.date)){const st=prompt('Shift? morning or evening',r.shift_type||'morning');if(st&&['morning','evening'].includes(st))newShift=st;}
@@ -1104,7 +1387,7 @@ async function bulkApprove(){const p=reqs.filter(r=>r.status==='pending');sync(t
 async function bulkReject(){const p=reqs.filter(r=>r.status==='pending');sync(true);try{await Promise.all(p.map(r=>dbUpd('requests',r.id,{status:'rejected'})));p.forEach(r=>r.status='rejected');renderRequests();toast(`✗ ${p.length} rejected`);}catch(e){toast('Error: '+e.message);}finally{sync(false);}}
 
 // ══════════════════════════════════════
-// SCHEDULE + MOVE (uses getNeeded)
+// SCHEDULE + MOVE
 // ══════════════════════════════════════
 function populateSchedMonths(){
   const sel=document.getElementById('sched-month');if(!sel||sel.options.length)return;
@@ -1165,7 +1448,7 @@ async function applyMove(){
 }
 
 // ══════════════════════════════════════
-// CONFLICTS (uses getNeeded)
+// CONFLICTS
 // ══════════════════════════════════════
 function getConflicts(){
   const out=[];
@@ -1203,28 +1486,22 @@ async function applyConflict(){
 }
 
 // ══════════════════════════════════════
-// AUTO-SCHEDULE (uses getNeeded)
+// AUTO-SCHEDULE
 // ══════════════════════════════════════
 async function autoSchedule(){
   showLoad(true,'Auto-scheduling…');
   try{
-    const counts={};
-    reqs.filter(r=>r.status==='approved').forEach(r=>counts[r.doctor]=(counts[r.doctor]||0)+1);
-    const groups={};
-    reqs.filter(r=>r.status==='pending').forEach(r=>{
-      const k=`${r.date}||${r.site}||${r.specialty}||${r.shift_type||''}`;
-      if(!groups[k])groups[k]=[];groups[k].push(r);
-    });
-    const sortedGroups=Object.entries(groups).sort(([ka],[kb])=>{
+    const counts={};reqs.filter(r=>r.status==='approved').forEach(r=>counts[r.doctor]=(counts[r.doctor]||0)+1);
+    const groups={};reqs.filter(r=>r.status==='pending').forEach(r=>{const k=`${r.date}||${r.site}||${r.specialty}||${r.shift_type||''}`;if(!groups[k])groups[k]=[];groups[k].push(r);});
+    const sorted=Object.entries(groups).sort(([ka],[kb])=>{
       const[da,sa,spa,sha]=ka.split('||');const[db,sb,spb,shb]=kb.split('||');
       const nA=reqs.filter(r=>r.date===da&&r.site===sa&&r.specialty===spa&&r.status==='approved'&&r.shift_type==(sha||null)).length;
       const nB=reqs.filter(r=>r.date===db&&r.site===sb&&r.specialty===spb&&r.status==='approved'&&r.shift_type==(shb||null)).length;
       return nA-nB;
     });
     const updates=[];let totalApp=0,totalRej=0;
-    for(const[key,pendingReqs] of sortedGroups){
-      const[date,site,specialty,shiftTypeRaw]=key.split('||');
-      const shiftType=shiftTypeRaw||null;
+    for(const[key,pendingReqs] of sorted){
+      const[date,site,specialty,shiftTypeRaw]=key.split('||');const shiftType=shiftTypeRaw||null;
       const n=getNeeded(date,site,specialty,shiftType);
       const already=reqs.filter(r=>r.date===date&&r.site===site&&r.specialty===specialty&&r.status==='approved'&&r.shift_type==(shiftType||null)).length;
       const slots=n-already;
@@ -1234,62 +1511,34 @@ async function autoSchedule(){
         else{r.status='rejected';totalRej++;updates.push({id:r.id,s:'rejected'});}
       });
     }
-    const batchSize=10;
-    for(let i=0;i<updates.length;i+=batchSize)await Promise.all(updates.slice(i,i+batchSize).map(u=>dbUpd('requests',u.id,{status:u.s})));
+    const bs=10;for(let i=0;i<updates.length;i+=bs)await Promise.all(updates.slice(i,i+bs).map(u=>dbUpd('requests',u.id,{status:u.s})));
     renderRequests();renderStats();toast(`⚡ ${totalApp} approved, ${totalRej} not needed`);
   }catch(e){toast('Error: '+e.message);}finally{showLoad(false);}
 }
 
 // ══════════════════════════════════════
-// SWAPS
+// SLOT RULES
 // ══════════════════════════════════════
-function openSwapModal(myId){
-  const my=document.getElementById('sw-my');my.innerHTML='';
-  reqs.filter(r=>r.doctor===curDoc&&r.status==='approved').forEach(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=`${r.date} · ${r.site}${r.shift_type?' '+r.shift_type:''}`;if(r.id===myId)o.selected=true;my.appendChild(o);});
-  const other=document.getElementById('sw-other');
-  other.innerHTML='<option value="">— Select doctor —</option>';
-  getAllDocs().filter(d=>d.name!==curDoc).forEach(d=>{const o=document.createElement('option');o.value=d.name;o.textContent=d.name;other.appendChild(o);});
-  other.onchange=()=>{
-    const their=document.getElementById('sw-their');their.innerHTML='<option value="">— Any shift —</option>';
-    reqs.filter(r=>r.doctor===other.value&&r.status==='approved').forEach(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=`${r.date} · ${r.site}${r.shift_type?' '+r.shift_type:''}`;their.appendChild(o);});
-  };
-  openModal('modal-swap');
+function renderRules(){
+  const tbody=document.getElementById('rules-tbody');
+  if(!slotRules.length){tbody.innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--text3);padding:20px;font-style:italic">No custom rules — using defaults (ZVULUN=2, LIN=1)</td></tr>`;return;}
+  tbody.innerHTML=slotRules.map(r=>`<tr>
+    <td><strong>${WD[r.day_of_week]}</strong></td><td>${specBadge(r.specialty)}</td><td>${siteBadge(r.site)}</td>
+    <td>${r.shift_type?shiftBadge(r.shift_type):'<span style="color:var(--text3);font-size:11px">Regular / All</span>'}</td>
+    <td><span class="need-badge ${needBadgeClass(r.doctors_needed)}">${r.doctors_needed}</span></td>
+    <td><button class="btn btn-danger btn-sm" onclick="deleteRule(${r.id})">Remove</button></td>
+  </tr>`).join('');
 }
-async function submitSwap(){
-  const myId=document.getElementById('sw-my').value,otherDoc=document.getElementById('sw-other').value,theirId=document.getElementById('sw-their').value;
-  if(!myId||!otherDoc){toast('Please fill in required fields');return;}
-  const myReq=reqs.find(r=>r.id==myId);
-  try{
-    const row={requester:curDoc,requester_req_id:parseInt(myId),target_doctor:otherDoc,target_req_id:theirId?parseInt(theirId):null,status:'swap_pending',note:`${curDoc} wants to swap ${myReq.date}·${myReq.site} with ${otherDoc}`};
-    const ins=await dbIns('swaps',row);swaps.push(ins[0]);closeModal('modal-swap');renderMySwaps();toast('✓ Swap request sent!');
-  }catch(e){toast('Error: '+e.message);}
+async function addRule(){
+  const day=parseInt(document.getElementById('r-day').value),specialty=document.getElementById('r-spec').value,site=document.getElementById('r-site').value;
+  const shiftRaw=document.getElementById('r-shift').value,shift_type=shiftRaw||null;
+  const doctors_needed=parseInt(document.getElementById('r-needed').value);
+  if(!doctors_needed||doctors_needed<1){toast('Enter a valid number');return;}
+  if(slotRules.find(r=>r.day_of_week===day&&r.specialty===specialty&&r.site===site&&r.shift_type==shift_type)){toast('Rule already exists. Remove it first.');return;}
+  try{const ins=await dbIns('slot_rules',{day_of_week:day,specialty,site,shift_type,doctors_needed});slotRules.push(ins[0]);renderRules();toast('Rule added ✓');}
+  catch(e){toast('Error: '+e.message);}
 }
-function renderMySwaps(){
-  const wrap=document.getElementById('my-swaps');
-  const mine=swaps.filter(s=>s.requester===curDoc||s.target_doctor===curDoc);
-  if(!mine.length){wrap.innerHTML='<div class="empty-state"><div class="icon">⇄</div>No swap requests yet.</div>';return;}
-  let h=`<table class="req-table"><thead><tr><th>Request</th><th>Status</th></tr></thead><tbody>`;
-  mine.forEach(s=>{h+=`<tr><td style="font-size:12px">${s.note||'Swap request'}</td><td>${stBadge(s.status)}</td></tr>`;});
-  wrap.innerHTML=h+'</tbody></table>';
-}
-function renderSwapsAdmin(){
-  const wrap=document.getElementById('swaps-list');
-  if(!swaps.length){wrap.innerHTML='<div class="empty-state"><div class="icon">⇄</div>No swap requests yet.</div>';return;}
-  let h=`<table class="req-table"><thead><tr><th>Request</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
-  swaps.forEach(s=>{h+=`<tr><td style="font-size:12px">${s.note||`${s.requester} ⇄ ${s.target_doctor}`}</td><td>${stBadge(s.status)}</td><td style="display:flex;gap:4px">${s.status==='swap_pending'?`<button class="btn btn-success btn-sm" onclick="setSwapStatus(${s.id},'swap_approved')">✓</button><button class="btn btn-danger btn-sm" onclick="setSwapStatus(${s.id},'swap_rejected')">✗</button>`:''} ${s.status!=='swap_pending'?`<button class="btn btn-ghost btn-sm" onclick="setSwapStatus(${s.id},'swap_pending')">↺</button>`:''}</td></tr>`;});
-  wrap.innerHTML=h+'</tbody></table>';renderStats();
-}
-async function setSwapStatus(id,status){
-  sync(true);try{
-    await dbUpd('swaps',id,{status});const s=swaps.find(s=>s.id===id);if(s)s.status=status;
-    if(status==='swap_approved'&&s?.requester_req_id&&s?.target_req_id){
-      const rA=reqs.find(r=>r.id===s.requester_req_id),rB=reqs.find(r=>r.id===s.target_req_id);
-      if(rA&&rB){const[tS,tSh,tD]=[rA.site,rA.shift_type,rA.date];await dbUpd('requests',rA.id,{site:rB.site,shift_type:rB.shift_type,date:rB.date});await dbUpd('requests',rB.id,{site:tS,shift_type:tSh,date:tD});rA.site=rB.site;rA.shift_type=rB.shift_type;rA.date=rB.date;rB.site=tS;rB.shift_type=tSh;rB.date=tD;}
-      toast('✓ Swap approved & shifts exchanged!');
-    }else toast(`Swap ${status.replace('swap_','')}`);
-    renderSwapsAdmin();renderRequests();
-  }catch(e){toast('Error: '+e.message);}finally{sync(false);}
-}
+async function deleteRule(id){try{await dbDel('slot_rules',id);slotRules=slotRules.filter(r=>r.id!==id);renderRules();toast('Rule removed');}catch(e){toast('Error: '+e.message);}}
 
 // ══════════════════════════════════════
 // HOLIDAYS
@@ -1312,7 +1561,7 @@ function renderHolidays(){
 }
 
 // ══════════════════════════════════════
-// DOCTORS & PINs
+// DOCTORS
 // ══════════════════════════════════════
 function renderDoctors(){
   document.getElementById('doctor-cols').innerHTML=['ortho','pedia','internal'].map(sp=>`
@@ -1361,12 +1610,10 @@ Please submit your preferred shifts for ${m} ${y}:
 🔗 ${link}
 
 Instructions:
-1. Open the link in your browser
-2. Select your specialty and name
-3. Enter your PIN (default: 1234)
-4. Click days you wish to work
-5. On Fridays, Saturdays & holidays — choose 🌅 Morning or 🌙 Evening
-6. Check "Final Schedule" once published
+1. Open the link & enter your PIN (default: 1234)
+2. "My Shifts" — request shifts & give away / swap
+3. "🔄 Available & Swaps" — see available shifts & respond to swap requests
+4. "Final Schedule" — see the published schedule
 
 ⏰ Deadline: ${dl}
 
