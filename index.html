@@ -901,16 +901,24 @@ function renderMyReqs(){
   if(mine.length){
     h+=`<table class="req-table"><thead><tr><th>Date</th><th>Site</th><th>Shift</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
     mine.forEach(r=>{
-      // Check if this shift is already given away
-      const givenAway=swaps.find(s=>s.type==='giveaway'&&s.requester_req_id===r.id&&['giveaway','claimed'].includes(s.status));
+      // Active giveaway: status is 'giveaway' or 'claimed' (pending admin)
+      const activeGiveaway=swaps.find(s=>s.type==='giveaway'&&s.requester_req_id===r.id&&['giveaway','claimed'].includes(s.status));
+      // Completed giveaway (approved) — shift no longer belongs to this doctor
+      const completedGiveaway=swaps.find(s=>s.type==='giveaway'&&s.requester_req_id===r.id&&s.status==='swap_approved');
+      let statusDisplay=stBadge(r.status);
+      if(activeGiveaway){
+        statusDisplay=activeGiveaway.status==='giveaway'
+          ?`<span class="badge badge-giveaway">🎁 Available</span>`
+          :`<span class="badge badge-claimed">Claimed — pending approval</span>`;
+      }
       h+=`<tr><td style="font-family:'DM Mono',monospace;font-size:11px">${r.date} <span style="color:var(--text3)">${WD[new Date(r.date+'T12:00:00').getDay()]}</span></td>
       <td>${siteBadge(r.site)}</td>
       <td>${r.shift_type?shiftBadge(r.shift_type):'<span style="color:var(--text3);font-size:11px">Regular</span>'}</td>
-      <td>${givenAway?stBadge(givenAway.status):stBadge(r.status)}</td>
+      <td>${statusDisplay}</td>
       <td style="display:flex;gap:4px;flex-wrap:wrap">
-        ${!givenAway?`<button class="btn btn-ghost btn-sm" onclick="openGiveawayModal(${r.id})">🎁 Give away</button>`:''}
-        ${!givenAway?`<button class="btn btn-ghost btn-sm" onclick="openSwapModal(${r.id})">⇄ Swap</button>`:''}
-        ${givenAway&&givenAway.status==='giveaway'?`<button class="btn btn-danger btn-sm" onclick="cancelGiveaway(${givenAway.id})">Cancel giveaway</button>`:''}
+        ${!activeGiveaway?`<button class="btn btn-ghost btn-sm" onclick="openGiveawayModal(${r.id})">🎁 Give away</button>`:''}
+        ${!activeGiveaway?`<button class="btn btn-ghost btn-sm" onclick="openSwapModal(${r.id})">⇄ Swap</button>`:''}
+        ${activeGiveaway&&activeGiveaway.status==='giveaway'?`<button class="btn btn-danger btn-sm" onclick="cancelGiveaway(${activeGiveaway.id})">Cancel giveaway</button>`:''}
       </td></tr>`;
     });
     h+='</tbody></table>';
@@ -1098,14 +1106,24 @@ function renderOutgoingRequests(){
   let h=`<table class="req-table"><thead><tr><th>Type</th><th>Details</th><th>Status</th><th></th></tr></thead><tbody>`;
   outgoing.forEach(s=>{
     const typeLabel=s.type==='giveaway'?'🎁 Giveaway':'⇄ Swap';
-    const statusLabel=s.type==='giveaway'
-      ?(s.status==='giveaway'?'Awaiting claim':s.status==='claimed'?'Claimed — admin pending':'Done')
-      :(s.target_approval==='pending'?'Waiting for '+s.target_doctor:s.target_approval==='declined'?'Declined by '+s.target_doctor:s.admin_status==='pending'?'Admin review':s.admin_status);
+    let statusLabel,badgeClass,canCancel=false;
+    if(s.type==='giveaway'){
+      if(s.status==='giveaway'){statusLabel='Available — awaiting claim';badgeClass='giveaway';canCancel=true;}
+      else if(s.status==='claimed'&&s.admin_status==='pending'){statusLabel='Claimed — awaiting admin approval';badgeClass='claimed';}
+      else if(s.status==='swap_approved'){statusLabel='✓ Completed — shift transferred';badgeClass='approved';}
+      else{statusLabel='Available again';badgeClass='giveaway';canCancel=true;}
+    } else {
+      if(s.target_approval==='pending'){statusLabel='Waiting for '+s.target_doctor+' to respond';badgeClass='swap_pending';canCancel=true;}
+      else if(s.target_approval==='declined'){statusLabel='Declined by '+s.target_doctor;badgeClass='swap_rejected';}
+      else if(s.target_approval==='accepted'&&s.admin_status==='pending'){statusLabel='Accepted — awaiting admin approval';badgeClass='swap_pending';}
+      else if(s.admin_status==='approved'||s.status==='swap_approved'){statusLabel='✓ Swap completed';badgeClass='approved';}
+      else{statusLabel='Rejected by admin';badgeClass='swap_rejected';}
+    }
     h+=`<tr>
       <td>${typeLabel}</td>
       <td style="font-size:12px">${s.note||'—'}</td>
-      <td><span class="badge badge-${s.type==='giveaway'?s.status:s.target_approval==='pending'?'swap_pending':s.target_approval==='declined'?'swap_rejected':'swap_pending'}">${statusLabel}</span></td>
-      <td>${s.status==='giveaway'||s.target_approval==='pending'?`<button class="btn btn-danger btn-sm" onclick="cancelExchangeReq(${s.id})">Cancel</button>`:''}</td>
+      <td><span class="badge badge-${badgeClass}">${statusLabel}</span></td>
+      <td>${canCancel?`<button class="btn btn-danger btn-sm" onclick="cancelExchangeReq(${s.id})">Cancel</button>`:''}</td>
     </tr>`;
   });
   wrap.innerHTML=h+'</tbody></table>';
@@ -1148,25 +1166,38 @@ async function approveGiveaway(swapId){
   const s=swaps.find(s=>s.id===swapId);if(!s)return;
   const origReq=reqs.find(r=>r.id===s.requester_req_id);if(!origReq)return;
   const claimer=s.target_doctor;
-  const claimerSpec=getDocSpec(claimer);
+  const claimerSpec=getDocSpec(claimer)||s.specialty;
   sync(true);
   try{
-    // Transfer the shift: update the original request to the claimer
-    await dbUpd('requests',origReq.id,{doctor:claimer,specialty:claimerSpec});
-    origReq.doctor=claimer;origReq.specialty=claimerSpec;
-    // Mark swap as approved
+    // Transfer the shift: reassign request to the claimer
+    await dbUpd('requests',origReq.id,{doctor:claimer,specialty:claimerSpec,status:'approved'});
+    // Update local state so claimer sees it in My Shifts immediately
+    origReq.doctor=claimer;
+    origReq.specialty=claimerSpec;
+    origReq.status='approved';
+    // Mark swap as fully approved
     await dbUpd('swaps',swapId,{admin_status:'approved',status:'swap_approved'});
     s.admin_status='approved';s.status='swap_approved';
-    renderAdminExchange();renderRequests();toast('✓ Giveaway approved — shift transferred to '+claimer);
+    // Refresh all views
+    renderAdminExchange();renderRequests();renderMyReqs();renderCal();
+    toast('✓ Giveaway approved — shift transferred to '+claimer);
   }catch(e){toast('Error: '+e.message);}finally{sync(false);}
 }
 
 async function rejectGiveaway(swapId){
   const s=swaps.find(s=>s.id===swapId);if(!s)return;
   try{
-    await dbUpd('swaps',swapId,{admin_status:'rejected',status:'giveaway'});// Put back to giveaway state
-    s.admin_status='rejected';s.status='giveaway';s.target_doctor=null;
-    renderAdminExchange();toast('Giveaway claim rejected — shift put back as available');
+    // Reset back to available: clear claimer, reset status to 'giveaway', reset admin_status
+    await dbUpd('swaps',swapId,{
+      status:'giveaway',
+      target_doctor:null,
+      admin_status:'pending'
+    });
+    s.status='giveaway';
+    s.target_doctor=null;
+    s.admin_status='pending';
+    renderAdminExchange();renderMyReqs();renderExchangeTab();
+    toast('Claim rejected — shift is available again for others to claim');
   }catch(e){toast('Error: '+e.message);}
 }
 
