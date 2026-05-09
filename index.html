@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl" id="html-root">
+<html lang="en" dir="ltr" id="html-root">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -385,8 +385,11 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
           <div style="font-size:11px;color:var(--text2);margin-top:8px" id="cal-legend-text">🟡 שישי / שבת / חג — משמרות בוקר וערב</div>
         </div>
         <div class="card">
-          <div class="card-title" id="lbl-my-requests">בקשות המשמרות שלי</div>
-          <div id="my-requests"><div class="empty-state"><div class="icon">📋</div><span class="t" data-he="לחץ על יום בלוח לבקש משמרת" data-en="Click a day on the calendar to request a shift">לחץ על יום בלוח לבקש משמרת</span></div></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+            <div class="card-title" style="margin-bottom:0" id="lbl-my-requests">My Shift Requests</div>
+            <select id="doc-f-month" onchange="renderMyReqs()" style="font-size:12px;padding:5px 8px"></select>
+          </div>
+          <div id="my-requests"><div class="empty-state"><div class="icon">📋</div><span class="t" data-he="לחץ על יום בלוח לבקש משמרת" data-en="Click a day on the calendar to request a shift">Click a day on the calendar to request a shift</span></div></div>
         </div>
       </div>
 
@@ -444,6 +447,7 @@ select:focus,input:focus{outline:none;border-color:var(--accent)}
             <select id="f-site" onchange="renderRequests()"><option value="">—</option><option value="ZVULUN">ZVULUN</option><option value="LIN">LIN</option></select>
             <select id="f-doctor" onchange="renderRequests()"></select>
             <select id="f-shift" onchange="renderRequests()"></select>
+            <select id="f-month" onchange="renderRequests()"></select>
             <button class="btn btn-success btn-sm" onclick="bulkApprove()">✓ <span class="t" data-he="אשר הכל" data-en="Approve all">אשר הכל</span></button>
             <button class="btn btn-danger btn-sm" onclick="bulkReject()">✗ <span class="t" data-he="דחה הכל" data-en="Reject all">דחה הכל</span></button>
           </div>
@@ -698,7 +702,7 @@ async function dbDel(t,id){const r=await fetch(api(t,'id=eq.'+id),{method:'DELET
 // ══════════════════════════════════════
 // LANGUAGE
 // ══════════════════════════════════════
-let lang=localStorage.getItem('clinicsched_lang')||'he';
+let lang=localStorage.getItem('clinicsched_lang')||'en';
 
 const T={
   he:{
@@ -968,7 +972,7 @@ async function loadAll(){
     try{swaps=await dbGet('swaps');}catch(e){swaps=[];}
     try{holidays=await dbGet('holidays');}catch(e){holidays=[];}
     try{slotRules=await dbGet('slot_rules');}catch(e){slotRules=[];}
-    renderCal();renderMyReqs();renderExchangeTab();populateDoctorFilter();updateExchangeNotif();
+    renderCal();renderMyReqs();renderExchangeTab();populateDoctorFilter();populateMonthFilters();updateExchangeNotif();
     if(document.getElementById('panel-admin').classList.contains('active'))renderAdmin();
   }catch(e){toast(T[lang].errorPrefix+e.message);}
   finally{sync(false);}
@@ -978,6 +982,35 @@ async function seedDefaultDoctors(){
   for(const sp of Object.keys(base))for(const name of base[sp]){try{const ins=await dbIns('doctors',{name,specialty:sp,pin:DEFAULT_PIN});DOCS[sp].push(ins[0]);}catch(e){}}
 }
 setInterval(loadAll,30000);
+
+function populateMonthFilters(){
+  const L=T[lang];
+  // Get all unique months from requests
+  const months=[...new Set(reqs.map(r=>r.date.substring(0,7)))].sort().reverse();
+  // Also always include current and next month
+  const cur=`${now.getFullYear()}-${pad(now.getMonth()+1)}`;
+  const next=now.getMonth()===11?`${now.getFullYear()+1}-01`:`${now.getFullYear()}-${pad(now.getMonth()+2)}`;
+  [cur,next].forEach(m=>{if(!months.includes(m))months.unshift(m);});
+  months.sort().reverse();
+
+  const allLabel=lang==='he'?'כל החודשים':'All months';
+  [
+    {id:'f-month', curVal:document.getElementById('f-month')?.value||''},
+    {id:'doc-f-month', curVal:document.getElementById('doc-f-month')?.value||''}
+  ].forEach(({id,curVal})=>{
+    const sel=document.getElementById(id);if(!sel)return;
+    sel.innerHTML=`<option value="">${allLabel}</option>`;
+    months.forEach(mk=>{
+      const[y,m]=mk.split('-').map(Number);
+      const o=document.createElement('option');o.value=mk;
+      o.textContent=`${L.months[m-1]} ${y}`;
+      if(mk===curVal)o.selected=true;
+      sel.appendChild(o);
+    });
+    // Default to current month if nothing selected
+    if(!curVal&&months.includes(cur))sel.value=cur;
+  });
+}
 
 function populateDoctorFilter(){
   const sel=document.getElementById('f-doctor');if(!sel)return;
@@ -999,7 +1032,7 @@ function updateExchangeNotif(){
 function loginSpecChange(){
   const sp=document.getElementById('login-specialty').value;loginSelectedSpec=sp;
   const sel=document.getElementById('login-name');sel.innerHTML=`<option value="">${lang==='he'?'— בחר שם —':'— Select name —'}</option>`;
-  if(sp)(DOCS[sp]||[]).forEach(d=>{const o=document.createElement('option');o.value=d.name;o.textContent=d.name;sel.appendChild(o);});
+  if(sp)(DOCS[sp]||[]).slice().sort((a,b)=>a.name.localeCompare(b.name)).forEach(d=>{const o=document.createElement('option');o.value=d.name;o.textContent=d.name;sel.appendChild(o);});
 }
 function loginStep1Next(){
   const sp=document.getElementById('login-specialty').value,name=document.getElementById('login-name').value;
@@ -1153,8 +1186,9 @@ async function submitRequest(){
 
 function renderMyReqs(){
   const wrap=document.getElementById('my-requests');
-  const mine=reqs.filter(r=>r.doctor===curDoc&&r.status==='approved').sort((a,b)=>a.date.localeCompare(b.date));
-  const pending=reqs.filter(r=>r.doctor===curDoc&&r.status==='pending').sort((a,b)=>a.date.localeCompare(b.date));
+  const fMonth=document.getElementById('doc-f-month')?.value||'';
+  const mine=reqs.filter(r=>r.doctor===curDoc&&r.status==='approved'&&(!fMonth||r.date.startsWith(fMonth))).sort((a,b)=>a.date.localeCompare(b.date));
+  const pending=reqs.filter(r=>r.doctor===curDoc&&r.status==='pending'&&(!fMonth||r.date.startsWith(fMonth))).sort((a,b)=>a.date.localeCompare(b.date));
   const L=T[lang];
   if(!mine.length&&!pending.length){wrap.innerHTML=`<div class="empty-state"><div class="icon">📋</div>${lang==='he'?'לחץ על יום בלוח לבקש משמרת':'Click a day on the calendar to request a shift'}</div>`;return;}
   let h='';
@@ -1554,7 +1588,7 @@ function unpublishMonth(mk){if(!confirm(lang==='he'?'לבטל פרסום?':'Unpu
 // ══════════════════════════════════════
 // ADMIN — REQUESTS
 // ══════════════════════════════════════
-function renderAdmin(){renderStats();renderRequests();}
+function renderAdmin(){renderStats();populateMonthFilters();renderRequests();}
 function renderStats(){
   const L=T[lang];
   const pending=reqs.filter(r=>r.status==='pending').length;
@@ -1567,11 +1601,12 @@ function renderStats(){
     <div class="stat-card"><div class="stat-num" style="color:var(--danger)">${needAttn}</div><div class="stat-label">${L.needAttention}</div></div>`;
 }
 function renderRequests(){
-  const fs=document.getElementById('f-status')?.value||'';const fsp=document.getElementById('f-spec')?.value||'';const fsi=document.getElementById('f-site')?.value||'';const fdoc=document.getElementById('f-doctor')?.value||'';const fsh=document.getElementById('f-shift')?.value||'';
+  const fs=document.getElementById('f-status')?.value||'';const fsp=document.getElementById('f-spec')?.value||'';const fsi=document.getElementById('f-site')?.value||'';const fdoc=document.getElementById('f-doctor')?.value||'';const fsh=document.getElementById('f-shift')?.value||'';const fmo=document.getElementById('f-month')?.value||'';
   const L=T[lang];
   const data=reqs.filter(r=>{
     if(fs&&r.status!==fs)return false;if(fsp&&r.specialty!==fsp)return false;if(fsi&&r.site!==fsi)return false;if(fdoc&&r.doctor!==fdoc)return false;
     if(fsh==='regular'&&r.shift_type!=null)return false;if(fsh==='morning'&&r.shift_type!=='morning')return false;if(fsh==='evening'&&r.shift_type!=='evening')return false;
+    if(fmo&&!r.date.startsWith(fmo))return false;
     return true;
   }).sort((a,b)=>a.date.localeCompare(b.date));
   const wrap=document.getElementById('req-table');
